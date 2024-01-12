@@ -1,0 +1,7 @@
+{
+  "name": "ControlVolumetricoGas",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
