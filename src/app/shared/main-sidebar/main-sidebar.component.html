@@ -44,26 +44,43 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="./index.html" class="nav-link active">
+              <a routerLink="panel_control/mostrar" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Dashboard v1</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="./index2.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Dashboard v2</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="./index3.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Dashboard v3</p>
+                <p>Panel de control</p>
               </a>
             </li>
           </ul>
         </li>
 
+        <!-- INICIO REPORTES -->
+        <li class="nav-header">REPORTES VOLUMETRICOS</li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-clipboard"></i>
+            <!--i class="nav-icon fas fa-chart-pie"></i-->
+            <p>
+              Reportes
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a routerLink="reporte/registrar" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Registrar reporte</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="reporte/mostrar" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Lista de reportes</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <!-- FIN REPORTES -->
+
+        <!-- INICIO EQUIPOS -->
         <li class="nav-header">EQUIPOS</li>
         <li class="nav-item">
           <a href="#" class="nav-link">
@@ -76,31 +93,20 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="pages/charts/chartjs.html" class="nav-link">
+              <a routerLink="equipo_tecnico/registrar" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Medidor 1</p>
+                <p>Registrar equipo</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="pages/charts/flot.html" class="nav-link">
+              <a routerLink="equipo_tecnico/mostrar" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Medidor 2</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/charts/inline.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Medidor 3</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/charts/uplot.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Medidor 4</p>
+                <p>Lista de equipos</p>
               </a>
             </li>
           </ul>
         </li>
+        <!-- FIN EQUIPOS -->
       </ul>
     </nav>
     <!-- /.sidebar-menu -->
