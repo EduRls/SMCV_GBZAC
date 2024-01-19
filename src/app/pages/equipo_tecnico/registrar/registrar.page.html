@@ -8,43 +8,43 @@
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2">
           <div class="col mb-3 form-floating">
             <label for="">Modelo del equipo</label>
-            <input type="text" id="" class="form-control" placeholder="Model">
+            <input type="text" id="" class="form-control" placeholder="Model" [(ngModel)]="equipo.modelo_equipo">
           </div>
           <div class="col mb-3 form-floating">
             <label for="">Rango de flujo</label>
-            <input type="text" id="" class="form-control" placeholder="Flow range">
+            <input type="text" id="" class="form-control" placeholder="Flow range" [(ngModel)]="equipo.rango_flujo">
           </div>
           <div class="col mb-3 form-floating">
             <label for="">Rango de temperatura</label>
-            <input type="text" id="" class="form-control" placeholder="Temperature">
+            <input type="text" id="" class="form-control" placeholder="Temperature" [(ngModel)]="equipo.rango_temperatura">
           </div>
           <div class="col mb-3 form-floating">
             <label for="">Número de serie</label>
-            <input type="text" id="" class="form-control" placeholder="Meter Number">
+            <input type="text" id="" class="form-control" placeholder="Meter Number" [(ngModel)]="equipo.numero_serie">
           </div>
           <div class="col mb-3 form-floating">
             <label for="">Precisión</label>
-            <input type="text" id="" class="form-control" placeholder="Accuracy">
+            <input type="text" id="" class="form-control" placeholder="Accuracy" [(ngModel)]="equipo.precision">
           </div>
           <div class="col mb-3 form-floating">
             <label for="">Suminitro de poder (Energia)</label>
-            <input type="text" id="" class="form-control" placeholder="Power Supply">
+            <input type="text" id="" class="form-control" placeholder="Power Supply" [(ngModel)]="equipo.suministro_energia">
           </div>
           <div class="col mb-3 form-floating">
             <label for="">Salida del modelo</label>
-            <input type="text" id="" class="form-control" placeholder="Output Model">
+            <input type="text" id="" class="form-control" placeholder="Output Model" [(ngModel)]="equipo.salida_modelo">
           </div>
           <div class="col mb-3 form-floating">
             <label for="">Fecha</label>
-            <input type="text" id="" class="form-control" placeholder="Date">
+            <input type="text" id="" class="form-control" placeholder="Date" [(ngModel)]="equipo.fecha">
           </div>
         </div>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2">
           <div class="col mb-3 form-floating">
-            <button type="button" class="btn btn-secondary btn-lg btn-block">Borrar formulario</button>
+            <button type="button" class="btn btn-secondary btn-lg btn-block" (click)="borrarFormulario()">Limpiar formulario</button>
           </div>
           <div class="col mb-3 form-floating">
-            <button type="button" class="btn btn-primary btn-lg btn-block">Guardar equipo</button>
+            <button type="button" class="btn btn-primary btn-lg btn-block" (click)="guardarEquipo()">Guardar equipo</button>
           </div>
         </div>
       </div>

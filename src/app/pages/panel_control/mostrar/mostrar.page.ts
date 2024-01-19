@@ -19,13 +19,7 @@ export class MostrarPage implements OnInit {
   }
 
   async getInformaicon(){
-    (await this.laravelApi.getInformacion()).subscribe({
-      next:(result:any) => {
-        this.datos = result;
-      },error:(error) => {
-        console.log(error)
-      }
-    })
+    
   }
 
   mostrarInformacion(){
