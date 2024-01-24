@@ -1,13 +1,105 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>mostrar</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">mostrar</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="container" style="padding-top: 2%;">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2">
+      <div class="col mb-3" *ngFor="let mt of medidor_turbina">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Medidor modelo: {{mt.modelo_equipo}}</h3>
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2">
+              <div class="col mb-3" style="display: flex; justify-content: center; align-items: center;">
+                <img src="assets/img/medidor.png" alt="medidor.png" width="50%">
+              </div>
+              <div>
+                Datos generales
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2">
+              <div class="col mb-3">
+                <button type="button" (click)="historialMantenimiento(mt.id)"
+                  class="btn btn-block btn-default">Mantenimiento</button>
+              </div>
+              <div class="col mb-3">
+                <ion-button id="open-modal-{{mt.id}}" expand="block">Open</ion-button>
+
+                <ion-modal trigger="open-modal-{{mt.id}}">
+                  <ng-template>
+                    <ion-header>
+                      <ion-toolbar style="text-align: center;">
+                        <ion-buttons slot="start">
+                          <ion-button>Cancel</ion-button>
+                        </ion-buttons>
+                        <ion-title>{{mt.modelo_equipo}}</ion-title>
+                        <ion-buttons slot="end">
+                          <ion-button [strong]="true">Confirm</ion-button>
+                        </ion-buttons>
+                      </ion-toolbar>
+                    </ion-header>
+                    <ion-content class="ion-padding">
+                      <ion-item>
+                        <ion-label>
+                          Modelo del equipo: <br> {{mt.modelo_equipo}}
+                        </ion-label>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label>
+                          Número de serie: <br> {{mt.numero_serie}}
+                        </ion-label>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label>
+                          Rango de precisión: <br> {{mt.precision}}
+                        </ion-label>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label>
+                          Rango de temperatura: <br> {{mt.rango_temperatura}}
+                        </ion-label>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label>
+                          Rango de fluido: <br> {{mt.rango_flujo}}
+                        </ion-label>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label>
+                          Salida del modelo: <br> {{mt.salida_modelo}}
+                        </ion-label>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label>
+                          Suministro de energía: <br> {{mt.suministro_energia}}
+                        </ion-label>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label>
+                          Fecha del modelo: <br> {{mt.fecha}}
+                        </ion-label>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label>
+                          Fecha en que se dio de alta el modelo: <br> {{mt.created_at | date: 'short'}}
+                        </ion-label>
+                      </ion-item>
+                    </ion-content>
+                  </ng-template>
+                </ion-modal>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
 </ion-content>

@@ -36,4 +36,8 @@ export class LaravelService {
   async deleteMedidorTurbina(id:number){
     return this.http.delete(`${this.api}v1/equipo/turbina/${id}`);
   }
+  // Consultar el historial de mantenimiento de un equipo
+  async getMedidorTurbinaMantenimiento(id:number){
+    return this.http.get(`${this.api}v1/equipo/turbina/mantenimiento/${id}`);
+  }
 }
