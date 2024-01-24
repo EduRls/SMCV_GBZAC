@@ -22,7 +22,7 @@ export class MostrarPage implements OnInit {
   }
 
   async obtenerInformacion(){
-    (await this.apiLaravel.getMedidoresTurbian()).subscribe({
+    (await this.apiLaravel.getMedidoresTurbian('1|cIYsvDBetefTElQiIpUVeGA19DFwh9BMoVqvciay822a1e1e')).subscribe({
       next: (result:any) => {
         this.medidor_turbina = result;
         console.log("result: ", result);
@@ -33,7 +33,7 @@ export class MostrarPage implements OnInit {
   }
 
   async historialMantenimiento(id:number){
-    (await this.apiLaravel.getMedidorTurbinaMantenimiento(id)).subscribe({
+    (await this.apiLaravel.getMedidorTurbinaMantenimiento(id, '')).subscribe({
       next: (result) => {
         console.log("result: ", result);
       }, error: (error) => {

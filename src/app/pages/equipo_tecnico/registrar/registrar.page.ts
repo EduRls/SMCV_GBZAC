@@ -56,7 +56,7 @@ export class RegistrarPage implements OnInit {
     
     if(!informacionCompleta){
       try {
-        (await this.apiLaravel.createMedidorTurbina(informacion)).subscribe({
+        (await this.apiLaravel.createMedidorTurbina(informacion, '')).subscribe({
           next:(value) => {
             this.presentToast('bottom', 'El registro se ha agregado de forma éxitosa!')
           },error: (err) => {
