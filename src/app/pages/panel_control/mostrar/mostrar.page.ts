@@ -33,6 +33,7 @@ export class MostrarPage implements OnInit {
   }
 
   async mostrarInformacion(){
+    /*
     const user = {
       email: 'eduruelas13@gmail.com',
       password: 'lalo12345'
@@ -45,6 +46,7 @@ export class MostrarPage implements OnInit {
 
       }
     })
+    */
   }
 
 }

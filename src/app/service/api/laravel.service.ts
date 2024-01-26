@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -60,5 +61,8 @@ export class LaravelService {
   async getMedidorTurbinaMantenimiento(id:number, bearerToken:string){
     const header = this.headerCreate(bearerToken, 'cud')
     return this.http.get(`${this.api}v1/equipo/turbina/mantenimiento/${id}`);
+  }
+
+  async pruebaFacturaget(){
   }
 }
