@@ -1,13 +1,88 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>registrar</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">registrar</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="card ion-margin">
+    <form class="ion-margin">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="RfcContribuyente">RFC Contribuyente:</label>
+          <input type="text" id="RfcContribuyente" name="RfcContribuyente" class="form-control">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="RfcRepresentanteLegal">RFC Representante Legal:</label>
+          <input type="text" id="RfcRepresentanteLegal" name="RfcRepresentanteLegal" class="form-control">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="RfcProveedor">RFC Proveedor:</label>
+          <input type="text" id="RfcProveedor" name="RfcProveedor" class="form-control">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="RfcProveedores">RFC Proveedores:</label>
+          <input type="text" id="RfcProveedores" name="RfcProveedores" class="form-control">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="Caracter">Caracter:</label>
+          <select id="Caracter" name="Caracter" class="form-control">
+            <option value="" selected></option>
+            <option value="Contratista">Contratista</option>
+            <option value="Asignatario">Asignatario</option>
+            <option value="Permisionario">Permisionario</option>
+            <option value="Usuario">Usuario</option>
+          </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="Clavelnstalacion">Clave Instalación:</label>
+          <input type="text" id="Clavelnstalacion" name="Clavelnstalacion" class="form-control">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <label for="DescripcionInstalacion">Descripción Instalación:</label>
+          <input type="text" id="DescripcionInstalacion" name="DescripcionInstalacion" class="form-control">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="Geolocalizacion">Geolocalización:</label>
+          <input type="text" id="Geolocalizacion" name="Geolocalizacion" class="form-control">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="NumeroPozos">Número Pozos:</label>
+          <input type="number" id="NumeroPozos" name="NumeroPozos" class="form-control">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="NumeroTanques">Número Tanques:</label>
+          <input type="number" id="NumeroTanques" name="NumeroTanques" class="form-control">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="NumeroDuctosEntradaSalida">Número Ductos Entrada/Salida:</label>
+          <input type="number" id="NumeroDuctosEntradaSalida" name="NumeroDuctosEntradaSalida" class="form-control">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="NumeroDuctosTransporte">Número Ductos Transporte:</label>
+          <input type="number" id="NumeroDuctosTransporte" name="NumeroDuctosTransporte" class="form-control">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="NumeroDuctosTransporte">Número Ductos Transporte:</label>
+          <input type="number" id="NumeroDuctosTransporte" name="NumeroDuctosTransporte" class="form-control">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="NumeroDispensarios">Número Dispensarios:</label>
+          <input type="number" id="NumeroDispensarios" name="NumeroDispensarios" class="form-control">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="FechaYHoraCorte">Fecha y Hora Corte:</label>
+          <input type="datetime-local" id="FechaYHoraCorte" name="FechaYHoraCorte" class="form-control">
+        </div>
+      </div>
+    </form>
+  </div>
 </ion-content>

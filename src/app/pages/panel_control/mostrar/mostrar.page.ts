@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { LaravelService } from 'src/app/service/api/laravel.service';
 import { AuthService } from 'src/app/service/auth/auth.service';
+import { StorageService } from 'src/app/service/storage/storage.service';
 
 @Component({
   selector: 'app-mostrar',
@@ -11,42 +13,40 @@ export class MostrarPage implements OnInit {
 
   constructor(
     private apiLaravel:LaravelService,
-    private authSerivce: AuthService
+    private authSerivce: AuthService,
+    private storage: StorageService,
+    private route: Router
   ) { }
 
   public datos:any = [];
+  private token:any;
+  
 
   ngOnInit() {
-    this.getInformaicon();
+    
+    /*
+    this.storage.get('bearerToken').then(res => {
+      if(res != null){
+        this.getInformaicon(res);
+      }else{
+        this.route.navigate(['/login'], {replaceUrl: true});
+      }
+    })
+    */
   }
 
-  async getInformaicon(){
-    (await this.apiLaravel.getMedidoresTurbian('1|cIYsvDBetefTElQiIpUVeGA19DFwh9BMoVqvciay822a1e1e')).subscribe({
-      next:(result:any) => {
-        console.log("result: ", result);
-      }, error:(err:any) => {
-        if(err.status == 401 ){
-          console.log('SERAS ENVIADO AL login')
-        }
+  async getInformaicon(token:string){
+    (await this.apiLaravel.getMedidoresTurbian(token)).subscribe({
+      next: (res) => {
+        console.log("res: ", res);
+      }, error: (err) => {
+        console.log("err: ", err);
       }
     })
   }
 
   async mostrarInformacion(){
-    /*
-    const user = {
-      email: 'eduruelas13@gmail.com',
-      password: 'lalo12345'
-    }
-    ;(await this.authSerivce.login(user)).subscribe({
-      next: (v:any) => {
-        console.log("v: ", v);
-      }, error:(err:any) => {
-        console.log("err: ", err);
-
-      }
-    })
-    */
+    
   }
 
 }

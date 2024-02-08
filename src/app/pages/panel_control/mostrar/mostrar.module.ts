@@ -8,6 +8,8 @@ import { MostrarPageRoutingModule } from './mostrar-routing.module';
 
 import { MostrarPage } from './mostrar.page';
 
+
+
 @NgModule({
   imports: [
     CommonModule,

@@ -1,16 +1,55 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>mostrar</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">mostrar</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-button (click)="mostrarInformacion()" expand="block" fill="clear" shape="round">
-    Click me
-  </ion-button>
+  <!-- INICIO CONTENIDO DE LOS ALMACENES -->
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2">
+    <div class="col mb-3">
+      <div class="card ion-margin" style="max-width: 100%;">
+          <h4 style="text-align: center;">ALMACÉN 1</h4>
+        <div style="text-align: center;">
+          <img src="/assets/img/almcen_gas.png" width="80%" alt="...">
+        </div>
+      </div>
+    </div>
+    <div class="col mb-3">
+      <div class="card ion-margin" style="max-width: 100%;">
+        <div style="text-align: center;">
+          <h4>ALMACÉN 2</h4>
+        </div>
+        <div style="text-align: center;">
+          <img src="/assets/img/almcen_gas.png" width="80%" alt="..." style="transform: scaleX(-1);">
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- FIN CONTENIDO DE LOS ALMACENES -->
+
+  <!-- INICIO HISTORIAL DE CARGAS Y SALIDAS -->
+  <div class="card ion-margin">
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Column 1</th>
+            <th>Column 2</th>
+            <th>Column 3</th>
+            <th>Column 4</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Row 1 Data 1</td>
+            <td>Row 1 Data 2</td>
+            <td>Row 1 Data 1</td>
+            <td>Row 1 Data 2</td>
+          </tr>
+          <tr>
+            <td>Row 2 Data 1</td>
+            <td>Row 2 Data 2</td>
+            <td>Row 1 Data 1</td>
+            <td>Row 1 Data 2</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- INICIO HISTORIAL DE CARGAS Y SALIDAS -->
 </ion-content>

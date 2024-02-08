@@ -1,9 +1,9 @@
 <ion-app>
   <div class="wrapper">
     <app-preload></app-preload>
-    <app-main-header></app-main-header>
-    <app-main-sidebar></app-main-sidebar>
-    <div class="content-wrapper">
+    <app-main-header *ngIf="isLoggin"></app-main-header>
+    <app-main-sidebar *ngIf="isLoggin"></app-main-sidebar>
+    <div class="content-wrapper" >
       <ion-content>
         <ion-router-outlet></ion-router-outlet>
       </ion-content>

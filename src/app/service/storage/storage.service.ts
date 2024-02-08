@@ -7,7 +7,7 @@ import { Storage } from '@ionic/storage';
 export class StorageService {
 
   constructor(private _storage: Storage) {
-    //this._storage.create();
+    this._storage.create();
   }
 
   public async set(key: string, value: any) {

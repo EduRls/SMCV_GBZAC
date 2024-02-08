@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { StorageService } from '../storage/storage.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +18,8 @@ export class AuthService {
 
   constructor(
     private http:HttpClient,
+    private storage:StorageService,
+    private route: Router
   ) { }
 
   /*  
@@ -23,7 +27,9 @@ export class AuthService {
   */
 
   async isAuthenticatedUser(){
-    let isAuth = environment.authOptions.isloggedUser;
+    const sesionDate = await this.storage.get('sessionDate').then(res => res != new Date() ? true : false);
+    const tokenBearer = await this.storage.get('bearerToken').then(res => res != null ? true : false);
+    let isAuth:boolean = (sesionDate && tokenBearer) || false;
     return isAuth
   }
   
@@ -54,6 +60,8 @@ export class AuthService {
   Función para la salida de sesión de un usuarioS
   */
   async logout(){
+    this.storage.clear();
+    this.route.navigate(['login'], {replaceUrl: true});
     return this.http.post(`${this.url}/logout`, true, this.httpHeader);
   }
 }
