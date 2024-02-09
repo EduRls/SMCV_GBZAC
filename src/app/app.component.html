@@ -1,12 +1,17 @@
 <ion-app>
-  <div class="wrapper">
+  <div class="wrapper" *ngIf="isLoggin; else userNotLogged">
     <app-preload></app-preload>
-    <app-main-header *ngIf="isLoggin"></app-main-header>
-    <app-main-sidebar *ngIf="isLoggin"></app-main-sidebar>
+    <app-main-header></app-main-header>
+    <app-main-sidebar></app-main-sidebar>
     <div class="content-wrapper" >
       <ion-content>
         <ion-router-outlet></ion-router-outlet>
       </ion-content>
     </div>
   </div>
+  <ng-template #userNotLogged>
+    <ion-content>
+      <ion-router-outlet></ion-router-outlet>
+    </ion-content>
+  </ng-template>
 </ion-app>

@@ -4,6 +4,7 @@ import { StorageService } from '../service/storage/storage.service';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,8 @@ export class LoginPage implements OnInit {
     private authService:AuthService,
     private storage:StorageService,
     private route:Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private toastController: ToastController
   ) { }
 
   ngOnInit() {
@@ -28,33 +30,31 @@ export class LoginPage implements OnInit {
     })
   }
 
+  async presentToast(position: 'top' | 'middle' | 'bottom', mensaje:string, icono:string) {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      duration: 1500,
+      position: position,
+      icon: icono
+    });
+
+    await toast.present();
+  }
+
   async login(){
-    console.log(this.user.value)
     if(this.user.valid){
       (await this.authService.login(this.user.value)).subscribe({
         next: (v:any) => {
           this.storage.set('bearerToken', v.data.token);
-          this.storage.set('sessionDate', new Date());
           this.route.navigate(['/panel_control/mostrar'], {replaceUrl: true});
         }, error:(err) => {
-          console.log('Ha ocurrido un error, vuelva a intentarlo')
+          this.presentToast('bottom', 'Ha ocurrido un error, vuelva a intentarlo', 'close')
         }
       })
       return false
     }else{
-      return console.log('Favor de completar todos los campos!')
+      return this.presentToast('bottom', 'Favor de completar los campos', 'close')
     }
-    /*
-    (await this.authService.login(user)).subscribe({
-      next: (v:any) => {
-        this.storage.set('bearerToken', v.data.token);
-        environment.authOptions.isloggedUser = true;
-        this.route.navigate(['/panel_control/mostrar'], {replaceUrl: true});
-      }, error:(err) => {
-        console.log('Ha ocurrido un error, vuelva a intentarlo')
-      }
-    })
-    */
   }
 
 }

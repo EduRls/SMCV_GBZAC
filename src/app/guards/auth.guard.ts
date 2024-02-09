@@ -30,5 +30,9 @@ export class AuthGuard implements CanActivate {
     this.route.navigate(['/login'], {replaceUrl: true});
     return false
   }
+
+  private routeToHomePage() {
+    this.route.navigate(['/panel_control/mostrar'], {replaceUrl: true})
+  }
   
 }

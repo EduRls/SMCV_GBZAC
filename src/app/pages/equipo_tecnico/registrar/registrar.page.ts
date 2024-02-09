@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LaravelService } from 'src/app/service/api/laravel.service';
 import { ToastController } from '@ionic/angular';
+import { StorageService } from 'src/app/service/storage/storage.service';
 
 @Component({
   selector: 'app-registrar',
@@ -10,14 +11,16 @@ import { ToastController } from '@ionic/angular';
 export class RegistrarPage implements OnInit {
 
   public equipo: any = [];
+  private bearerToken:string = ''
 
   constructor(
     private apiLaravel: LaravelService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private storage:StorageService
   ) { }
 
   ngOnInit() {
-    //this.obtenerInformacion()
+    this.obtenerInformacion()
   }
   async presentToast(position: 'top' | 'middle' | 'bottom', mensaje:string) {
     const toast = await this.toastController.create({
@@ -29,17 +32,11 @@ export class RegistrarPage implements OnInit {
     await toast.present();
   }
 
-  /*
+  
   async obtenerInformacion(){
-    (await this.apiLaravel.getMedidoresTurbian()).subscribe({
-      next:(result:any) => {
-        console.log("result: ", result);
-      }, error:(err) => {
-        console.log(err)
-      }
-    })
+    this.bearerToken = await this.storage.get('bearerToken');
   }
-  */
+  
 
   async guardarEquipo() {
     const informacion:any = {
@@ -56,7 +53,7 @@ export class RegistrarPage implements OnInit {
     
     if(!informacionCompleta){
       try {
-        (await this.apiLaravel.createMedidorTurbina(informacion, '')).subscribe({
+        (await this.apiLaravel.createMedidorTurbina(informacion, this.bearerToken)).subscribe({
           next:(value) => {
             this.presentToast('bottom', 'El registro se ha agregado de forma éxitosa!')
           },error: (err) => {

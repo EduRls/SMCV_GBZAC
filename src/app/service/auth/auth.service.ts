@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class AuthService {
 
   private url:string = 'http://127.0.0.1:8000/api/local/auth';
+  public isUserLogged?:boolean;
 
   // Componenete de encabezado para el servicio
   private httpHeader = {
@@ -27,9 +28,9 @@ export class AuthService {
   */
 
   async isAuthenticatedUser(){
-    const sesionDate = await this.storage.get('sessionDate').then(res => res != new Date() ? true : false);
     const tokenBearer = await this.storage.get('bearerToken').then(res => res != null ? true : false);
-    let isAuth:boolean = (sesionDate && tokenBearer) || false;
+    this.isUserLogged = tokenBearer || false;
+    let isAuth:boolean = tokenBearer || false;
     return isAuth
   }
   

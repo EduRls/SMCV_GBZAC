@@ -45,22 +45,22 @@ export class LaravelService {
   // Agregar un nuevo medidor
   async createMedidorTurbina(data:any, bearerToken:string){
     const header = this.headerCreate(bearerToken, 'cud')
-    return this.http.post(`${this.api}v1/equipo/turbina`, data);
+    return this.http.post(`${this.api}v1/equipo/turbina`, data, header);
   }
   // Editar un medidor
   async editMedidorTurbina(id:number, data:any, bearerToken:string){
     const header = this.headerCreate(bearerToken, 'cud')
-    return this.http.put(`${this.api}v1/equipo/turbina/${id}`, data);
+    return this.http.put(`${this.api}v1/equipo/turbina/${id}`, data, header);
   }
   // Eliminar un medidor
   async deleteMedidorTurbina(id:number, bearerToken:string){
     const header = this.headerCreate(bearerToken, 'cud')
-    return this.http.delete(`${this.api}v1/equipo/turbina/${id}`);
+    return this.http.delete(`${this.api}v1/equipo/turbina/${id}`, header);
   }
   // Consultar el historial de mantenimiento de un equipo
   async getMedidorTurbinaMantenimiento(id:number, bearerToken:string){
     const header = this.headerCreate(bearerToken, 'cud')
-    return this.http.get(`${this.api}v1/equipo/turbina/mantenimiento/${id}`);
+    return this.http.get(`${this.api}v1/equipo/turbina/mantenimiento/${id}`, header);
   }
 
   async pruebaFacturaget(){

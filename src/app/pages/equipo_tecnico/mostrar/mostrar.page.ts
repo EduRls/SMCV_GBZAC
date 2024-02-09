@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LaravelService } from 'src/app/service/api/laravel.service';
+import { StorageService } from 'src/app/service/storage/storage.service';
 
 @Component({
   selector: 'app-mostrar',
@@ -9,20 +10,25 @@ import { LaravelService } from 'src/app/service/api/laravel.service';
 export class MostrarPage implements OnInit {
 
   public medidor_turbina:any = []
+  private brearToken:string = ''
 
   constructor(
-    private apiLaravel: LaravelService
+    private apiLaravel: LaravelService,
+    private storage:StorageService
   ) { }
 
   ngOnInit() {
   }
 
   ionViewWillEnter(){
-    this.obtenerInformacion();
+    this.storage.get('bearerToken').then((res:any) => {
+      this.brearToken = res;
+      this.obtenerInformacion(res);
+    })
   }
 
-  async obtenerInformacion(){
-    (await this.apiLaravel.getMedidoresTurbian('1|cIYsvDBetefTElQiIpUVeGA19DFwh9BMoVqvciay822a1e1e')).subscribe({
+  async obtenerInformacion(token:string){
+    (await this.apiLaravel.getMedidoresTurbian(token)).subscribe({
       next: (result:any) => {
         this.medidor_turbina = result;
         console.log("result: ", result);
@@ -33,7 +39,7 @@ export class MostrarPage implements OnInit {
   }
 
   async historialMantenimiento(id:number){
-    (await this.apiLaravel.getMedidorTurbinaMantenimiento(id, '')).subscribe({
+    (await this.apiLaravel.getMedidorTurbinaMantenimiento(id, this.brearToken)).subscribe({
       next: (result) => {
         console.log("result: ", result);
       }, error: (error) => {
