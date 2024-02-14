@@ -21,6 +21,7 @@ export class AppComponent {
     private route: Router,
     private platform: Platform
   ) {
+    /*
     this.route.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         // Aquí puedes realizar cualquier acción que desees cuando la ruta cambia
@@ -29,6 +30,7 @@ export class AppComponent {
         })
       }
     });
+    */
   }
 
 }

@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/service/auth/auth.service';
 import { StorageService } from 'src/app/service/storage/storage.service';
 import * as $ from 'jquery';
 import DataTable from 'datatables.net-dt';
+import { DataPaginasService } from 'src/app/service/api/data-paginas.service';
 
 @Component({
   selector: 'app-mostrar',
@@ -15,6 +16,7 @@ export class MostrarPage implements OnInit {
 
   constructor(
     private apiLaravel: LaravelService,
+    private datapagina: DataPaginasService,
     private authSerivce: AuthService,
     private storage: StorageService,
     private route: Router
@@ -35,16 +37,13 @@ export class MostrarPage implements OnInit {
         url: "/assets/utils/es-ES.json"
       }
     })
+
+    this.getInformaicon()
+    
   }
 
-  async getInformaicon(token: string) {
-    (await this.apiLaravel.getMedidoresTurbian(token)).subscribe({
-      next: (res) => {
-        console.log("res: ", res);
-      }, error: (err) => {
-        console.log("err: ", err);
-      }
-    })
+  async getInformaicon() {
+    this.datapagina.consultarInformacion().then((res) => {console.log(res)})
   }
 
   async mostrarInformacion() {
