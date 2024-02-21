@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import * as Tesseract from 'tesseract.js';
+//import * as Tesseract from 'tesseract.js';
 
 @Component({
   selector: 'app-registrar',
@@ -14,6 +14,7 @@ export class RegistrarPage implements OnInit {
   ngOnInit() {
   }
   async onFileSelected(event: any) {
+    /*
     const image = event.target.files[0];
     
     // Crear un objeto FileReader para leer la imagen como un objeto de tipo 'blob'
@@ -56,6 +57,7 @@ export class RegistrarPage implements OnInit {
     
     // Leer la imagen como un objeto de tipo 'blob'
     reader.readAsDataURL(image);
+    */
   }
   
   convertToGrayscale(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement) {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-registrar',
@@ -9,7 +10,8 @@ import { Platform } from '@ionic/angular';
 export class RegistrarPage implements OnInit {
 
   constructor(
-    private platform: Platform
+    private platform: Platform,
+    private modalCtrl: ModalController
   ) { }
 
   public resultado:any
@@ -17,7 +19,8 @@ export class RegistrarPage implements OnInit {
 
 
   ngOnInit() {
-    
+
+
   }
 
   async startRecording(){
@@ -26,5 +29,18 @@ export class RegistrarPage implements OnInit {
 
   async stopRecording(){
     
+  }
+
+  async generarModal(){
+    const user = [{
+      nombre: "Eduardo",
+      apellido: {
+        apellido_paterno: "Ruelas",
+        apellido_materno: "Cortés"
+      },
+      edad: 21
+    }];
+
+
   }
 }
