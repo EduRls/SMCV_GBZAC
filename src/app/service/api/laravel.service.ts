@@ -93,4 +93,34 @@ export class LaravelService {
     return this.http.delete(`${this.api}v1/pipa/${id}`, header);
   }
 
+  /*
+  INICIO CRUD REGISTRO DE ENTRADAS Y SALIDAS
+  */
+
+  // Obtener la infromación de las pipas
+  async getRegistroPipasES(bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'get')
+    return this.http.get(`${this.api}v1/entrada-salida-pipa/registro`, header)
+  }
+  // Obtener información de un medidor de acuerdo a un ID
+  async getRegistroPipasESById(id: number, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'get')
+    return this.http.get(`${this.api}v1/entrada-salida-pipa/registro/${id}`);
+  }
+  // Agregar un nuevo medidor
+  async createRegistroPipasES(data: any, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'cud')
+    return this.http.post(`${this.api}v1/entrada-salida-pipa/registro`, data, header);
+  }
+  // Editar un medidor
+  async editRegistroPipasES(id: number, data: any, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'cud')
+    return this.http.post(`${this.api}v1/entrada-salida-pipa/registro/${id}`, data, header);
+  }
+  // Eliminar un medidor
+  async deleteRegistroPipasES(id: number, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'cud')
+    return this.http.delete(`${this.api}v1/entrada-salida-pipa/registro/${id}`, header);
+  }
+
 }

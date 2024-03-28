@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar style="--background: #2c3d50;">
+    <ion-title style="color: white;">Editar Registro de Pipas</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()" style="color: white;">Cancelar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content style="padding-top: 3%;">
+  <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-input label="Inventario Inicial" labelPlacement="floating" formControlName="inventario_inical" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input label="Compra" labelPlacement="floating" formControlName="compra" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input label="Venta" labelPlacement="floating" formControlName="venta" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input label="Inventario Final" labelPlacement="floating" formControlName="inventario_final" type="text"></ion-input>
+    </ion-item>
+    <ion-button type="submit" expand="full" style="padding-top: 5%;">Guardar</ion-button>
+  </form>
+</ion-content>

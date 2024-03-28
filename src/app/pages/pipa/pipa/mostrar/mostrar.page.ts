@@ -46,7 +46,6 @@ export class MostrarPage implements OnInit {
       this.pipas = response;
       this.generarTablaPipa(response);
     });
-
   }
 
   async presentToast(position: 'top' | 'middle' | 'bottom', msg: string, color: "success" | "danger" | "warning") {
