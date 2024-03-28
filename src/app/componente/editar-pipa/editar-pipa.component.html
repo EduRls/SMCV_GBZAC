@@ -1,0 +1,32 @@
+<ion-header >
+  <ion-toolbar style="--background: #2c3d50;">
+    <ion-title style="color: white;">Editar Pipa</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cerrarModal()" [strong]="true" style="color: white;">Cancelar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card color="warning" class="text-center">
+    <ion-card-header>
+      <ion-card-title>Editar Pipa</ion-card-title>
+      <ion-card-subtitle>Favor de ingresar la información correspondiente para editar la pipa</ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+  <form [formGroup]="formularioPipa" (submit)="guardarCambios()">
+    <ion-item>
+      <ion-input label="Matricula" labelPlacement="floating" formControlName="clave_pipa" type="text"
+        placeholder="Ingrese la matricula de la pipa"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input label="Responsable" labelPlacement="floating" formControlName="responsable_pipa" type="text"
+        placeholder="Ingrese el nombre del responsable"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input label="Capacidad" labelPlacement="floating" formControlName="capacidad_pipa" type="number"
+        placeholder="Ingrese la capcidad en Litros de la pipa"></ion-input>
+    </ion-item>
+    <ion-button type="submit" expand="full" style="margin-top: 5%;">Guardar Cambios</ion-button>
+  </form>
+</ion-content>

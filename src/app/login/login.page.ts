@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../service/auth/auth.service';
 import { StorageService } from '../service/storage/storage.service';
-import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ToastController } from '@ionic/angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { LoadingController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -20,22 +19,26 @@ export class LoginPage implements OnInit {
     private storage:StorageService,
     private route:Router,
     private formBuilder: FormBuilder,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private loadCtrl: LoadingController
   ) { }
 
   ngOnInit() {
     this.user = this.formBuilder.group({
       email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$')]],
       password: ['', Validators.required]
-    })
+    });
+    if(this.storage.getUserLogged()){
+      this.route.navigate(['/panel_control/mostrar'], {replaceUrl: true});
+    }
   }
 
-  async presentToast(position: 'top' | 'middle' | 'bottom', mensaje:string, icono:string) {
+  async presentToast(position: 'top' | 'middle' | 'bottom', mensaje:string, color: "success" | "warning" | "danger") {
     const toast = await this.toastController.create({
       message: mensaje,
       duration: 1500,
       position: position,
-      icon: icono
+      color: color
     });
 
     await toast.present();
@@ -43,17 +46,28 @@ export class LoginPage implements OnInit {
 
   async login(){
     if(this.user.valid){
+      const loading = await this.loadCtrl.create({
+        message: "Iniciando sesión..."
+      });
+      loading.present();
       (await this.authService.login(this.user.value)).subscribe({
         next: (v:any) => {
-          this.storage.set('bearerToken', v.data.token);
+          this.storage.setUserLoggedIn(true, v.data);
+          this.presentToast('bottom', 'Sesión inicada, bienvenido!! 😎', 'success');
           this.route.navigate(['/panel_control/mostrar'], {replaceUrl: true});
+          loading.dismiss();
         }, error:(err) => {
-          this.presentToast('bottom', 'Ha ocurrido un error, vuelva a intentarlo', 'close')
+          if(err.error.message == "Invalid credentials"){
+            this.presentToast('bottom', 'Datos incorrectos, favor de verificar', 'danger');
+          }else{
+            this.presentToast('bottom', 'Ha ocurrido un error, vuelva a intentarlo', 'danger');
+          }
+          loading.dismiss();
         }
       })
       return false
     }else{
-      return this.presentToast('bottom', 'Favor de completar los campos', 'close')
+      return this.presentToast('bottom', 'Favor de completar los campos', 'warning')
     }
   }
 

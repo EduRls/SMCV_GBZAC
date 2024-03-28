@@ -21,10 +21,7 @@ export class MostrarPage implements OnInit {
   }
 
   ionViewWillEnter(){
-    this.storage.get('bearerToken').then((res:any) => {
-      this.brearToken = res;
-      this.obtenerInformacion(res);
-    })
+    this.obtenerInformacion(this.brearToken);
   }
 
   async obtenerInformacion(token:string){

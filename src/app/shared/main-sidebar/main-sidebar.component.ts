@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { StorageService } from 'src/app/service/storage/storage.service';
 @Component({
   selector: 'app-main-sidebar',
   templateUrl: './main-sidebar.component.html',
@@ -7,8 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainSidebarComponent  implements OnInit {
 
-  constructor() { }
+  public userDataName:any
 
-  ngOnInit() {}
+  constructor(
+    private staroge:StorageService
+  ) { }
+
+  ngOnInit(): void {
+    this.userDataName = this.staroge.getUserData();
+    this.userDataName = this.userDataName.user.name;
+  }
 
 }

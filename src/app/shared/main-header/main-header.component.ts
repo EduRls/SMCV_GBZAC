@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AuthService } from 'src/app/service/auth/auth.service';
+import { StorageService } from 'src/app/service/storage/storage.service';
 
 @Component({
   selector: 'app-main-header',
@@ -9,12 +10,14 @@ import { AuthService } from 'src/app/service/auth/auth.service';
 export class MainHeaderComponent  implements OnInit {
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private storage:StorageService
   ) { }
 
   ngOnInit() {}
 
   async logout(){
+    this.storage.logout();
     this.authService.logout()
   }
 

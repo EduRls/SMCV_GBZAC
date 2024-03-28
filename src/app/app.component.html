@@ -1,6 +1,5 @@
 <ion-app>
-  <div class="wrapper" *ngIf="isLoggin; else userNotLogged">
-    <app-preload></app-preload>
+  <div class="wrapper" *ngIf="isUserLogged(); else userNotLogged">
     <app-main-header></app-main-header>
     <app-main-sidebar></app-main-sidebar>
     <div class="content-wrapper" >
@@ -10,8 +9,10 @@
     </div>
   </div>
   <ng-template #userNotLogged>
-    <ion-content>
-      <ion-router-outlet></ion-router-outlet>
-    </ion-content>
+    <div class="wrapper">
+      <ion-content>
+        <ion-router-outlet></ion-router-outlet>
+      </ion-content>
+    </div>
   </ng-template>
 </ion-app>

@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './guards/auth.guard';
-
 const routes: Routes = [
   {
     path: 'home',
@@ -43,7 +41,12 @@ const routes: Routes = [
   {
     path: 'pipa/mostrar',
     loadChildren: () => import('./pages/pipa/pipa/mostrar/mostrar.module').then( m => m.MostrarPageModule)
+  },
+  {
+    path: 'pipa/registrar-entrada-salida',
+    loadChildren: () => import('./pages/pipa/registrar-entrada-salida/registrar-entrada-salida.module').then( m => m.RegistrarEntradaSalidaPageModule)
   }
+
 
 
 

@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-import { StorageService } from '../storage/storage.service';
 import { Router } from '@angular/router';
-
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private url:string = 'http://127.0.0.1:8000/api/local/auth';
+  private url:string = environment.urlServidor + 'local/auth';
   public isUserLogged?:boolean;
 
   // Componenete de encabezado para el servicio
@@ -19,20 +17,12 @@ export class AuthService {
 
   constructor(
     private http:HttpClient,
-    private storage:StorageService,
     private route: Router
   ) { }
 
   /*  
   Función para validar si el usuario esta authenticado
   */
-
-  async isAuthenticatedUser(){
-    const tokenBearer = await this.storage.get('bearerToken').then(res => res != null ? true : false);
-    this.isUserLogged = tokenBearer || false;
-    let isAuth:boolean = tokenBearer || false;
-    return isAuth
-  }
   
 
   /*
@@ -61,7 +51,6 @@ export class AuthService {
   Función para la salida de sesión de un usuarioS
   */
   async logout(){
-    this.storage.clear();
     this.route.navigate(['login'], {replaceUrl: true});
     return this.http.post(`${this.url}/logout`, true, this.httpHeader);
   }

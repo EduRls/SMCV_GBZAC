@@ -34,7 +34,7 @@ export class RegistrarPage implements OnInit {
 
   
   async obtenerInformacion(){
-    this.bearerToken = await this.storage.get('bearerToken');
+    //this.bearerToken = await this.storage.get('bearerToken');
   }
   
 

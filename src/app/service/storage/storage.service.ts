@@ -1,29 +1,59 @@
 import { Injectable } from '@angular/core';
-import { Storage } from '@ionic/storage';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StorageService {
 
-  constructor(private _storage: Storage) {
-    this._storage.create();
+  //Variables de entorno
+  private isUserLogged = false;
+  private userData:any;
+  private readonly STORAGE_KEY = "userLoggedIn";
+  private readonly USER_dATA_KEY = "userData";
+
+  constructor(
+    private route:Router
+  ){
+    const storedSatatus = localStorage.getItem(this.STORAGE_KEY);
+    if(storedSatatus !== null){
+      this.isUserLogged = JSON.parse(storedSatatus);
+    }
+
+    const storedUserSatatus = localStorage.getItem(this.USER_dATA_KEY);
+    if(storedUserSatatus !== null){
+      this.userData = JSON.parse(storedUserSatatus);
+    }
   }
 
-  public async set(key: string, value: any) {
-    await this._storage?.set(key, value);
+  setUserLoggedIn(status:boolean, userData?: any){
+    this.isUserLogged = status;
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(status));
+
+    if(userData){
+      this.userData = userData;
+      localStorage.setItem(this.USER_dATA_KEY, JSON.stringify(userData));
+    }
   }
 
-  public async get(key: string): Promise<any> {
-    const data = await this._storage?.get(key);
-    return data;
+  getUserLogged(){
+    return this.isUserLogged;
   }
 
-  public async remove(key: string): Promise<void>{
-    await this._storage?.remove(key);
+  getUserData(){
+    return this.userData;
   }
 
-  public async clear(): Promise<void>{
-    await this._storage?.clear();
+  logout(){
+    // Limpiar el estado de sesión y los datos del usuario
+    this.isUserLogged = false;
+    this.userData = null
+
+    // Eliminar los datos del usuario
+    localStorage.removeItem(this.STORAGE_KEY);
+    localStorage.removeItem(this.USER_dATA_KEY);
   }
+
+  
+  
 }
