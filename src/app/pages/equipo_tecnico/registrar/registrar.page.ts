@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { LaravelService } from 'src/app/service/api/laravel.service';
-import { ToastController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { StorageService } from 'src/app/service/storage/storage.service';
+import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import DataTable from 'datatables.net-dt';
 
 @Component({
   selector: 'app-registrar',
@@ -10,66 +13,147 @@ import { StorageService } from 'src/app/service/storage/storage.service';
 })
 export class RegistrarPage implements OnInit {
 
+  formularioMedidorTurbina: FormBuilder | any;
+
   public equipo: any = [];
-  private bearerToken:string = ''
+  private bearerToken:any;
 
   constructor(
     private apiLaravel: LaravelService,
     private toastController: ToastController,
-    private storage:StorageService
+    private storage:StorageService,
+    private route:Router,
+    private formBuilder:FormBuilder,
+    private modal:ModalController
   ) { }
 
   ngOnInit() {
-    this.obtenerInformacion()
+    if (!this.storage.getUserLogged()) {
+      this.storage.logout();
+      this.route.navigate(['/login'], { replaceUrl: true });
+    }else{
+      this.obtenerInformacion();
+      this.generarFormaulario();
+    }
   }
-  async presentToast(position: 'top' | 'middle' | 'bottom', mensaje:string) {
+
+  async generarFormaulario(){
+    this.formularioMedidorTurbina = this.formBuilder.group({
+      modelo_equipo: ['', Validators.required],
+      rango_flujo: ['', Validators.required],
+      rango_temperatura: ['', Validators.required],
+      numero_serie: ['', Validators.required],
+      precision: ['', Validators.required],
+      suministro_energia: ['', Validators.required],
+      salida_modelo: ['', Validators.required],
+      fecha: ['', Validators.required]
+    });
+  }
+
+  async presentToast(position: 'top' | 'middle' | 'bottom', mensaje:string, color: "success" | "warning" | "danger") {
     const toast = await this.toastController.create({
       message: mensaje,
       duration: 1500,
       position: position,
+      color: color
     });
 
     await toast.present();
   }
 
-  
   async obtenerInformacion(){
-    //this.bearerToken = await this.storage.get('bearerToken');
-  }
-  
+    this.bearerToken = this.storage.getUserData();
 
-  async guardarEquipo() {
-    const informacion:any = {
-      'modelo_equipo': this.equipo.modelo_equipo,
-      'rango_flujo': this.equipo.rango_flujo,
-      'rango_temperatura': this.equipo.rango_temperatura,
-      'numero_serie': this.equipo.numero_serie,
-      'precision': this.equipo.precision,
-      'suministro_energia': this.equipo.suministro_energia,
-      'salida_modelo': this.equipo.salida_modelo,
-      'fecha': this.equipo.fecha
-    };
-    var informacionCompleta:boolean = Object.values(informacion).some((item:any) => item == undefined || item.trim() == '' ? true: false)
-    
-    if(!informacionCompleta){
+    //Obtener la lista de los medidores
+    (await this.apiLaravel.getMedidoresTurbian(this.bearerToken.token)).subscribe((res:any) => {
+      this.generaTablaMedidores(res);
+    })
+  }
+
+  async generaTablaMedidores(data:any){
+    let tablaMedidores = new DataTable('#listaEquiposTurbina', {
+      language: {
+        url: "/assets/utils/es-ES.json"
+      },
+      columns: [
+        {data: 'modelo_equipo', title: 'Modelo'},
+        {data: 'rango_flujo', title: 'R. Flujo'},
+        {data: 'rango_temperatura', title: 'R. Temp'},
+        {data: 'numero_serie', title: 'No. Serie'},
+        {data: 'precision', title:'Precisión'},
+        {data: 'suministro_energia', title: 'S. Energía'},
+        {data: 'salida_modelo', title: 'S. Modelo'},
+        {data: 'fecha', title: 'Fecha'},
+        { title: 'Operaciones', orderable: false, searchable: false, data: null }
+      ],
+      data: data,
+      createdRow: (row: any, data: any, dataIndex: any) => {
+        const editarButton = document.createElement('ion-button');
+        editarButton.setAttribute('size', 'small');
+        editarButton.innerHTML = '<ion-icon name="create"></ion-icon>';
+        editarButton.addEventListener('click', () => this.abrirModalEditarMedidor(data.id));
+        editarButton.style.marginRight = '15%';
+
+        const eliminarButton = document.createElement('ion-button');
+        eliminarButton.setAttribute('size', 'small');
+        eliminarButton.setAttribute('color', 'danger');
+        eliminarButton.innerHTML = '<ion-icon name="trash"></ion-icon>';
+        eliminarButton.addEventListener('click', () => this.eliminarPipa(data.id));
+
+        const cell = row.getElementsByTagName('td')[8];
+        cell.innerHTML = '';
+        cell.appendChild(editarButton);
+        cell.appendChild(eliminarButton);
+      }
+    });
+  }
+
+  async eliminarPipa(id:number){
+    (await this.apiLaravel.deleteMedidorTurbina(id, this.bearerToken.token)).subscribe({
+      next: (val:any) => {
+        console.log("🚀 ~ RegistrarPage ~ val:", val)
+        this.presentToast('bottom', 'Se ha eliminado un registro, exitosamente!', 'success');
+        setTimeout(() => {
+          window.location.reload()
+        }, 1000);
+      }, error: (err) => {
+        console.log("🚀 ~ RegistrarPage ~ err:", err)
+        this.presentToast('bottom', 'Ha ocurrido un error', 'danger');
+      }
+    })
+  }
+
+  async abrirModalEditarMedidor(id:number){
+
+  }
+
+  async onSubmit() {
+    if(this.formularioMedidorTurbina.valid){
       try {
-        (await this.apiLaravel.createMedidorTurbina(informacion, this.bearerToken)).subscribe({
+        (await this.apiLaravel.createMedidorTurbina(this.formularioMedidorTurbina.value, this.bearerToken.token)).subscribe({
           next:(value) => {
-            this.presentToast('bottom', 'El registro se ha agregado de forma éxitosa!')
+            console.log("🚀 ~ RegistrarPage ~ value:", value)
+            this.presentToast('bottom', 'El registro se ha agregado de forma éxitosa!', 'success')
+            this.modal.dismiss();
+            this.formularioMedidorTurbina.reset();
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
           },error: (err) => {
-            this.presentToast('bottom', 'Hubo un error, por favor, vuelva a intentarlo')
+            console.log("🚀 ~ RegistrarPage ~ err:", err)
+            this.presentToast('bottom', 'Hubo un error, por favor, vuelva a intentarlo', 'danger')
           },
         })
       } catch (error) {
-        this.presentToast('bottom', 'Hubo un error, por favor, vuelva a intentarlo')
+        this.presentToast('bottom', 'Hubo un error, por favor, vuelva a intentarlo', 'danger')
       }
     }else{
-      this.presentToast('bottom', 'Favor de completar los campos')
+      this.presentToast('bottom', 'Favor de completar los campos', 'warning')
     }
   }
 
-  async borrarFormulario(){
-    this.equipo = [];
+  async cancel(){
+    this.modal.dismiss();
   }
 
 }

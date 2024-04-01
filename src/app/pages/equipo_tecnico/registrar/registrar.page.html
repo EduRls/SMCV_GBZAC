@@ -1,56 +1,97 @@
 <ion-content [fullscreen]="true">
-  <div class="ion-padding">
-    <div class="card">
-      <div class="card-header text-white bg-secondary">
-        <h4 class="text-center pt-2">Registro de equipo</h4>
-      </div>
-      <div class="card-body">
-        <div class="container text-center">
-          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2">
-            <div class="col mb-3 form-floating">
-              <label for="">Modelo del equipo</label>
-              <input type="text" id="" class="form-control" placeholder="Model" [(ngModel)]="equipo.modelo_equipo">
-            </div>
-            <div class="col mb-3 form-floating">
-              <label for="">Rango de flujo</label>
-              <input type="text" id="" class="form-control" placeholder="Flow range" [(ngModel)]="equipo.rango_flujo">
-            </div>
-            <div class="col mb-3 form-floating">
-              <label for="">Rango de temperatura</label>
-              <input type="text" id="" class="form-control" placeholder="Temperature" [(ngModel)]="equipo.rango_temperatura">
-            </div>
-            <div class="col mb-3 form-floating">
-              <label for="">Número de serie</label>
-              <input type="text" id="" class="form-control" placeholder="Meter Number" [(ngModel)]="equipo.numero_serie">
-            </div>
-            <div class="col mb-3 form-floating">
-              <label for="">Precisión</label>
-              <input type="text" id="" class="form-control" placeholder="Accuracy" [(ngModel)]="equipo.precision">
-            </div>
-            <div class="col mb-3 form-floating">
-              <label for="">Suminitro de poder (Energia)</label>
-              <input type="text" id="" class="form-control" placeholder="Power Supply" [(ngModel)]="equipo.suministro_energia">
-            </div>
-            <div class="col mb-3 form-floating">
-              <label for="">Salida del modelo</label>
-              <input type="text" id="" class="form-control" placeholder="Output Model" [(ngModel)]="equipo.salida_modelo">
-            </div>
-            <div class="col mb-3 form-floating">
-              <label for="">Fecha</label>
-              <input type="text" id="" class="form-control" placeholder="Date" [(ngModel)]="equipo.fecha">
-            </div>
-          </div>
-          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2">
-            <div class="col mb-3 form-floating">
-              <button type="button" class="btn btn-secondary btn-lg btn-block" (click)="borrarFormulario()">Limpiar formulario</button>
-            </div>
-            <div class="col mb-3 form-floating">
-              <button type="button" class="btn btn-primary btn-lg btn-block" (click)="guardarEquipo()">Guardar equipo</button>
-            </div>
-          </div>
+  <div class="card ion-margin rounded">
+    <div class="card-hedaer text-white bg-secondary ion-padding">
+      <div class="row">
+        <div class="col-md-10 pt-2">
+          <h4>Lista de equipos disponibles</h4>
+        </div>
+        <div class="col-md-2" style="text-align: center;">
+          <ion-button id="agregarEquipoModal" color="light">
+            <ion-icon slot="start" name="add"></ion-icon>
+            Agregar <br> Equipo
+          </ion-button>
+          <ion-modal trigger="agregarEquipoModal">
+            <ng-template>
+              <ion-header>
+                <ion-toolbar style="--background: #2c3d50;">
+                  <ion-buttons slot="start">
+                  </ion-buttons>
+                  <ion-buttons slot="end">
+                    <ion-button (click)="cancel()" [strong]="true" style="color: white;">Cancelar</ion-button>
+                  </ion-buttons>
+                </ion-toolbar>
+              </ion-header>
+              <ion-content class="ion-padding">
+                <ion-card color="warning" class="text-center">
+                  <ion-card-header>
+                    <ion-card-title>Registro del equipo</ion-card-title>
+                    <ion-card-subtitle>Favor de ingresar la infromación correspondiente para registrar un nuevo medidor de turbina</ion-card-subtitle>
+                  </ion-card-header>
+                </ion-card>
+                <form [formGroup]="formularioMedidorTurbina" (ngSubmit)="onSubmit()">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <ion-item>
+                        <ion-input label="Modelo" labelPlacement="floating" formControlName="modelo_equipo" type="text" placeholder="Ingrese el modelo del equipo."></ion-input>
+                      </ion-item>
+                    </div>
+                    <div class="col-md-6">
+                      <ion-item>
+                        <ion-input label="Rango de flujo" labelPlacement="floating" formControlName="rango_flujo" type="text" placeholder="Ingrese el rango de flujo"></ion-input>
+                      </ion-item>
+                    </div>
+                  </div>
+                  
+                  <div class="row">
+                    <div class="col-md-6">
+                      <ion-item>
+                        <ion-input label="Rengo de temperatura" labelPlacement="floating" formControlName="rango_temperatura" type="text" placeholder="Ingrese la capcidad en Litros de la pipa"></ion-input>
+                      </ion-item>
+                    </div>
+                    <div class="col-md-6">
+                      <ion-item>
+                        <ion-input label="Número de serie" labelPlacement="floating" formControlName="numero_serie" type="text" placeholder="Ingrese el número de serie."></ion-input>
+                      </ion-item>
+                    </div>
+                  </div>
+                  
+                  <div class="row">
+                    <div class="col-md-6">
+                      <ion-item>
+                        <ion-input label="Precisión" labelPlacement="floating" formControlName="precision" type="text" placeholder="Ingrese el rango de exactitud."></ion-input>
+                      </ion-item>
+                    </div>
+                    <div class="col-md-6">
+                      <ion-item>
+                        <ion-input label="Energía requerida" labelPlacement="floating" formControlName="suministro_energia" type="text" placeholder="Cantidad de energía que funcioné el medidor."></ion-input>
+                      </ion-item>
+                    </div>
+                  </div>
+                  
+                  <div class="row">
+                    <div class="col-md-6">
+                      <ion-item>
+                        <ion-input label="Modelo de salida" labelPlacement="floating" formControlName="salida_modelo" type="text" placeholder="Cantidad de energía que funcioné el medidor."></ion-input>
+                      </ion-item>
+                    </div>
+                    <div class="col-md-6">
+                      <ion-item>
+                        <ion-input label="Fecha del modelo" labelPlacement="floating" formControlName="fecha" type="date" placeholder="Fecha del medidor de turbina."></ion-input>
+                      </ion-item>
+                    </div>
+                  </div>
+
+                  <ion-button type="submit" expand="full" style="padding-top: 5%;">Guardar</ion-button>
+                </form>
+              </ion-content>
+            </ng-template>
+          </ion-modal>
         </div>
       </div>
-      <!-- /.card-body -->
+    </div>
+    <div class="table-responsive p-2">
+      <table class="table" id="listaEquiposTurbina">
+      </table>
     </div>
   </div>
 </ion-content>

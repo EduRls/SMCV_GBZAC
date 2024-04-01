@@ -7,7 +7,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/panel_control/mostrar',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {

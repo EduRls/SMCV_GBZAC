@@ -60,6 +60,7 @@ export class LoginPage implements OnInit {
           if(err.error.message == "Invalid credentials"){
             this.presentToast('bottom', 'Datos incorrectos, favor de verificar', 'danger');
           }else{
+            console.log(err)
             this.presentToast('bottom', 'Ha ocurrido un error, vuelva a intentarlo', 'danger');
           }
           loading.dismiss();

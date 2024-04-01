@@ -5,7 +5,8 @@ import { LaravelService } from 'src/app/service/api/laravel.service';
 import { StorageService } from 'src/app/service/storage/storage.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EditarRegistroPipasComponent } from 'src/app/componente/editar-registro-pipas/editar-registro-pipas.component';
-
+import { Router } from '@angular/router';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-registrar-entrada-salida',
@@ -29,10 +30,15 @@ export class RegistrarEntradaSalidaPage implements OnInit {
     private formBuilder: FormBuilder,
     private toastController: ToastController,
     private alertController: AlertController,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private route:Router
   ) { }
 
   ngOnInit() {
+    if (!this.storage.getUserLogged()) {
+      this.storage.logout();
+      this.route.navigate(['/login'], { replaceUrl: true });
+    }
     this.formularioRegistro = this.formBuilder.group({
       inventario_inical: ['', Validators.required],
       compra: ['', Validators.required],
@@ -55,6 +61,10 @@ export class RegistrarEntradaSalidaPage implements OnInit {
   }
 
   async generarTablaRegistroPipa(data: any) {
+    if ($.fn.DataTable.isDataTable('#listaRegistroPipas')) {
+      $('#listaRegistroPipas').DataTable().destroy();
+    }
+    setTimeout(() => {}, 700);
     let tablaRegistroPipas = new DataTable('#listaRegistroPipas', {
       language: {
         url: "/assets/utils/es-ES.json"

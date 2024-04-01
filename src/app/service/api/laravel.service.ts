@@ -58,11 +58,6 @@ export class LaravelService {
     const header = this.headerCreate(bearerToken, 'cud')
     return this.http.delete(`${this.api}v1/equipo/turbina/${id}`, header);
   }
-  // Consultar el historial de mantenimiento de un equipo
-  async getMedidorTurbinaMantenimiento(id: number, bearerToken: string) {
-    const header = this.headerCreate(bearerToken, 'cud')
-    return this.http.get(`${this.api}v1/equipo/turbina/mantenimiento/${id}`, header);
-  }
 
   /*
     INICIO CRUD PIPAS
@@ -123,4 +118,90 @@ export class LaravelService {
     return this.http.delete(`${this.api}v1/entrada-salida-pipa/registro/${id}`, header);
   }
 
+  /*
+  INICIO DE REGISTRO DE LLENADO DE COMBUSTIBLE
+  */
+  // Obtener la infromación de las pipas
+  async getRegistroAlmacen(bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'get')
+    return this.http.get(`${this.api}v1/almacen/registro`, header)
+  }
+  // Obtener información de un medidor de acuerdo a un ID
+  async getRegistroAlmacenById(id: number, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'get')
+    return this.http.get(`${this.api}v1/almacen/registro/${id}`);
+  }
+  // Agregar un nuevo medidor
+  async createRegistroAlmacen(data: any, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'cud')
+    return this.http.post(`${this.api}v1/almacen/registro`, data, header);
+  }
+  // Editar un medidor
+  async editRegistroAlmacen(id: number, data: any, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'cud')
+    return this.http.post(`${this.api}v1/almacen/registro/${id}`, data, header);
+  }
+  // Eliminar un medidor
+  async deleteRegistroAlmacen(id: number, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'cud')
+    return this.http.delete(`${this.api}v1/almacen/registro/${id}`, header);
+  }
+
+  /*
+  INICIO DE REGISTRO DE MANTENIMIENTO DE COMBUSTIBLE
+  */
+  // Obtener la infromación de las pipas
+  async getRegistroMantenimientoMedidor(bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'get')
+    return this.http.get(`${this.api}v1/equipo/mantenimiento`, header);
+  }
+  // Obtener información de un medidor de acuerdo a un ID
+  async getRegistroMantenimientoMedidorById(id: number, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'get')
+    return this.http.get(`${this.api}v1/equipo/mantenimiento/${id}`, header);
+  }
+  // Agregar un nuevo medidor
+  async createRegistroMantenimientoMedidor(data: any, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'cud')
+    return this.http.post(`${this.api}v1/equipo/mantenimiento`, data, header);
+  }
+  // Editar un medidor
+  async editRegistroMantenimientoMedidor(id: number, data: any, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'cud')
+    return this.http.post(`${this.api}v1/equipo/mantenimiento/${id}`, data, header);
+  }
+  // Eliminar un medidor
+  async deleteRegistroMantenimientoMedidor(id: number, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'cud')
+    return this.http.delete(`${this.api}v1/equipo/mantenimiento/${id}`, header);
+  }
+
+  /*
+  INICIO DE REGISTRO DE HISTORIAL DE LOS MEDIDORES
+  */
+  // Obtener la infromación de las pipas
+  async getRegistroInformacionMedidor(bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'get')
+    return this.http.get(`${this.api}v1/medidorT/informacion`, header);
+  }
+  // Obtener información de un medidor de acuerdo a un ID
+  async getRegistroInformacionMedidorById(id: number, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'get')
+    return this.http.get(`${this.api}v1/medidorT/informacion/${id}`, header);
+  }
+  // Agregar un nuevo medidor
+  async createRegistroInformacionMedidor(data: any, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'cud')
+    return this.http.post(`${this.api}v1/medidorT/informacion`, data, header);
+  }
+  // Editar un medidor
+  async editRegistroInformacionMedidor(id: number, data: any, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'cud')
+    return this.http.post(`${this.api}v1/medidorT/informacion/${id}`, data, header);
+  }
+  // Eliminar un medidor
+  async deleteRegistroInformacionMedidor(id: number, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'cud')
+    return this.http.delete(`${this.api}v1/medidorT/informacion/${id}`, header);
+  }
 }

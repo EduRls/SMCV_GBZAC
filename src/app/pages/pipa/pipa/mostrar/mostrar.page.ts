@@ -5,6 +5,7 @@ import { LaravelService } from 'src/app/service/api/laravel.service';
 import { StorageService } from 'src/app/service/storage/storage.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EditarPipaComponent } from 'src/app/componente/editar-pipa/editar-pipa.component';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-mostrar',
   templateUrl: './mostrar.page.html',
@@ -27,10 +28,15 @@ export class MostrarPage implements OnInit {
     private formBuilder: FormBuilder,
     private toastController: ToastController,
     private alertController: AlertController,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private route:Router 
   ) { }
 
   ngOnInit() {
+    if (!this.storage.getUserLogged()) {
+      this.storage.logout();
+      this.route.navigate(['/login'], { replaceUrl: true });
+    }
     this.formularioPipa = this.formBuilder.group({
       clave_pipa: ['', Validators.required],
       responsable_pipa: ['', Validators.required],
@@ -60,6 +66,7 @@ export class MostrarPage implements OnInit {
   }
 
   async generarTablaPipa(data: any) {
+    setTimeout(() => {}, 700);
     let tablaPipas = new DataTable('#listaPipas', {
       language: {
         url: "/assets/utils/es-ES.json"

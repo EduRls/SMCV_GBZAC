@@ -3,21 +3,47 @@
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2">
     <div class="col mb-3">
       <div class="card ion-margin" style="max-width: 100%;">
-        <div class="card-header text-white bg-secondary">
-          <h4 class="text-center">ALMACÉN 1</h4>
+        <div class="card-header bg-secondary">
+          <div class="row">
+            <div class="col-lg-9 col-md-8 col-sm-12 pt-3">
+              <h4>ALMACÉN 1</h4>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-12">
+              <ion-button id="" color="light">
+                <ion-icon slot="start" name="add"></ion-icon>
+                Agregar <br> Registro
+              </ion-button>
+            </div>
+          </div>
         </div>
         <div style="text-align: center;">
           <img src="/assets/img/almcen_gas.png" width="70%" alt="...">
+          <div class="ion-margin">
+            <ion-progress-bar class="pb-3" [value]="cantidadAlmacen1"></ion-progress-bar>
+          </div>
         </div>
       </div>
     </div>
     <div class="col mb-3">
       <div class="card ion-margin" style="max-width: 100%;">
-        <div class="card-header text-white bg-secondary">
-          <h4 class="text-center">ALMACÉN 2</h4>
+        <div class="card-header bg-secondary">
+          <div class="row">
+            <div class="col-lg-9 col-md-8 col-sm-12 pt-3">
+              <h4>ALMACÉN 2</h4>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-12">
+              <ion-button id="" color="light">
+                <ion-icon slot="start" name="add"></ion-icon>
+                Agregar <br> Registro
+              </ion-button>
+            </div>
+          </div>
         </div>
         <div style="text-align: center;">
           <img src="/assets/img/almcen_gas.png" width="70%" alt="..." style="transform: scaleX(-1);">
+          <div class="ion-margin">
+            <ion-progress-bar class="pb-3" [value]="cantidadAlmacen2"></ion-progress-bar>
+          </div>
         </div>
       </div>
     </div>
@@ -31,28 +57,6 @@
     </div>
     <div class="table-responsive p-2">
       <table class="table" id="almacenCombustible">
-        <thead>
-          <tr>
-            <th>Contendor</th>
-            <th>Cantidad inical</th>
-            <th>Cantidad final</th>
-            <th>% llenado</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Row 1 Data 1</td>
-            <td>Row 1 Data 2</td>
-            <td>Row 1 Data 1</td>
-            <td>Row 1 Data 2</td>
-          </tr>
-          <tr>
-            <td>Row 2 Data 1</td>
-            <td>Row 2 Data 2</td>
-            <td>Row 1 Data 1</td>
-            <td>Row 1 Data 2</td>
-          </tr>
-        </tbody>
       </table>
     </div>
   </div>
@@ -64,32 +68,8 @@
       <h4>Entradas y salidas para la carga de pipas</h4>
     </div>
     <div class="table-responsive p-2">
-      <table class="table" id="almacenPipas">
-        <thead>
-          <tr>
-            <th>Id. Pipa</th>
-            <th>Inventario Inicial</th>
-            <th>Compra</th>
-            <th>Venta</th>
-            <th>Inventario Final</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Row 1 Data 1</td>
-            <td>Row 1 Data 2</td>
-            <td>Row 1 Data 1</td>
-            <td>Row 1 Data 2</td>
-            <td>Row 1 Data 2</td>
-          </tr>
-          <tr>
-            <td>Row 2 Data 1</td>
-            <td>Row 2 Data 2</td>
-            <td>Row 1 Data 1</td>
-            <td>Row 1 Data 2</td>
-            <td>Row 1 Data 2</td>
-          </tr>
-        </tbody>
+      <table class="table" id="listaRegistroPipas">
+
       </table>
     </div>
   </div>

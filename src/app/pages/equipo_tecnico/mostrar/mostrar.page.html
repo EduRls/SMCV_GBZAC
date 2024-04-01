@@ -1,105 +1,64 @@
 <ion-content [fullscreen]="true">
   <div class="ion-padding">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2">
-      <div class="col mb-3" *ngFor="let mt of medidor_turbina">
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Medidor modelo: {{mt.modelo_equipo}}</h3>
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                <i class="fas fa-minus"></i>
-              </button>
-            </div>
+    <ion-card style="--background: #2c3d50;">
+      <ion-card-header>
+        <ion-card-title style="color: white;">
+          Selecciona un medidor para conocer el historial de su información
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="row">
+          <div class="col-md-6">
+            <ion-select style="color: white;" label="Selecciona un medidor" labelPlacement="floating"
+              placeholder="Selecciona un medidor" (ionChange)="onSelectElement($event)">
+              <ion-select-option *ngFor="let item of medidor_turbina"
+                value="{{item.id}}">{{item.modelo_equipo}}</ion-select-option>
+            </ion-select>
           </div>
-          <div class="card-body">
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2">
-              <div class="col mb-3" style="display: flex; justify-content: center; align-items: center;">
-                <img src="assets/img/medidor.png" alt="medidor.png" width="50%">
-              </div>
-              <div>
-                Datos generales
-              </div>
-            </div>
-          </div>
-          <div class="card-footer">
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2">
-              <div class="col mb-3">
-                <button type="button" (click)="historialMantenimiento(mt.id)"
-                  class="btn btn-block btn-default">Mantenimiento</button>
-              </div>
-              <div class="col mb-3">
-                <ion-button id="open-modal-{{mt.id}}" expand="block">Open</ion-button>
-
-                <ion-modal trigger="open-modal-{{mt.id}}">
-                  <ng-template>
-                    <ion-header>
-                      <ion-toolbar style="text-align: center;">
-                        <ion-buttons slot="start">
-                          <ion-button>Cancel</ion-button>
-                        </ion-buttons>
-                        <ion-title>{{mt.modelo_equipo}}</ion-title>
-                        <ion-buttons slot="end">
-                          <ion-button [strong]="true">Confirm</ion-button>
-                        </ion-buttons>
-                      </ion-toolbar>
-                    </ion-header>
-                    <ion-content class="ion-padding">
-                      <ion-item>
-                        <ion-label>
-                          Modelo del equipo: <br> {{mt.modelo_equipo}}
-                        </ion-label>
-                      </ion-item>
-                      <ion-item>
-                        <ion-label>
-                          Número de serie: <br> {{mt.numero_serie}}
-                        </ion-label>
-                      </ion-item>
-                      <ion-item>
-                        <ion-label>
-                          Rango de precisión: <br> {{mt.precision}}
-                        </ion-label>
-                      </ion-item>
-                      <ion-item>
-                        <ion-label>
-                          Rango de temperatura: <br> {{mt.rango_temperatura}}
-                        </ion-label>
-                      </ion-item>
-                      <ion-item>
-                        <ion-label>
-                          Rango de fluido: <br> {{mt.rango_flujo}}
-                        </ion-label>
-                      </ion-item>
-                      <ion-item>
-                        <ion-label>
-                          Salida del modelo: <br> {{mt.salida_modelo}}
-                        </ion-label>
-                      </ion-item>
-                      <ion-item>
-                        <ion-label>
-                          Suministro de energía: <br> {{mt.suministro_energia}}
-                        </ion-label>
-                      </ion-item>
-                      <ion-item>
-                        <ion-label>
-                          Fecha del modelo: <br> {{mt.fecha}}
-                        </ion-label>
-                      </ion-item>
-                      <ion-item>
-                        <ion-label>
-                          Fecha en que se dio de alta el modelo: <br> {{mt.created_at | date: 'short'}}
-                        </ion-label>
-                      </ion-item>
-                    </ion-content>
-                  </ng-template>
-                </ion-modal>
-              </div>
-            </div>
+          <div class="col-md-6">
+            <ion-select [disabled]="enableMedidor" style="color: white;" label="Información del medidor"
+              labelPlacement="floating" placeholder="Selecciona la infromación que deseas obtener del medidor"
+              (ionChange)="onSelectInformacion($event)" [(ngModel)]="valorInformacion" [multiple]="true">
+              <ion-select-option value="mantenimiento">Mantenimiento</ion-select-option>
+              <ion-select-option value="info_historial">Historial de registros del medidor</ion-select-option>
+            </ion-select>
           </div>
         </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- GENERAR TABLA DE LA DESCRIPCIÓN DEL MEDIDOR -->
+    <ion-card *ngIf="medidor_seleccionado != undefined">
+      <ion-card-header style="--background: #2c3d50; text-align: center;">
+        <ion-card-title style="color: white;">Descripción del medidor</ion-card-title>
+      </ion-card-header>
+      <div class="table-responsive p-2">
+        <table class="table" id="tableMedidorSeleccionado">
+        </table>
       </div>
-    </div>
+    </ion-card>
+
+    <!-- GENERAR TABLA DE MANTENIMIENTO -->
+    <ion-card *ngIf="tablaMantenimeitnoGenerada">
+      <ion-card-header style="--background: #2c3d50; text-align: center;">
+        <ion-card-title style="color: white;">Hisotrial de mantenimiento</ion-card-title>
+      </ion-card-header>
+      <div class="table-responsive p-2">
+        <table class="table" id="tableMantenimientoSelecionado">
+        </table>
+      </div>
+    </ion-card>
+
+    <!-- GENERAR TABLA DE LA INFROMAICÓN DEL EQUIPO -->
+    <ion-card *ngIf="tablaHistorialGenerada">
+      <ion-card-header style="--background: #2c3d50; text-align: center;">
+        <ion-card-title style="color: white;">Historial de los registros de infromaicón</ion-card-title>
+      </ion-card-header>
+      <div class="table-responsive p-2">
+        <table class="table" id="tableInformacionSelecionado">
+        </table>
+      </div>
+    </ion-card>
+
   </div>
-
-
-
 </ion-content>
