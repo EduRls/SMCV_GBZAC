@@ -5,6 +5,7 @@ import { StorageService } from 'src/app/service/storage/storage.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import DataTable from 'datatables.net-dt';
+import { EditarMedidorComponent } from 'src/app/componente/editar-medidor/editar-medidor.component';
 
 @Component({
   selector: 'app-registrar',
@@ -31,10 +32,12 @@ export class RegistrarPage implements OnInit {
     if (!this.storage.getUserLogged()) {
       this.storage.logout();
       this.route.navigate(['/login'], { replaceUrl: true });
-    }else{
-      this.obtenerInformacion();
-      this.generarFormaulario();
     }
+  }
+
+  ionViewDidEnter(){
+    this.obtenerInformacion();
+    this.generarFormaulario();
   }
 
   async generarFormaulario(){
@@ -67,6 +70,7 @@ export class RegistrarPage implements OnInit {
     //Obtener la lista de los medidores
     (await this.apiLaravel.getMedidoresTurbian(this.bearerToken.token)).subscribe((res:any) => {
       this.generaTablaMedidores(res);
+      this.equipo = res;
     })
   }
 
@@ -92,7 +96,13 @@ export class RegistrarPage implements OnInit {
         editarButton.setAttribute('size', 'small');
         editarButton.innerHTML = '<ion-icon name="create"></ion-icon>';
         editarButton.addEventListener('click', () => this.abrirModalEditarMedidor(data.id));
-        editarButton.style.marginRight = '15%';
+        editarButton.style.marginRight = '5%';
+
+        const mantenimientoButton = document.createElement('ion-button');
+        mantenimientoButton.setAttribute('size', 'small');
+        mantenimientoButton.setAttribute('color', 'secondary');
+        mantenimientoButton.innerHTML = '<ion-icon name="hammer"></ion-icon>';
+        mantenimientoButton.addEventListener('click', () => this.generarMantnimiento(data.id));
 
         const eliminarButton = document.createElement('ion-button');
         eliminarButton.setAttribute('size', 'small');
@@ -103,9 +113,14 @@ export class RegistrarPage implements OnInit {
         const cell = row.getElementsByTagName('td')[8];
         cell.innerHTML = '';
         cell.appendChild(editarButton);
+        cell.appendChild(mantenimientoButton);
         cell.appendChild(eliminarButton);
       }
     });
+  }
+
+  async generarMantnimiento(id:number){
+
   }
 
   async eliminarPipa(id:number){
@@ -115,7 +130,7 @@ export class RegistrarPage implements OnInit {
         this.presentToast('bottom', 'Se ha eliminado un registro, exitosamente!', 'success');
         setTimeout(() => {
           window.location.reload()
-        }, 1000);
+        }, 300);
       }, error: (err) => {
         console.log("🚀 ~ RegistrarPage ~ err:", err)
         this.presentToast('bottom', 'Ha ocurrido un error', 'danger');
@@ -124,7 +139,32 @@ export class RegistrarPage implements OnInit {
   }
 
   async abrirModalEditarMedidor(id:number){
+    const result = this.equipo.filter((item:any) => item.id === id);
 
+    const modal = await this.modal.create({
+      component: EditarMedidorComponent,
+      componentProps: {
+        medidor: result
+      }
+    });
+
+    await modal.present();
+
+    const {data} = await modal.onWillDismiss();
+    if(data){
+      (await this.apiLaravel.editMedidorTurbina(id, data, this.bearerToken.token)).subscribe({
+        next:(val) => {
+          console.log(val)
+          this.presentToast('bottom', 'Se ha actualizado un registro', 'success');
+          setTimeout(() => {
+            window.location.reload();
+          }, 300);
+        }, error:(err) => {
+          console.log(err)
+          this.presentToast('bottom', 'Algo ha salido mal', 'danger');
+        }
+      })
+    }
   }
 
   async onSubmit() {

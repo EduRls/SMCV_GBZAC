@@ -37,6 +37,9 @@ export class MostrarPage implements OnInit {
       this.storage.logout();
       this.route.navigate(['/login'], { replaceUrl: true });
     }
+  }
+
+  ionViewDidEnter(){
     this.formularioPipa = this.formBuilder.group({
       clave_pipa: ['', Validators.required],
       responsable_pipa: ['', Validators.required],
@@ -66,7 +69,7 @@ export class MostrarPage implements OnInit {
   }
 
   async generarTablaPipa(data: any) {
-    setTimeout(() => {}, 700);
+    setTimeout(() => {}, 300);
     let tablaPipas = new DataTable('#listaPipas', {
       language: {
         url: "/assets/utils/es-ES.json"

@@ -31,7 +31,7 @@ export class RegistrarEntradaSalidaPage implements OnInit {
     private toastController: ToastController,
     private alertController: AlertController,
     private modalController: ModalController,
-    private route:Router
+    private route: Router
   ) { }
 
   ngOnInit() {
@@ -39,6 +39,10 @@ export class RegistrarEntradaSalidaPage implements OnInit {
       this.storage.logout();
       this.route.navigate(['/login'], { replaceUrl: true });
     }
+
+  }
+
+  ionViewDidEnter() {
     this.formularioRegistro = this.formBuilder.group({
       inventario_inical: ['', Validators.required],
       compra: ['', Validators.required],
@@ -50,8 +54,10 @@ export class RegistrarEntradaSalidaPage implements OnInit {
 
   async getInformacion() {
     this.token = this.storage.getUserData();
+
     (await this.api.getRegistroPipasES(this.token.token)).subscribe({
       next: (val: any) => {
+        console.log("🚀 ~ RegistrarEntradaSalidaPage ~ val:", val)
         this.registros = val
         this.generarTablaRegistroPipa(val)
       }, error: (err) => {
@@ -64,13 +70,14 @@ export class RegistrarEntradaSalidaPage implements OnInit {
     if ($.fn.DataTable.isDataTable('#listaRegistroPipas')) {
       $('#listaRegistroPipas').DataTable().destroy();
     }
-    setTimeout(() => {}, 700);
+    setTimeout(() => { }, 300);
     let tablaRegistroPipas = new DataTable('#listaRegistroPipas', {
+      destroy: true,
       language: {
         url: "/assets/utils/es-ES.json"
       },
       columns: [
-        { data: 'id', title: 'Matricula' },
+        { data: 'id_pipa', title: 'Matricula' },
         { data: 'inventario_inical', title: 'Inventario Inicial' },
         { data: 'compra', title: 'Compra' },
         { data: 'venta', title: 'Venta' },

@@ -1,13 +1,27 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>mostrar</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">mostrar</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="ion-padding">
+    <ion-card style="--background: #2c3d50;">
+      <ion-card-header>
+        <ion-card-title style="color: white;">
+          Selecciona un tipo de reporte volumétrico.
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="row">
+          <div class="col-md-4">
+            <ion-select style="color: white;" label="Selecciona un plazo de reporte" [multiple]="true"
+              labelPlacement="floating" placeholder="Selecciona un medidor" (ionChange)="onSelectElement($event)">
+              <ion-select-option value="diario">Diario</ion-select-option>
+              <ion-select-option value="mensual">Mensual</ion-select-option>
+            </ion-select>
+          </div>
+          <div class="col-md-4">
+            
+          </div>
+          <div class="col-md-4"></div>
+        </div>
+
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>

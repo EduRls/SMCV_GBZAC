@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Platform } from '@ionic/angular';
-import { ModalController } from '@ionic/angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-registrar',
@@ -10,37 +10,19 @@ import { ModalController } from '@ionic/angular';
 export class RegistrarPage implements OnInit {
 
   constructor(
-    private platform: Platform,
-    private modalCtrl: ModalController
+    private toastController:ToastController
   ) { }
 
-  public resultado:any
-  recognition: any;
+  ngOnInit() {}
 
+  async presentToast(position: 'top' | 'middle' | 'bottom', msg: string, color: "success" | "danger" | "warning") {
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: 1500,
+      position: position,
+      color: color
+    });
 
-  ngOnInit() {
-
-
-  }
-
-  async startRecording(){
-    
-  }
-
-  async stopRecording(){
-    
-  }
-
-  async generarModal(){
-    const user = [{
-      nombre: "Eduardo",
-      apellido: {
-        apellido_paterno: "Ruelas",
-        apellido_materno: "Cortés"
-      },
-      edad: 21
-    }];
-
-
+    await toast.present();
   }
 }

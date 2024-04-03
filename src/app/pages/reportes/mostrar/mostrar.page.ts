@@ -12,4 +12,8 @@ export class MostrarPage implements OnInit {
   ngOnInit() {
   }
 
+  onSelectElement(event:any){
+
+  }
+
 }

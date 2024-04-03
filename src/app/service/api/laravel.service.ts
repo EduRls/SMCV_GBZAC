@@ -51,7 +51,7 @@ export class LaravelService {
   // Editar un medidor
   async editMedidorTurbina(id: number, data: any, bearerToken: string) {
     const header = this.headerCreate(bearerToken, 'cud')
-    return this.http.put(`${this.api}v1/equipo/turbina/${id}`, data, header);
+    return this.http.post(`${this.api}v1/equipo/turbina/${id}`, data, header);
   }
   // Eliminar un medidor
   async deleteMedidorTurbina(id: number, bearerToken: string) {
@@ -204,4 +204,34 @@ export class LaravelService {
     const header = this.headerCreate(bearerToken, 'cud')
     return this.http.delete(`${this.api}v1/medidorT/informacion/${id}`, header);
   }
+
+  /*
+  INICIO DE INFORMACIÓN GENERAL DEL REPORTE DE CONTROL VOLUMETRICO
+  */
+  // Obtener la infromación de las pipas
+  async getInformacionGeneralReporte(bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'get')
+    return this.http.get(`${this.api}v1/medidorT/informacion`, header);
+  }
+  // Obtener información de un medidor de acuerdo a un ID
+  async getInformacionGeneralReporteById(id: number, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'get')
+    return this.http.get(`${this.api}v1/medidorT/informacion/${id}`, header);
+  }
+  // Agregar un nuevo medidor
+  async createInformacionGeneralReporte(data: any, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'cud')
+    return this.http.post(`${this.api}v1/medidorT/informacion`, data, header);
+  }
+  // Editar un medidor
+  async editInformacionGeneralReporte(id: number, data: any, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'cud')
+    return this.http.post(`${this.api}v1/medidorT/informacion/${id}`, data, header);
+  }
+  // Eliminar un medidor
+  async deleteInformacionGeneralReporte(id: number, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'cud')
+    return this.http.delete(`${this.api}v1/medidorT/informacion/${id}`, header);
+  }
+  
 }

@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar style="--background: #2c3d50;">
+    <ion-title style="color: white;">Editar Medidor</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cerrarModal()" [strong]="true" style="color: white;">Cancelar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="formularioEditarMedidorTurbina" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col-md-6">
+        <ion-item>
+          <ion-input label="Modelo" labelPlacement="floating" formControlName="modelo_equipo" type="text"
+            placeholder="Ingrese el modelo del equipo."></ion-input>
+        </ion-item>
+      </div>
+      <div class="col-md-6">
+        <ion-item>
+          <ion-input label="Rango de flujo" labelPlacement="floating" formControlName="rango_flujo" type="text"
+            placeholder="Ingrese el rango de flujo"></ion-input>
+        </ion-item>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <ion-item>
+          <ion-input label="Rengo de temperatura" labelPlacement="floating" formControlName="rango_temperatura"
+            type="text" placeholder="Ingrese la capcidad en Litros de la pipa"></ion-input>
+        </ion-item>
+      </div>
+      <div class="col-md-6">
+        <ion-item>
+          <ion-input label="Número de serie" labelPlacement="floating" formControlName="numero_serie" type="text"
+            placeholder="Ingrese el número de serie."></ion-input>
+        </ion-item>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <ion-item>
+          <ion-input label="Precisión" labelPlacement="floating" formControlName="precision" type="text"
+            placeholder="Ingrese el rango de exactitud."></ion-input>
+        </ion-item>
+      </div>
+      <div class="col-md-6">
+        <ion-item>
+          <ion-input label="Energía requerida" labelPlacement="floating" formControlName="suministro_energia"
+            type="text" placeholder="Cantidad de energía que funcioné el medidor."></ion-input>
+        </ion-item>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <ion-item>
+          <ion-input label="Modelo de salida" labelPlacement="floating" formControlName="salida_modelo" type="text"
+            placeholder="Cantidad de energía que funcioné el medidor."></ion-input>
+        </ion-item>
+      </div>
+      <div class="col-md-6">
+        <ion-item>
+          <ion-input label="Fecha del modelo" labelPlacement="floating" formControlName="fecha" type="text"
+            placeholder="Fecha del medidor de turbina."></ion-input>
+        </ion-item>
+      </div>
+    </div>
+
+    <ion-button type="submit" expand="full" style="padding-top: 5%;">Guardar</ion-button>
+  </form>
+</ion-content>

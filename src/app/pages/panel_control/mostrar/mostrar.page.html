@@ -3,16 +3,48 @@
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2">
     <div class="col mb-3">
       <div class="card ion-margin" style="max-width: 100%;">
-        <div class="card-header bg-secondary">
+        <div class="card-header" style="background: #2c3d50;">
           <div class="row">
-            <div class="col-lg-9 col-md-8 col-sm-12 pt-3">
+            <div class="col-lg-9 col-md-8 col-sm-12 pt-3" style="color: white;">
               <h4>ALMACÉN 1</h4>
             </div>
             <div class="col-lg-3 col-md-4 col-sm-12">
-              <ion-button id="" color="light">
+              <ion-button id="open-modal-almacen-1" color="light">
                 <ion-icon slot="start" name="add"></ion-icon>
                 Agregar <br> Registro
               </ion-button>
+              <ion-modal trigger="open-modal-almacen-1">
+                <ng-template>
+                  <ion-header>
+                    <ion-toolbar style="--background: #2c3d50;">
+                      <ion-title style="color: white;">Almacen 1</ion-title>
+                      <ion-buttons slot="end">
+                        <ion-button (click)="cancel()" [strong]="true" style="color: white;">Cancelar</ion-button>
+                      </ion-buttons>
+                    </ion-toolbar>
+                  </ion-header>
+                  <ion-content class="ion-padding">
+                    <form [formGroup]="formularioAlmacen">
+                      <div class="row">
+                        <div class="col-md-4">
+                          <ion-item>
+                            <ion-input label="Cantidad Inicial" labelPlacement="floating" formControlName="cantidadInicial" type="number"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-input label="Cantidad Final" labelPlacement="floating" formControlName="cantidadFinal" type="number"></ion-input>
+                          </ion-item>
+                        </div>
+                        <div class="col-md-8">
+                          <ion-datetime formControlName="fechaLlenado" locale="es-ES" hourCycle="h12">
+                            <span slot="time-label">Tiempo</span>
+                          </ion-datetime>
+                        </div>
+                      </div>
+                      <ion-button expand="block" (click)="submitForm('c1')">Guardar</ion-button>
+                    </form>
+                  </ion-content>
+                </ng-template>
+              </ion-modal>
             </div>
           </div>
         </div>
@@ -26,16 +58,49 @@
     </div>
     <div class="col mb-3">
       <div class="card ion-margin" style="max-width: 100%;">
-        <div class="card-header bg-secondary">
+        <div class="card-header" style="background: #2c3d50;">
           <div class="row">
-            <div class="col-lg-9 col-md-8 col-sm-12 pt-3">
+            <div class="col-lg-9 col-md-8 col-sm-12 pt-3" style="color: white;">
               <h4>ALMACÉN 2</h4>
             </div>
             <div class="col-lg-3 col-md-4 col-sm-12">
-              <ion-button id="" color="light">
+              <ion-button id="open-modal-almacen-2" color="light">
                 <ion-icon slot="start" name="add"></ion-icon>
                 Agregar <br> Registro
               </ion-button>
+              <ion-modal trigger="open-modal-almacen-2">
+                <ng-template>
+                  <ion-header>
+                    <ion-toolbar style="--background: #2c3d50;">
+                      <ion-title style="color: white;">Almacen 2</ion-title>
+                      <ion-buttons slot="end">
+                        <ion-button (click)="cancel()" [strong]="true" style="color: white;">Cancelar</ion-button>
+                      </ion-buttons>
+                    </ion-toolbar>
+                  </ion-header>
+                  <ion-content class="ion-padding">
+                    <form [formGroup]="formularioAlmacen">
+                      <div class="row">
+                        <div class="col-md-4">
+                          <ion-item>
+                            <ion-input label="Cantidad Inicial" labelPlacement="floating" formControlName="cantidadInicial" type="number"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-input label="Cantidad Final" labelPlacement="floating" formControlName="cantidadFinal" type="number"></ion-input>
+                          </ion-item>
+                        </div>
+                        <div class="col-md-8">
+                          <ion-datetime formControlName="fechaLlenado" locale="es-ES" hourCycle="h12">
+                            <span slot="time-label">Tiempo</span>
+                          </ion-datetime>
+                        </div>
+                      </div>
+                  
+                      <ion-button expand="block" (click)="submitForm('c2')">Guardar</ion-button>
+                    </form>
+                  </ion-content>
+                </ng-template>
+              </ion-modal>
             </div>
           </div>
         </div>
@@ -52,7 +117,7 @@
 
   <!-- INICIO HISTORIAL DE CARGAS Y SALIDAS -->
   <div class="card ion-margin rounded">
-    <div class="card-hedaer text-white bg-secondary text-center pt-1">
+    <div class="card-hedaer text-white text-center pt-1" style="background: #2c3d50; color: white;">
       <h4>Registro de llenado de combustible</h4>
     </div>
     <div class="table-responsive p-2">
@@ -64,11 +129,11 @@
 
   <!-- INICIO HISTORIAL DE CARGAS DE PIPAS -->
   <div class="card ion-margin rounded">
-    <div class="card-hedaer text-white bg-secondary text-center pt-1">
+    <div class="card-hedaer text-white text-center pt-1" style="background: #2c3d50; color: white;">
       <h4>Entradas y salidas para la carga de pipas</h4>
     </div>
     <div class="table-responsive p-2">
-      <table class="table" id="listaRegistroPipas">
+      <table class="table" id="listaRegistroPipasPanel">
 
       </table>
     </div>
