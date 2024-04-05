@@ -34,9 +34,9 @@ export class LaravelService {
     INICIO CRUD MEDIDORES DE TURBINA
   */
   // Obtención de la informaicón de los medidores
-  async getMedidoresTurbian(bearerToken: string) {
+  async getMedidoresTurbian(bearerToken: string, idPlanta:number) {
     const header = this.headerCreate(bearerToken, 'get')
-    return this.http.get(`${this.api}v1/equipo/turbina`, header)
+    return this.http.get(`${this.api}v1/equipo/turbina/${idPlanta}`, header)
   }
   // Obtener información de un medidor de acuerdo a un ID
   async getMedidorTurbinaById(id: number, bearerToken: string) {
@@ -63,9 +63,9 @@ export class LaravelService {
     INICIO CRUD PIPAS
   */
   // Obtener la infromación de las pipas
-  async getPipas(bearerToken: string) {
+  async getPipas(bearerToken: string, idPlanta:number) {
     const header = this.headerCreate(bearerToken, 'get')
-    return this.http.get(`${this.api}v1/pipa`, header)
+    return this.http.get(`${this.api}v1/pipa/${idPlanta}`, header)
   }
   // Obtener información de un medidor de acuerdo a un ID
   async getPipasById(id: number, bearerToken: string) {
@@ -93,9 +93,9 @@ export class LaravelService {
   */
 
   // Obtener la infromación de las pipas
-  async getRegistroPipasES(bearerToken: string) {
+  async getRegistroPipasES(bearerToken: string, idPlanta:number) {
     const header = this.headerCreate(bearerToken, 'get')
-    return this.http.get(`${this.api}v1/entrada-salida-pipa/registro`, header)
+    return this.http.get(`${this.api}v1/entrada-salida-pipa/registro/${idPlanta}`, header)
   }
   // Obtener información de un medidor de acuerdo a un ID
   async getRegistroPipasESById(id: number, bearerToken: string) {
@@ -122,9 +122,9 @@ export class LaravelService {
   INICIO DE REGISTRO DE LLENADO DE COMBUSTIBLE
   */
   // Obtener la infromación de las pipas
-  async getRegistroAlmacen(bearerToken: string) {
+  async getRegistroAlmacen(bearerToken: string, idPlanta:number) {
     const header = this.headerCreate(bearerToken, 'get')
-    return this.http.get(`${this.api}v1/almacen/registro`, header)
+    return this.http.get(`${this.api}v1/almacen/registro/${idPlanta}`, header)
   }
   // Obtener información de un medidor de acuerdo a un ID
   async getRegistroAlmacenById(id: number, bearerToken: string) {
@@ -151,9 +151,9 @@ export class LaravelService {
   INICIO DE REGISTRO DE MANTENIMIENTO DE COMBUSTIBLE
   */
   // Obtener la infromación de las pipas
-  async getRegistroMantenimientoMedidor(bearerToken: string) {
+  async getRegistroMantenimientoMedidor(bearerToken: string, idPlanta:number) {
     const header = this.headerCreate(bearerToken, 'get')
-    return this.http.get(`${this.api}v1/equipo/mantenimiento`, header);
+    return this.http.get(`${this.api}v1/equipo/mantenimiento/${idPlanta}`, header);
   }
   // Obtener información de un medidor de acuerdo a un ID
   async getRegistroMantenimientoMedidorById(id: number, bearerToken: string) {
@@ -180,9 +180,9 @@ export class LaravelService {
   INICIO DE REGISTRO DE HISTORIAL DE LOS MEDIDORES
   */
   // Obtener la infromación de las pipas
-  async getRegistroInformacionMedidor(bearerToken: string) {
+  async getRegistroInformacionMedidor(bearerToken: string, idPlanta:number) {
     const header = this.headerCreate(bearerToken, 'get')
-    return this.http.get(`${this.api}v1/medidorT/informacion`, header);
+    return this.http.get(`${this.api}v1/medidorT/informacion/${idPlanta}`, header);
   }
   // Obtener información de un medidor de acuerdo a un ID
   async getRegistroInformacionMedidorById(id: number, bearerToken: string) {
@@ -209,29 +209,34 @@ export class LaravelService {
   INICIO DE INFORMACIÓN GENERAL DEL REPORTE DE CONTROL VOLUMETRICO
   */
   // Obtener la infromación de las pipas
-  async getInformacionGeneralReporte(bearerToken: string) {
+  async getInformacionGeneralReporte(bearerToken: string, idPlanta:number) {
     const header = this.headerCreate(bearerToken, 'get')
-    return this.http.get(`${this.api}v1/medidorT/informacion`, header);
+    return this.http.get(`${this.api}v1/reporteVolumetrico/informacion-general/${idPlanta}`, header);
   }
   // Obtener información de un medidor de acuerdo a un ID
   async getInformacionGeneralReporteById(id: number, bearerToken: string) {
     const header = this.headerCreate(bearerToken, 'get')
-    return this.http.get(`${this.api}v1/medidorT/informacion/${id}`, header);
+    return this.http.get(`${this.api}v1/reporteVolumetrico/informacion-general/${id}`, header);
   }
   // Agregar un nuevo medidor
   async createInformacionGeneralReporte(data: any, bearerToken: string) {
     const header = this.headerCreate(bearerToken, 'cud')
-    return this.http.post(`${this.api}v1/medidorT/informacion`, data, header);
+    return this.http.post(`${this.api}v1/reporteVolumetrico/informacion-general`, data, header);
   }
   // Editar un medidor
   async editInformacionGeneralReporte(id: number, data: any, bearerToken: string) {
     const header = this.headerCreate(bearerToken, 'cud')
-    return this.http.post(`${this.api}v1/medidorT/informacion/${id}`, data, header);
+    return this.http.post(`${this.api}v1/reporteVolumetrico/informacion-general/${id}`, data, header);
   }
   // Eliminar un medidor
   async deleteInformacionGeneralReporte(id: number, bearerToken: string) {
     const header = this.headerCreate(bearerToken, 'cud')
-    return this.http.delete(`${this.api}v1/medidorT/informacion/${id}`, header);
+    return this.http.delete(`${this.api}v1/reporteVolumetrico/informacion-general/${id}`, header);
   }
-  
+
+  // Generación de reporte
+  async getReporteVolumetrico(bearerToken: string, idPlanta:number) {
+    const header = this.headerCreate(bearerToken, 'get')
+    return this.http.get(`${this.api}v1/generar-reporte/${idPlanta}`, header);
+  }
 }

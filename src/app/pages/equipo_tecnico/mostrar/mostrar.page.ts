@@ -58,21 +58,21 @@ export class MostrarPage implements OnInit {
 
   async obtenerInformacion() {
     this.brearToken = this.storage.getUserData();
-    (await this.apiLaravel.getMedidoresTurbian(this.brearToken.token)).subscribe({
+    (await this.apiLaravel.getMedidoresTurbian(this.brearToken.token, this.brearToken.user.id_planta)).subscribe({
       next: (result: any) => {
         this.medidor_turbina = result;
       }, error: (error) => {
         console.log("error: ", error);
       }
     });
-    (await this.apiLaravel.getRegistroMantenimientoMedidor(this.brearToken.token)).subscribe({
+    (await this.apiLaravel.getRegistroMantenimientoMedidor(this.brearToken.token, this.brearToken.user.id_planta)).subscribe({
       next: (value) => {
         this.mantenminetos = value;
       }, error: (error) => {
         console.log(error)
       }
     });
-    (await this.apiLaravel.getRegistroInformacionMedidor(this.brearToken.token)).subscribe({
+    (await this.apiLaravel.getRegistroInformacionMedidor(this.brearToken.token, this.brearToken.user.id_planta)).subscribe({
       next:(value) => {
         this.historial_informacion = value
       },error:(error) => {
@@ -82,7 +82,7 @@ export class MostrarPage implements OnInit {
   }
 
   async historialMantenimiento(id: number) {
-    (await this.apiLaravel.getRegistroMantenimientoMedidor(this.brearToken.token)).subscribe({
+    (await this.apiLaravel.getRegistroMantenimientoMedidor(this.brearToken.token, this.brearToken.user.id_planta)).subscribe({
       next: (response: any) => {
         const result = response.filter((item: any) => item.id_medidor == id)
 

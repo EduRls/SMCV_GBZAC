@@ -55,7 +55,7 @@ export class RegistrarEntradaSalidaPage implements OnInit {
   async getInformacion() {
     this.token = this.storage.getUserData();
 
-    (await this.api.getRegistroPipasES(this.token.token)).subscribe({
+    (await this.api.getRegistroPipasES(this.token.token, this.token.user.id_planta)).subscribe({
       next: (val: any) => {
         console.log("🚀 ~ RegistrarEntradaSalidaPage ~ val:", val)
         this.registros = val

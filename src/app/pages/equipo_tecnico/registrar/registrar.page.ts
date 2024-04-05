@@ -42,6 +42,7 @@ export class RegistrarPage implements OnInit {
 
   async generarFormaulario(){
     this.formularioMedidorTurbina = this.formBuilder.group({
+      id_planta: [this.bearerToken.user.id_planta ,Validators.required],
       modelo_equipo: ['', Validators.required],
       rango_flujo: ['', Validators.required],
       rango_temperatura: ['', Validators.required],
@@ -68,7 +69,7 @@ export class RegistrarPage implements OnInit {
     this.bearerToken = this.storage.getUserData();
 
     //Obtener la lista de los medidores
-    (await this.apiLaravel.getMedidoresTurbian(this.bearerToken.token)).subscribe((res:any) => {
+    (await this.apiLaravel.getMedidoresTurbian(this.bearerToken.token, this.bearerToken.user.id_planta)).subscribe((res:any) => {
       this.generaTablaMedidores(res);
       this.equipo = res;
     })

@@ -8,20 +8,53 @@
       </ion-card-header>
       <ion-card-content>
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-5">
             <ion-select style="color: white;" label="Selecciona un plazo de reporte" [multiple]="true"
               labelPlacement="floating" placeholder="Selecciona un medidor" (ionChange)="onSelectElement($event)">
               <ion-select-option value="diario">Diario</ion-select-option>
               <ion-select-option value="mensual">Mensual</ion-select-option>
             </ion-select>
           </div>
-          <div class="col-md-4">
-            
+          <div class="col-md-5">
+            <ion-item lines="none">
+              <ion-label>Selecciona un mes</ion-label>
+              <ion-datetime-button datetime="datetimeMonthly" [disabled]="habilitarMes"></ion-datetime-button>
+              <ion-modal [keepContentsMounted]="true" (willDismiss)="onSelectElementMonth($event)">
+                <ng-template>
+                  <ion-datetime id="datetimeMonthly" presentation="month-year" [showDefaultButtons]="true" doneText="Aceptar" cancelText="Cancelar"></ion-datetime>
+                </ng-template>
+              </ion-modal>
+            </ion-item>
           </div>
-          <div class="col-md-4"></div>
+          <div class="col-md-2">
+            <ion-button (click)="generarReportes()" [disabled]="habilitarBoton" expand="block" shape="round">
+              Generar
+            </ion-button>
+          </div>
         </div>
-
       </ion-card-content>
     </ion-card>
+
+
+    <ion-card *ngIf="tablaRDiarioGenerada">
+      <ion-card-header style="--background: #2c3d50; text-align: center;">
+        <ion-card-title style="color: white;">Reportes diarios</ion-card-title>
+      </ion-card-header>
+      <div class="table-responsive p-2">
+        <table class="table" id="tablaReporteDiario">
+        </table>
+      </div>
+    </ion-card>
+
+    <ion-card *ngIf="tablaRMensualGenerada">
+      <ion-card-header style="--background: #2c3d50; text-align: center;">
+        <ion-card-title style="color: white;">Reportes mensuales</ion-card-title>
+      </ion-card-header>
+      <div class="table-responsive p-2">
+        <table  class="table"id="tablaReporteMensual">
+        </table>
+      </div>
+    </ion-card>
+  
   </div>
 </ion-content>

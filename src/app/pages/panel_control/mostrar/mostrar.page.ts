@@ -66,10 +66,10 @@ export class MostrarPage implements OnInit {
 
   async getInformaicon() {
     this.token = this.storage.getUserData();
-    (await this.api.getRegistroPipasES(this.token.token)).subscribe((res: any) => {
+    (await this.api.getRegistroPipasES(this.token.token, this.token.user.id_planta)).subscribe((res: any) => {
       this.generarTabla(res)
     });
-    (await this.api.getRegistroAlmacen(this.token.token)).subscribe((res: any) => {
+    (await this.api.getRegistroAlmacen(this.token.token, this.token.user.id_planta)).subscribe((res: any) => {
       this.generarTablaAlmacen(res);
       this.calcularNivelContenedor(res);
     })

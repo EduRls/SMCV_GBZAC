@@ -51,7 +51,7 @@ export class MostrarPage implements OnInit {
   async getInformacion() {
     this.token = this.storage.getUserData();
     // Obtener la infromaicón de la pipa
-    (await this.api.getPipas(this.token.token)).subscribe((response: any) => {
+    (await this.api.getPipas(this.token.token, this.token.user.id_planta)).subscribe((response: any) => {
       this.pipas = response;
       this.generarTablaPipa(response);
     });
