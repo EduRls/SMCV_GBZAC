@@ -25,21 +25,30 @@
                 <ion-card color="warning" class="text-center">
                   <ion-card-header>
                     <ion-card-title>Registro de entrada/salida</ion-card-title>
-                    <ion-card-subtitle>Favor de ingresar la infromación correspondiente para registrar un ingreso/egreso un pipa</ion-card-subtitle>
+                    <ion-card-subtitle>Favor de ingresar la infromación correspondiente para registrar un ingreso/egreso
+                      un pipa</ion-card-subtitle>
                   </ion-card-header>
                 </ion-card>
                 <form [formGroup]="formularioRegistro" (ngSubmit)="onSubmit()">
                   <ion-item>
-                    <ion-input label="Inventario Inicial" labelPlacement="floating" formControlName="inventario_inical" type="text"></ion-input>
+                    <ion-select label="Seleccione una pipa/autotanque" formControlName="id_pipa" labelPlacement="floating">
+                      <ion-select-option *ngFor="let item of pipas" value="{{item.id}}">{{item.clave_pipa}}</ion-select-option>
+                    </ion-select>
                   </ion-item>
                   <ion-item>
-                    <ion-input label="Compra" labelPlacement="floating" formControlName="compra" type="text"></ion-input>
+                    <ion-input label="Inventario Inicial" labelPlacement="floating" formControlName="inventario_inical"
+                      type="text"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-input label="Compra" labelPlacement="floating" formControlName="compra"
+                      type="text"></ion-input>
                   </ion-item>
                   <ion-item>
                     <ion-input label="Venta" labelPlacement="floating" formControlName="venta" type="text"></ion-input>
                   </ion-item>
                   <ion-item>
-                    <ion-input label="Inventario Final" labelPlacement="floating" formControlName="inventario_final" type="text"></ion-input>
+                    <ion-input label="Inventario Final" labelPlacement="floating" formControlName="inventario_final"
+                      type="text"></ion-input>
                   </ion-item>
                   <ion-button type="submit" expand="full" style="padding-top: 5%;">Guardar</ion-button>
                 </form>
@@ -51,7 +60,7 @@
     </div>
     <div class="table-responsive p-2">
       <table class="table" id="listaRegistroPipas">
-        
+
       </table>
     </div>
   </div>

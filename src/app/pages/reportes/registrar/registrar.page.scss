@@ -1,0 +1,10 @@
+/* Estilos para pantallas grandes */
+@media only screen and (min-width: 1024px) {
+    .modalPc {
+      --width: 150%;
+      --min-width: 600px;
+      --height: fit-content;
+      --border-radius: 10px;
+      --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+    }
+  }

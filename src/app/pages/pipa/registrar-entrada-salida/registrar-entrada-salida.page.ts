@@ -19,6 +19,7 @@ export class RegistrarEntradaSalidaPage implements OnInit {
 
   // Variables para el listado de pipas
   public registros: any;
+  public pipas:any;
 
   // Variable token
   private token: any;
@@ -42,14 +43,16 @@ export class RegistrarEntradaSalidaPage implements OnInit {
 
   }
 
-  ionViewDidEnter() {
+  async ionViewDidEnter() {
+    await this.getInformacion();
     this.formularioRegistro = this.formBuilder.group({
+      id_planta: [this.token.user.id_planta ,Validators.required],
+      id_pipa: ['', Validators.required],
       inventario_inical: ['', Validators.required],
       compra: ['', Validators.required],
       venta: ['', Validators.required],
       inventario_final: ['', Validators.required]
     });
-    this.getInformacion();
   }
 
   async getInformacion() {
@@ -57,9 +60,17 @@ export class RegistrarEntradaSalidaPage implements OnInit {
 
     (await this.api.getRegistroPipasES(this.token.token, this.token.user.id_planta)).subscribe({
       next: (val: any) => {
-        console.log("🚀 ~ RegistrarEntradaSalidaPage ~ val:", val)
         this.registros = val
+        console.log("🚀 ~ RegistrarEntradaSalidaPage ~ val:", val)
         this.generarTablaRegistroPipa(val)
+      }, error: (err) => {
+        console.log(err)
+      }
+    });
+
+    (await this.api.getPipas(this.token.token, this.token.user.id_planta)).subscribe({
+      next: (val: any) => {
+        this.pipas = val;
       }, error: (err) => {
         console.log(err)
       }
@@ -77,7 +88,7 @@ export class RegistrarEntradaSalidaPage implements OnInit {
         url: "/assets/utils/es-ES.json"
       },
       columns: [
-        { data: 'id_pipa', title: 'Matricula' },
+        { data: 'pipa.clave_pipa', title: 'Calve ID' },
         { data: 'inventario_inical', title: 'Inventario Inicial' },
         { data: 'compra', title: 'Compra' },
         { data: 'venta', title: 'Venta' },

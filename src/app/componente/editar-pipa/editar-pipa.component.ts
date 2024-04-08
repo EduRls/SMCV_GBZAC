@@ -29,7 +29,14 @@ export class EditarPipaComponent implements OnInit {
     this.formularioPipa = this.formBuilder.group({
       clave_pipa: [this.pipa.clave_pipa, Validators.required],
       responsable_pipa: [this.pipa.responsable_pipa, Validators.required],
-      capacidad_pipa: [this.pipa.capacidad_pipa, Validators.required]
+      capacidad_pipa: [this.pipa.capacidad_pipa, Validators.required],
+      localizacion_descripcion_pipa: [this.pipa.localizacion_descripcion_pipa, Validators.required],
+      vigencia_calibracion_tanque: [this.pipa.vigencia_calibracion_tanque, Validators.required],
+      capacidad_operativa: [this.pipa.capacidad_operativa, Validators.required],
+      capacidad_util: [this.pipa.capacidad_util, Validators.required],
+      capacidad_fondaje: [this.pipa.capacidad_fondaje, Validators.required],
+      volumen_minimo_operacion: [this.pipa.volumen_minimo_operacion, Validators.required],
+      estado_tanque: [this.pipa.estado_tanque, Validators.required]
     });
   }
 

@@ -2,14 +2,26 @@
   <ion-card color="tertiary" class="ion-margin">
     <ion-card-header>
       <ion-card-subtitle>
-        Bienvenido a la sección de generación de reportes volumetricos, en esta parte se te permite generar tus reportes diarios/mensuales. <br>
-        Para generar una experiencia más amena, se presentan las siguientes herramientas para generar tus reportes
+        <div class="row">
+          <div class="col-md-8">
+            Bienvenido a la sección de reportes volumétricos, en esta parte se te permite completar la información
+            general de tus
+            reportes diarios/mensuales. <br>
+            Para generar una experiencia más amena, se presentan las siguientes herramientas:
+          </div>
+          <div class="col-md-4">
+            <h5 style="text-align: center;">Herraminetas</h5>
+            <ion-button expand="block" color="secondary" (click)="consultarGuia()">
+              Conusltar guia de llenado
+            </ion-button>
+          </div>
+        </div>
       </ion-card-subtitle>
     </ion-card-header>
   </ion-card>
   <div>
-    <form [formGroup]="formInformacionGeneral">
-      <ion-accordion-group class="ion-padding" value="first" [multiple]="true" mode="md">
+    <ion-accordion-group class="ion-padding" value="first" [multiple]="true" mode="md">
+      <form [formGroup]="formInformacionGeneral">
         <ion-accordion value="first" class="pb-2">
           <!-- INFORMACIÓN DEL CONTRIBUYENTE -->
           <ion-item slot="header" color="medium" class="rounded" style="text-align: center;">
@@ -17,36 +29,26 @@
           </ion-item>
           <div class="ion-padding rounded" slot="content" style="background-color: whitesmoke;">
             <div class="form-row">
-              <div class="form-group col-md-4">
+              <div class="form-group col-md-4" >
                 <label for="RfcContribuyente">RFC Contribuyente:</label>
-                <input type="text" formControlName="rfc_contribuyente" id="RfcContribuyente" name="RfcContribuyente" class="form-control">
+                <input type="text" formControlName="rfc_contribuyente" id="RfcContribuyente" name="RfcContribuyente"
+                  class="form-control">
               </div>
-              <div class="form-group col-md-4">
+              <div class="form-group col-md-4" >
                 <label for="RfcRepresentanteLegal">RFC Representante Legal:</label>
-                <input type="text" formControlName="rfc_representante_legal" id="RfcRepresentanteLegal" name="RfcRepresentanteLegal" class="form-control">
+                <input type="text" formControlName="rfc_representante_legal" id="RfcRepresentanteLegal"
+                  name="RfcRepresentanteLegal" class="form-control">
               </div>
-              <div class="form-group col-md-4">
+              <div class="form-group col-md-4" >
                 <label for="RfcProveedor">RFC Proveedor:</label>
-                <input type="text" formControlName="rfc_proveedor" id="RfcProveedor" name="RfcProveedor" class="form-control">
+                <input type="text" formControlName="rfc_proveedor" id="RfcProveedor" name="RfcProveedor"
+                  class="form-control">
               </div>
-              <div class="form-group col-md-12">
+              <div class="form-group col-md-12" >
                 <label for="RfcProveedores">RFC Proveedores:</label>
-                <textarea class="form-control" formControlName="rfc_proveedores" id="RfcProveedores" name="RfcProveedores"
-                  placeholder="Favor de escribir los RFC, separado por comas, Ej. RFC0000000, RFC0000000"></textarea>
-              </div>
-            </div>
-            <div>
-              <div class="row">
-                <div class="col-md-6">
-                  <ion-button expand="block" fill="clear" color="danger" shape="round">
-                    Limpiar
-                  </ion-button>
-                </div>
-                <div class="col-md-6">
-                  <ion-button expand="block" fill="clear" shape="round" (click)="onSubmit('infoGeneral')">
-                    Guardar Información
-                  </ion-button>
-                </div>
+                <textarea class="form-control" formControlName="rfc_proveedores" id="RfcProveedores"
+                  name="RfcProveedores"
+                  placeholder="Favor de escribir los RFC, separado por comas, Ej. RFC0000000,RFC0000000"></textarea>
               </div>
             </div>
           </div>
@@ -79,44 +81,25 @@
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="NumPermiso">Número de Permiso</label>
-                  <input type="text" formControlName="numero_permiso" class="form-control" id="NumPermiso" placeholder="Ingrese el número de permiso">
+                  <input type="text" formControlName="numero_permiso" class="form-control" id="NumPermiso"
+                    placeholder="Ingrese el número de permiso">
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="NumContratoOAsignacion">Número de Contrato o Asignación</label>
-                  <input type="text" formControlName="numero_contrato_asignacion" class="form-control" id="NumContratoOAsignacion"
-                    placeholder="Ingrese el número de contrato o asignación">
+                  <input type="text" formControlName="numero_contrato_asignacion" class="form-control"
+                    id="NumContratoOAsignacion" placeholder="Ingrese el número de contrato o asignación">
                 </div>
               </div>
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label for="InstalacionAlmacenGas">Instalación de Almacén de Gas</label>
-                  <input type="text" formControlName="instalacion_almacen_gas" class="form-control" id="InstalacionAlmacenGas"
-                    placeholder="Ingrese la instalación de almacén de gas">
-                </div>
-              </div>
-            </div>
-            <div>
-              <div class="row">
-                <div class="col-md-6">
-                  <ion-button expand="block" fill="clear" color="danger" shape="round">
-                    Limpiar
-                  </ion-button>
-                </div>
-                <div class="col-md-6">
-                  <ion-button expand="block" fill="clear" shape="round" (click)="onSubmit('infoCaracter')">
-                    Guardar Información
-                  </ion-button>
-                </div>
-              </div>
+  
             </div>
           </div>
-          
+  
         </ion-accordion>
         <!-- FIN INFORMACIÓN DEL CARACTER -->
         <!-- INICIO INFORMACIÓN DE LA PLANTA -->
-        <ion-accordion value="third" class="pb-2">
+        <ion-accordion value="third">
           <ion-item slot="header" color="medium" class="rounded" style="text-align: center;">
             <ion-label>INFORMACIÓN SOBRE LAS INSTALACIONES</ion-label>
           </ion-item>
@@ -124,70 +107,81 @@
             <div class="form-row">
               <div class="form-group col-md-12">
                 <label for="Clavelnstalacion">Clave Instalación:</label>
-                <input type="text" formControlName="clave_instalacion" id="Clavelnstalacion" name="Clavelnstalacion" class="form-control">
+                <input type="text" formControlName="clave_instalacion" id="Clavelnstalacion" name="Clavelnstalacion"
+                  class="form-control">
+              </div>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="InstalacionAlmacenGas">Instalación de Almacén de Gas</label>
+                  <input type="text" formControlName="instalacion_almacen_gas" class="form-control"
+                    id="InstalacionAlmacenGas" placeholder="Ingrese la instalación de almacén de gas">
+                </div>
               </div>
               <div class="form-group col-md-12">
                 <label for="DescripcionInstalacion">Descripción Instalación:</label>
-                <textarea class="form-control" formControlName="descripcion_instalacion" id="DescripcionInstalacion" name="DescripcionInstalacion"
-                  rows="3"></textarea>
+                <textarea class="form-control" formControlName="descripcion_instalacion" id="DescripcionInstalacion"
+                  name="DescripcionInstalacion" rows="3"></textarea>
               </div>
               <div class="form-group col-md-6">
-                <label for="Geolocalizacion">Geolocalización:</label>
+                <label>Geolocalización:</label>
                 <div class="form-row">
                   <div class="form-group col-md-6">
-                    <input type="text" formControlName="geolocalizacion_latitud" class="form-control" placeholder="Latitud" id="latitudGas" name="latitudGas">
+                    <input type="text" formControlName="geolocalizacion_latitud" class="form-control"
+                      placeholder="Latitud" id="latitudGas" name="latitudGas">
                   </div>
                   <div class="form-group col-md-6">
-                    <input type="text" formControlName="geolocalizacion_longitud" class="form-control" placeholder="Longitud" id="longitudGas" name="longitudGas">
+                    <input type="text" formControlName="geolocalizacion_longitud" class="form-control"
+                      placeholder="Longitud" id="longitudGas" name="longitudGas">
                   </div>
                 </div>
               </div>
               <div class="form-group col-md-3">
                 <label for="NumeroPozos">Número Pozos:</label>
-                <input type="number" formControlName="numero_pozos" id="NumeroPozos" name="NumeroPozos" class="form-control">
-              </div>
-              <div class="form-group col-md-3">
-                <label for="NumeroTanques">Número Tanques:</label>
-                <input type="number" formControlName="numero_tanques" id="NumeroTanques" name="NumeroTanques" class="form-control">
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group col-md-3">
-                <label for="NumeroDuctosEntradaSalida">Número Ductos Entrada/Salida:</label>
-                <input type="number" formControlName="numero_ductos_entrada_salida" id="NumeroDuctosEntradaSalida" name="NumeroDuctosEntradaSalida"
+                <input type="number" formControlName="numero_pozos" id="NumeroPozos" name="NumeroPozos"
                   class="form-control">
               </div>
               <div class="form-group col-md-3">
-                <label for="NumeroDuctosTransporte">Número Ductos Transporte:</label>
-                <input type="number" formControlName="numero_ductos_transporte" id="NumeroDuctosTransporte" name="NumeroDuctosTransporte" class="form-control">
-              </div>
-              <div class="form-group col-md-3">
-                <label for="NumeroDuctosTransporte">Número Dispensarios:</label>
-                <input type="number" formControlName="numero_dispensarios" id="NumeroDuctosTransporte" name="NumeroDuctosTransporte" class="form-control">
-              </div>
-              <div class="form-group col-md-3">
-                <label for="FechaYHoraCorte">Fecha y Hora de Corte:</label>
-                <input type="datetime-local" id="FechaYHoraCorte" name="FechaYHoraCorte" class="form-control">
+                <label for="NumeroTanques">Número Tanques:</label>
+                <input type="number" formControlName="numero_tanques" id="NumeroTanques" name="NumeroTanques"
+                  class="form-control">
               </div>
             </div>
-            <div>
-              <div class="row">
-                <div class="col-md-6">
-                  <ion-button expand="block" fill="clear" color="danger" shape="round">
-                    Limpiar
-                  </ion-button>
-                </div>
-                <div class="col-md-6">
-                  <ion-button expand="block" fill="clear" shape="round" (click)="onSubmit('infoInstalaciones')">
-                    Guardar Información
-                  </ion-button>
-                </div>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="NumeroDuctosEntradaSalida">Número Ductos Entrada/Salida:</label>
+                <input type="number" formControlName="numero_ductos_entrada_salida" id="NumeroDuctosEntradaSalida"
+                  name="NumeroDuctosEntradaSalida" class="form-control">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="NumeroDuctosTransporte">Número Ductos Transporte:</label>
+                <input type="number" formControlName="numero_ductos_transporte" id="NumeroDuctosTransporte"
+                  name="numero_dispensarios" class="form-control">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="numero_dispensarios">Número Dispensarios:</label>
+                <input type="number" formControlName="numero_dispensarios" id="numero_dispensarios"
+                  name="numero_dispensarios" class="form-control">
               </div>
             </div>
           </div>
         </ion-accordion>
         <!-- FIN INFORMACIÓN DE LA PLANTA -->
-      </ion-accordion-group>
-    </form>
+      </form>
+    </ion-accordion-group>
+    
+    <div>
+      <div class="row">
+        <div class="col-md-6">
+          <ion-button expand="block" fill="clear" color="danger" shape="round">
+            Limpiar
+          </ion-button>
+        </div>
+        <div class="col-md-6">
+          <ion-button expand="block" fill="clear" shape="round" (click)="onSubmit('infoGeneral')">
+            Guardar Información
+          </ion-button>
+        </div>
+      </div>
+    </div>
   </div>
 </ion-content>

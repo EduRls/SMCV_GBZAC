@@ -39,13 +39,22 @@ export class MostrarPage implements OnInit {
     }
   }
 
-  ionViewDidEnter(){
+  async ionViewDidEnter(){
+    await this.getInformacion();
     this.formularioPipa = this.formBuilder.group({
+      id_planta: [this.token.user.id_planta ,Validators.required],
       clave_pipa: ['', Validators.required],
+      localizacion_descripcion_pipa: ['', Validators.required],
+      vigencia_calibracion_tanque: ['', Validators.required],
       responsable_pipa: ['', Validators.required],
-      capacidad_pipa: ['', Validators.required]
+      capacidad_pipa: ['', Validators.required],
+      capacidad_operativa: ['', Validators.required],
+      capacidad_util: ['', Validators.required],
+      capacidad_fondaje: ['', Validators.required],
+      volumen_minimo_operacion: ['', Validators.required],
+      estado_tanque: ['', Validators.required]
     });
-    this.getInformacion();
+    
   }
 
   async getInformacion() {
@@ -164,6 +173,7 @@ export class MostrarPage implements OnInit {
           window.location.reload();
           this.modal.dismiss();
         }, error: (err) => {
+          console.log("🚀 ~ MostrarPage ~ err:", err)
           this.presentToast('bottom', 'Algo ha salido mal', 'danger')
         },
       })

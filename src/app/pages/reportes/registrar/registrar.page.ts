@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoadingController, ToastController } from '@ionic/angular';
+import { LoadingController, ModalController, ToastController } from '@ionic/angular';
 import { LaravelService } from 'src/app/service/api/laravel.service';
 import { StorageService } from 'src/app/service/storage/storage.service';
-import { take } from 'rxjs/operators';
-
+import { GuiaLlenadoSatComponent } from 'src/app/componente/guia-llenado-sat/guia-llenado-sat.component';
+import { DataPaginasService } from 'src/app/service/api/data-paginas.service';
 @Component({
   selector: 'app-registrar',
   templateUrl: './registrar.page.html',
@@ -13,57 +13,25 @@ import { take } from 'rxjs/operators';
 export class RegistrarPage implements OnInit {
 
   // Formulario
-  formInformacionGeneral: FormGroup | any;
+  formInformacionGeneral: FormGroup;
 
   private token: any;
   private infromacionGeneral: any;
+
+  //Mostrar la guia de llenado
+  mostrarGuia:boolean = false;
 
   constructor(
     private toastController: ToastController,
     private api: LaravelService,
     private storage: StorageService,
     private formBuilder: FormBuilder,
-    private loadController:LoadingController
-
-  ) { }
-
-  ngOnInit() {
-    this.initFormulario();
-    this.getInformacion();
-  }
-
-  async getInformacion() {
-    try {
-      this.token = await this.storage.getUserData();
-      (await this.api.getInformacionGeneralReporte(this.token.token, this.token.user.id_planta)).subscribe((data: any) => {
-        if (data && data.length > 0) {
-          this.generarFormularioReporte(data[0]);
-          this.infromacionGeneral = data
-        }
-      })
-    } catch (error) {
-      console.error('Error al obtener la información:', error);
-    }
-  }
-
-  generarFormularioReporte(data: any) {
-    const keysInformacionGeneral = Object.keys(data);
-    for (let i = 1; i <= 18; i++) {
-      if (keysInformacionGeneral[i] == 'rfc_proveedores') {
-        const claveNombre = keysInformacionGeneral[i];
-        const valor = data[claveNombre];
-        this.formInformacionGeneral.get(claveNombre)?.setValue(valor != null ? JSON.parse(valor) : '');
-      } else {
-        const claveNombre = keysInformacionGeneral[i];
-        const valor = data[claveNombre];
-        this.formInformacionGeneral.get(claveNombre)?.setValue(valor != null ? valor : '');
-      }
-
-    }
-  }
-
-  initFormulario() {
+    private loadController:LoadingController,
+    private modalCtrl: ModalController,
+    private datapage:DataPaginasService
+  ) {
     this.formInformacionGeneral = this.formBuilder.group({
+      id_planta: [''],
       rfc_contribuyente: [''],
       rfc_representante_legal: [''],
       rfc_proveedor: [''],
@@ -83,6 +51,50 @@ export class RegistrarPage implements OnInit {
       numero_ductos_transporte: [''],
       numero_dispensarios: ['']
     });
+  }
+
+  async ngOnInit() {
+    await this.getInformacion();
+  }
+
+  async getInformacion() {
+    try {
+      this.token = await this.storage.getUserData();
+      this.formInformacionGeneral.get('id_planta')?.setValue(this.token.user.id_planta);
+      (await this.api.getInformacionGeneralReporte(this.token.token, this.token.user.id_planta)).subscribe((data: any) => {
+        if (data && data.length > 0) {
+          this.generarFormularioReporte(data[0]);
+          this.infromacionGeneral = data
+        }
+      });
+      this.datapage.consultarInformacion().then((res) => {
+        const camposRequeridos =  res.required;
+        const camposCondicionlaes = res.allOf;
+        const camposPropiedades = res.properties;
+      })
+    } catch (error) {
+      console.error('Error al obtener la información:', error);
+    }
+  }
+
+  generarFormularioReporte(data: any) {
+    const keysInformacionGeneral = Object.keys(data);
+    for (let i = 1; i <= 19; i++) {
+      if (keysInformacionGeneral[i] == 'rfc_proveedores') {
+        const claveNombre = keysInformacionGeneral[i];
+        const valor = data[claveNombre];
+        this.formInformacionGeneral.get(claveNombre)?.setValue(valor != null ? (JSON.parse(valor)).toString() : '');
+      } else {
+        const claveNombre = keysInformacionGeneral[i];
+        const valor = data[claveNombre];
+        this.formInformacionGeneral.get(claveNombre)?.setValue(valor != null ? valor : '');
+      }
+    }
+  }
+
+
+  initFormulario() {
+    
   }
 
   async presentToast(position: 'top' | 'middle' | 'bottom', msg: string, color: "success" | "danger" | "warning") {
@@ -122,5 +134,14 @@ export class RegistrarPage implements OnInit {
       });
       await load.dismiss();
     }
+  }
+
+  async consultarGuia(){
+    const modalSat = await this.modalCtrl.create({
+      component: GuiaLlenadoSatComponent,
+      cssClass: 'modalPc'
+    });
+
+    await modalSat.present();
   }
 }

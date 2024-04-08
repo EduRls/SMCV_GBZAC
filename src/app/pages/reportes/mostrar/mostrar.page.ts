@@ -4,7 +4,6 @@ import DataTable from 'datatables.net-dt';
 import * as $ from 'jquery';
 import { LaravelService } from 'src/app/service/api/laravel.service';
 import { StorageService } from 'src/app/service/storage/storage.service';
-import { prettyPrintJson } from 'pretty-print-json';
 import { PreviewJsonReportesComponent } from 'src/app/componente/preview-json-reportes/preview-json-reportes.component';
 
 @Component({
@@ -28,6 +27,7 @@ export class MostrarPage implements OnInit {
 
   // Reportes generados
   public reportes:any;
+
   constructor(
     private storage:StorageService,
     private api:LaravelService,
@@ -35,19 +35,12 @@ export class MostrarPage implements OnInit {
     private modal:ModalController
   ) { }
 
-  async ngOnInit() {
-    await this.getInformacion();
+  ngOnInit() {
+    this.getInformacion();
   }
 
-  async getInformacion(){
-    this.token = this.storage.getUserData();
-    (await this.api.getReporteVolumetrico(this.token.token, this.token.user.id_planta)).subscribe({
-      next: (val:any) => {
-        this.reportes = val
-      },error:(err) => {
-      console.log("🚀 ~ MostrarPage ~ err:", err)
-      }
-    })
+  getInformacion(){
+    
   }
 
   async onSelectElement(event: any) {
@@ -57,9 +50,23 @@ export class MostrarPage implements OnInit {
 
   // En tu método onSelectElementMonth
   async onSelectElementMonth(event: any) {
-    let date: any = new Date(event.target.value);
-    date = date.getFullYear() + '-' + date.getMonth();
+    let fechaSeleccionada:any;
+    if(event.target.value == undefined){
+      let date = new Date();
+      fechaSeleccionada = date.getFullYear() + '-' + date.getMonth();
+    }else{
+      fechaSeleccionada = new Date(event.target.value);
+      fechaSeleccionada = fechaSeleccionada.getFullYear() + '-' + fechaSeleccionada.getMonth();
+    }
     this.habilitarBoton = false;
+    this.token = this.storage.getUserData();
+    (await this.api.getReporteVolumetrico(this.token.token, this.token.user.id_planta, fechaSeleccionada)).subscribe({
+      next: (val:any) => {
+        this.reportes = val
+      },error:(err) => {
+      console.log("🚀 ~ MostrarPage ~ err:", err)
+      }
+    })
   }
 
   async generarReportes(){

@@ -24,3 +24,14 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
+
+/* Estilos para pantallas grandes */
+@media only screen and (min-width: 1024px) {
+    .modalPc {
+      --width: 60%;
+      --min-width: 600px;
+      --height: 90%;
+      --border-radius: 10px;
+      --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+    }
+  }

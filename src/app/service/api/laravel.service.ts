@@ -124,27 +124,27 @@ export class LaravelService {
   // Obtener la infromación de las pipas
   async getRegistroAlmacen(bearerToken: string, idPlanta:number) {
     const header = this.headerCreate(bearerToken, 'get')
-    return this.http.get(`${this.api}v1/almacen/registro/${idPlanta}`, header)
+    return this.http.get(`${this.api}v1/almacen-registro/${idPlanta}`, header)
   }
   // Obtener información de un medidor de acuerdo a un ID
   async getRegistroAlmacenById(id: number, bearerToken: string) {
     const header = this.headerCreate(bearerToken, 'get')
-    return this.http.get(`${this.api}v1/almacen/registro/${id}`);
+    return this.http.get(`${this.api}v1/almacen-registro/${id}`);
   }
   // Agregar un nuevo medidor
   async createRegistroAlmacen(data: any, bearerToken: string) {
     const header = this.headerCreate(bearerToken, 'cud')
-    return this.http.post(`${this.api}v1/almacen/registro`, data, header);
+    return this.http.post(`${this.api}v1/almacen-registro`, data, header);
   }
   // Editar un medidor
   async editRegistroAlmacen(id: number, data: any, bearerToken: string) {
     const header = this.headerCreate(bearerToken, 'cud')
-    return this.http.post(`${this.api}v1/almacen/registro/${id}`, data, header);
+    return this.http.post(`${this.api}v1/almacen-registro/${id}`, data, header);
   }
   // Eliminar un medidor
   async deleteRegistroAlmacen(id: number, bearerToken: string) {
     const header = this.headerCreate(bearerToken, 'cud')
-    return this.http.delete(`${this.api}v1/almacen/registro/${id}`, header);
+    return this.http.delete(`${this.api}v1/almacen-registro/${id}`, header);
   }
 
   /*
@@ -235,8 +235,37 @@ export class LaravelService {
   }
 
   // Generación de reporte
-  async getReporteVolumetrico(bearerToken: string, idPlanta:number) {
+  async getReporteVolumetrico(bearerToken: string, idPlanta:number, monthAndYear:string) {
     const header = this.headerCreate(bearerToken, 'get')
-    return this.http.get(`${this.api}v1/generar-reporte/${idPlanta}`, header);
+    return this.http.get(`${this.api}v1/generar-reporte/${idPlanta}/${monthAndYear}`, header);
+  }
+
+  /*
+  INICIO DE REGISTRO DE ALMACENES DE GAS
+  */
+  // Obtener la infromación de las pipas
+  async getAlmacen(bearerToken: string, idPlanta:number) {
+    const header = this.headerCreate(bearerToken, 'get')
+    return this.http.get(`${this.api}v1/almacen/${idPlanta}`, header)
+  }
+  // Obtener información de un medidor de acuerdo a un ID
+  async getAlmacenById(id: number, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'get')
+    return this.http.get(`${this.api}v1/almacen/${id}`);
+  }
+  // Agregar un nuevo medidor
+  async createAlmacen(data: any, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'cud')
+    return this.http.post(`${this.api}v1/almacen`, data, header);
+  }
+  // Editar un medidor
+  async editAlmacen(id: number, data: any, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'cud')
+    return this.http.post(`${this.api}v1/almacen/${id}`, data, header);
+  }
+  // Eliminar un medidor
+  async deleteAlmacen(id: number, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'cud')
+    return this.http.delete(`${this.api}v1/almacen/${id}`, header);
   }
 }

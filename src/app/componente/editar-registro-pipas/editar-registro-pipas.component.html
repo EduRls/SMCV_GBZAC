@@ -7,7 +7,14 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content style="padding-top: 3%;">
+<ion-content style="padding-top: 3%;" class="ion-padding">
+  <ion-card color="warning" class="text-center">
+    <ion-card-header>
+      <ion-card-title>Registro de entrada/salida</ion-card-title>
+      <ion-card-subtitle>Favor de ingresar la infromación correspondiente para registrar un ingreso/egreso
+        un pipa</ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
   <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
     <ion-item>
       <ion-input label="Inventario Inicial" labelPlacement="floating" formControlName="inventario_inical" type="text"></ion-input>

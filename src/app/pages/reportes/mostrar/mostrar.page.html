@@ -19,9 +19,9 @@
             <ion-item lines="none">
               <ion-label>Selecciona un mes</ion-label>
               <ion-datetime-button datetime="datetimeMonthly" [disabled]="habilitarMes"></ion-datetime-button>
-              <ion-modal [keepContentsMounted]="true" (willDismiss)="onSelectElementMonth($event)">
+              <ion-modal [keepContentsMounted]="true">
                 <ng-template>
-                  <ion-datetime id="datetimeMonthly" presentation="month-year" [showDefaultButtons]="true" doneText="Aceptar" cancelText="Cancelar"></ion-datetime>
+                  <ion-datetime id="datetimeMonthly" presentation="month-year" (ionChange)="onSelectElementMonth($event)" [showDefaultButtons]="true" doneText="Aceptar" cancelText="Cancelar"></ion-datetime>
                 </ng-template>
               </ion-modal>
             </ion-item>
