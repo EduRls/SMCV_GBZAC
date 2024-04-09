@@ -54,7 +54,6 @@ export class MostrarPage implements OnInit {
       volumen_minimo_operacion: ['', Validators.required],
       estado_tanque: ['', Validators.required]
     });
-    
   }
 
   async getInformacion() {

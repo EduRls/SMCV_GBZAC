@@ -45,12 +45,13 @@ const routes: Routes = [
   {
     path: 'pipa/registrar-entrada-salida',
     loadChildren: () => import('./pages/pipa/registrar-entrada-salida/registrar-entrada-salida.module').then( m => m.RegistrarEntradaSalidaPageModule)
-  },  {
-    path: 'registro',
+  },
+  {
+    path: 'almacen/registro',
     loadChildren: () => import('./pages/almacen/registro/registro.module').then( m => m.RegistroPageModule)
   },
   {
-    path: 'mostrar',
+    path: 'almacen/mostrar',
     loadChildren: () => import('./pages/almacen/mostrar/mostrar.module').then( m => m.MostrarPageModule)
   }
 

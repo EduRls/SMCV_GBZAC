@@ -6,7 +6,7 @@ import { StorageService } from 'src/app/service/storage/storage.service';
 import * as $ from 'jquery';
 import DataTable from 'datatables.net-dt';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ModalController, ToastController } from '@ionic/angular';
+import { LoadingController, ModalController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-mostrar',
@@ -15,7 +15,7 @@ import { ModalController, ToastController } from '@ionic/angular';
 })
 export class MostrarPage implements OnInit {
 
-  formularioAlmacen: FormGroup | any;
+  formularioAlmacen: FormGroup;
 
   constructor(
     private api: LaravelService,
@@ -23,11 +23,17 @@ export class MostrarPage implements OnInit {
     private storage: StorageService,
     private route: Router,
     private modal:ModalController,
-    private toastController:ToastController
+    private toastController:ToastController,
+    private loadCtrl:LoadingController
   ) { }
 
   public datos: any = [];
+  public almacenDatos:any;
+  public almacen:any;
   private token: any;
+
+  private registrosAlmacen:any;
+  public registrosAlmacenById:any;
 
   public cantidadAlmacen1:number = 0.2
   public cantidadAlmacen2:number = 0.5
@@ -38,7 +44,6 @@ export class MostrarPage implements OnInit {
       this.storage.logout();
       this.route.navigate(['/login'], { replaceUrl: true });
     }
-    this.generarFormaulario();
   }
 
   async presentToast(position: 'top' | 'middle' | 'bottom', mensaje:string, color: "success" | "warning" | "danger") {
@@ -54,14 +59,17 @@ export class MostrarPage implements OnInit {
 
   async generarFormaulario(){
     this.formularioAlmacen = new FormGroup({
-      cantidadInicial: new FormControl('', Validators.required),
-      cantidadFinal: new FormControl('', Validators.required),
-      fechaLlenado: new FormControl('', Validators.required)
+      id_planta: new FormControl(this.token.user.id_planta ,Validators.required),
+      id_almacen: new FormControl('', Validators.required),
+      cantidad_inical: new FormControl('', Validators.required),
+      cantidad_final: new FormControl('', Validators.required),
+      fecha_llenado: new FormControl('', Validators.required)
     });
   }
 
-  ionViewDidEnter() {
-    this.getInformaicon();
+  async ionViewDidEnter() {
+    await this.getInformaicon();
+    this.generarFormaulario();
   }
 
   async getInformaicon() {
@@ -70,8 +78,12 @@ export class MostrarPage implements OnInit {
       this.generarTabla(res)
     });
     (await this.api.getRegistroAlmacen(this.token.token, this.token.user.id_planta)).subscribe((res: any) => {
-      this.generarTablaAlmacen(res);
+      this.registrosAlmacen = res;
+      console.log("🚀 ~ MostrarPage ~ this.registrosAlmacen:", this.registrosAlmacen)
       this.calcularNivelContenedor(res);
+    });
+    (await this.api.getAlmacen(this.token.token, this.token.user.id_planta)).subscribe((res:any) => {
+      this.almacenDatos = res;
     })
   }
 
@@ -107,7 +119,7 @@ export class MostrarPage implements OnInit {
           url: "/assets/utils/es-ES.json"
         },
         columns: [
-          { data: 'nombre_contenedor', title: 'Contenedor' },
+          { data: 'almacen.clave_almacen', title: 'Clave del almacen' },
           { data: 'cantidad_inical', title: 'Cantidad inicial' },
           { data: 'cantidad_final', title: 'Cantidad final' },
           { data: 'fecha_llenado', title: 'Fecha llenado' },
@@ -124,48 +136,21 @@ export class MostrarPage implements OnInit {
   }
 
   async submitForm(almacen:any) {
+    this.formularioAlmacen.get('id_almacen').setValue(almacen);
     if (this.formularioAlmacen.valid) {
-      if(almacen == 'c1'){
-        const data = {
-          'nombre_contenedor': 'Almacen 1',
-          'cantidad_inical': this.formularioAlmacen.value.cantidadInicial,
-          'cantidad_final': this.formularioAlmacen.value.cantidadFinal,
-          'fecha_llenado': this.formularioAlmacen.value.fechaLlenado
+      ;(await this.api.createRegistroAlmacen(this.formularioAlmacen.value, this.token.token)).subscribe({
+        next:(val) => {
+          this.presentToast('bottom', 'Se ha creado un nuevo registro', 'success');
+          this.formularioAlmacen.reset();
+          this.modal.dismiss();
+          setTimeout(() => {
+            window.location.reload();
+          }, 500);
+        }, error:(err) => {
+          console.log(err);
+          this.presentToast('bottom', 'Algo ha salido mal, vuelve a intentarlo', 'danger');
         }
-        ;(await this.api.createRegistroAlmacen(data, this.token.token)).subscribe({
-          next:(val) => {
-            this.presentToast('bottom', 'Se ha creado un nuevo registro', 'success');
-            this.formularioAlmacen.reset();
-            this.modal.dismiss();
-            setTimeout(() => {
-              window.location.reload();
-            }, 500);
-          }, error:(err) => {
-            console.log(err);
-            this.presentToast('bottom', 'Algo ha salido mal, vuelve a intentarlo', 'danger');
-          }
-        })
-      }else if(almacen == 'c2'){
-        const data = {
-          'nombre_contenedor': 'Almacen 2',
-          'cantidad_inical': this.formularioAlmacen.value.cantidadInicial,
-          'cantidad_final': this.formularioAlmacen.value.cantidadFinal,
-          'fecha_llenado': this.formularioAlmacen.value.fechaLlenado
-        }
-        ;(await this.api.createRegistroAlmacen(data, this.token.token)).subscribe({
-          next:(val) => {
-            this.presentToast('bottom', 'Se ha creado un nuevo registro', 'success');
-            this.formularioAlmacen.reset();
-            this.modal.dismiss();
-            setTimeout(() => {
-              window.location.reload();
-            }, 500);
-          }, error:(err) => {
-            console.log(err);
-            this.presentToast('bottom', 'Algo ha salido mal, vuelve a intentarlo', 'danger');
-          }
-        })
-      }
+      })
     } else {
       // Si el formulario no es válido, puedes mostrar mensajes de error o tomar otras acciones
       console.log("Formulario inválido");
@@ -175,6 +160,22 @@ export class MostrarPage implements OnInit {
   cancel() {
     this.modal.dismiss(null, 'cancel');
     this.formularioAlmacen.reset();
+  }
+
+  async selectAlmacen(event:any){
+    const load = this.loadCtrl.create({
+      message: "Cargando..."
+    });
+    (await load).present();
+
+    const result = this.almacenDatos.filter((item:any) => item.id == event.target.value);
+    
+    this.almacen = result;
+
+    const registrosAlmacenById = this.registrosAlmacen.filter((item:any) => item.id_almacen == event.target.value);
+    this.generarTablaAlmacen(registrosAlmacenById);
+    
+    (await load).dismiss();
   }
 
 }

@@ -1,14 +1,44 @@
 <ion-content [fullscreen]="true">
   <!-- INICIO CONTENIDO DE LOS ALMACENES -->
-  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2">
-    <div class="col mb-3">
-      <div class="card ion-margin" style="max-width: 100%;">
-        <div class="card-header" style="background: #2c3d50;">
-          <div class="row">
-            <div class="col-lg-9 col-md-8 col-sm-12 pt-3" style="color: white;">
-              <h4>ALMACÉN 1</h4>
+  <div class="mb-3">
+    <div class="card ion-margin" style="max-width: 100%;">
+      <div class="card-header" style="background: #2c3d50;">
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 pt-1" style="color: white;">
+            <ion-select label="Selecciona un almacen" placeholder="Selecciona un almacen" (ionChange)="selectAlmacen($event)">
+              <ion-select-option *ngFor="let item of almacenDatos" value="{{item.id}}">{{item.clave_almacen}}</ion-select-option>
+            </ion-select>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="almacen != undefined;else elseAlmacen">
+        <div class="row">
+          <div class="col-md-6" style="text-align: center;">
+            <img src="/assets/img/almcen_gas.png" width="70%" alt="...">
+            <div class="ion-margin">
+              <ion-progress-bar class="pb-3" [value]="cantidadAlmacen1"></ion-progress-bar>
             </div>
-            <div class="col-lg-3 col-md-4 col-sm-12">
+          </div>
+          <div class="col-md-6 pt-2 pb-2">
+            <h4 style="text-align: center;">Información del almacen</h4>
+            <div class="ion-padding">
+              <b>Clave del almacen:</b> <br> {{almacen[0].clave_almacen}}
+              <br>
+              <b>Estado del tanque:</b> <br> {{almacen[0].estado_tanque}}
+              <br>
+              <b>Vigencia de calibiración:</b> <br> {{almacen[0].vigencia_calibracion_tanque}}
+              <br>
+              <b>Capacidad almacen:</b> <br> {{almacen[0].capacidad_almacen}}
+              <br>
+              <b>Capacidad operativa:</b> <br> {{almacen[0].capacidad_operativa}}
+              <br>
+              <b>Capacidad útil:</b> <br> {{almacen[0].capacidad_util}}
+              <br>
+              <b>Capacidad de fonaje:</b> <br> {{almacen[0].capacidad_fondaje}}
+              <br>
+              <b>Volumen minimo de operción:</b> <br> {{almacen[0].volumen_minimo_operacion}}
+            </div>
+            <div style="text-align: center;">
               <ion-button id="open-modal-almacen-1" color="light">
                 <ion-icon slot="start" name="add"></ion-icon>
                 Agregar <br> Registro
@@ -17,7 +47,7 @@
                 <ng-template>
                   <ion-header>
                     <ion-toolbar style="--background: #2c3d50;">
-                      <ion-title style="color: white;">Almacen 1</ion-title>
+                      <ion-title style="color: white;">Almacen: {{almacen[0].clave_almacen}}</ion-title>
                       <ion-buttons slot="end">
                         <ion-button (click)="cancel()" [strong]="true" style="color: white;">Cancelar</ion-button>
                       </ion-buttons>
@@ -28,19 +58,25 @@
                       <div class="row">
                         <div class="col-md-4">
                           <ion-item>
-                            <ion-input label="Cantidad Inicial" labelPlacement="floating" formControlName="cantidadInicial" type="number"></ion-input>
+                            <ion-input label="Cantidad Inicial" labelPlacement="floating"
+                              formControlName="cantidad_inical" type="number"></ion-input>
                           </ion-item>
                           <ion-item>
-                            <ion-input label="Cantidad Final" labelPlacement="floating" formControlName="cantidadFinal" type="number"></ion-input>
+                            <ion-input label="Cantidad Final" labelPlacement="floating" formControlName="cantidad_final"
+                              type="number"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-input label="Compra total" labelPlacement="floating"
+                              type="text"></ion-input>
                           </ion-item>
                         </div>
                         <div class="col-md-8">
-                          <ion-datetime formControlName="fechaLlenado" locale="es-ES" hourCycle="h12">
+                          <ion-datetime formControlName="fecha_llenado" locale="es-ES" hourCycle="h12">
                             <span slot="time-label">Tiempo</span>
                           </ion-datetime>
                         </div>
                       </div>
-                      <ion-button expand="block" (click)="submitForm('c1')">Guardar</ion-button>
+                      <ion-button expand="block" (click)="submitForm(almacen[0].id)">Guardar</ion-button>
                     </form>
                   </ion-content>
                 </ng-template>
@@ -48,69 +84,12 @@
             </div>
           </div>
         </div>
-        <div style="text-align: center;">
-          <img src="/assets/img/almcen_gas.png" width="70%" alt="...">
-          <div class="ion-margin">
-            <ion-progress-bar class="pb-3" [value]="cantidadAlmacen1"></ion-progress-bar>
-          </div>
-        </div>
       </div>
-    </div>
-    <div class="col mb-3">
-      <div class="card ion-margin" style="max-width: 100%;">
-        <div class="card-header" style="background: #2c3d50;">
-          <div class="row">
-            <div class="col-lg-9 col-md-8 col-sm-12 pt-3" style="color: white;">
-              <h4>ALMACÉN 2</h4>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-12">
-              <ion-button id="open-modal-almacen-2" color="light">
-                <ion-icon slot="start" name="add"></ion-icon>
-                Agregar <br> Registro
-              </ion-button>
-              <ion-modal trigger="open-modal-almacen-2">
-                <ng-template>
-                  <ion-header>
-                    <ion-toolbar style="--background: #2c3d50;">
-                      <ion-title style="color: white;">Almacen 2</ion-title>
-                      <ion-buttons slot="end">
-                        <ion-button (click)="cancel()" [strong]="true" style="color: white;">Cancelar</ion-button>
-                      </ion-buttons>
-                    </ion-toolbar>
-                  </ion-header>
-                  <ion-content class="ion-padding">
-                    <form [formGroup]="formularioAlmacen">
-                      <div class="row">
-                        <div class="col-md-4">
-                          <ion-item>
-                            <ion-input label="Cantidad Inicial" labelPlacement="floating" formControlName="cantidadInicial" type="number"></ion-input>
-                          </ion-item>
-                          <ion-item>
-                            <ion-input label="Cantidad Final" labelPlacement="floating" formControlName="cantidadFinal" type="number"></ion-input>
-                          </ion-item>
-                        </div>
-                        <div class="col-md-8">
-                          <ion-datetime formControlName="fechaLlenado" locale="es-ES" hourCycle="h12">
-                            <span slot="time-label">Tiempo</span>
-                          </ion-datetime>
-                        </div>
-                      </div>
-                  
-                      <ion-button expand="block" (click)="submitForm('c2')">Guardar</ion-button>
-                    </form>
-                  </ion-content>
-                </ng-template>
-              </ion-modal>
-            </div>
-          </div>
-        </div>
-        <div style="text-align: center;">
-          <img src="/assets/img/almcen_gas.png" width="70%" alt="..." style="transform: scaleX(-1);">
-          <div class="ion-margin">
-            <ion-progress-bar class="pb-3" [value]="cantidadAlmacen2"></ion-progress-bar>
-          </div>
-        </div>
-      </div>
+      <ng-template #elseAlmacen>
+        <h4 style="text-align: center;" class="ion-padding">
+          Aún no se han creado o selecionado almacenes.
+        </h4>
+      </ng-template>
     </div>
   </div>
   <!-- FIN CONTENIDO DE LOS ALMACENES -->
