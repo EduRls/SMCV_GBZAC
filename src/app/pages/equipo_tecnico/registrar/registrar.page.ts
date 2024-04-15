@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import DataTable from 'datatables.net-dt';
 import { EditarMedidorComponent } from 'src/app/componente/editar-medidor/editar-medidor.component';
+import { MantenimientoTurbinaComponent } from 'src/app/componente/mantenimiento-turbina/mantenimiento-turbina.component';
 
 @Component({
   selector: 'app-registrar',
@@ -121,7 +122,27 @@ export class RegistrarPage implements OnInit {
   }
 
   async generarMantnimiento(id:number){
+    const mTrubina = this.equipo.filter((item:any) => item.id === id);
+    const modalMantnimiento = await this.modal.create({
+      component: MantenimientoTurbinaComponent,
+      componentProps: {
+        'mTurbina': mTrubina
+      }
+    });
 
+    await modalMantnimiento.present();
+
+    const {data} = await modalMantnimiento.onWillDismiss();
+
+    if(data){
+      (await this.apiLaravel.createRegistroMantenimientoMedidor(data, this.bearerToken.token)).subscribe({
+        next: (val) => {
+          this.presentToast('bottom', 'Se ha generado un registro de mantenimiento!', 'success');
+        }, error:(error) => {
+          this.presentToast('bottom', 'Algo ha salido mal', 'danger');
+        }
+      })
+    }
   }
 
   async eliminarPipa(id:number){

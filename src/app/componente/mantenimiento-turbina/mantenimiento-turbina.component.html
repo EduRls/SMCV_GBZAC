@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar style="--background: #2c3d50;">
-    <ion-title style="color: white;">Registro de mantenimientos</ion-title>
+    <ion-title style="color: white;">Registrar de mantenimientos</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="cerrarModal()" [strong]="true" style="color: white;">Cancelar</ion-button>
     </ion-buttons>
@@ -8,5 +8,43 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  
+  <ion-card color="warning" class="text-center">
+    <ion-card-header>
+      <ion-card-title>Registro del mantenimiento</ion-card-title>
+      <ion-card-subtitle>Favor de ingresar la infromación correspondiente para registrar un mantenimiento para el medidor de turbina</ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+
+  <form [formGroup]="formularioMantenimiento">
+    <ion-item>
+      <ion-select label="Tipo de mantnimiento" labelPlacement="floating"
+        placeholder="Selecciona un tipo de mantenimiento" formControlName="tipo_mantenimiento">
+        <ion-select-option value="Mantenimiento">Mantenimiento / Semestral</ion-select-option>
+        <ion-select-option value="Verificación">Verificación / Trimestral</ion-select-option>
+        <ion-select-option value="Comprobación">Comprobación / Mensual</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-input label="Nombre del responsable" labelPlacement="floating" type="text"
+        placeholder="Escribe el nombre del responsable" formControlName="responsable"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-select label="Estado del equipo" labelPlacement="floating" placeholder="Selecciona un tipo de mantenimiento" formControlName="estado">
+        <ion-select-option value="Operativo">Operativo</ion-select-option>
+        <ion-select-option value="NoOperativo">Fuera de operación</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item class="pb-3">
+      <ion-textarea placeholder="Observaciones sobre el estado del medidor" [autoGrow]="true" formControlName="observaciones">
+      </ion-textarea>
+    </ion-item>
+
+
+    <ion-button (click)="guardarCambios()" expand="block">
+      Guardar mantnimiento
+    </ion-button>
+  </form>
 </ion-content>

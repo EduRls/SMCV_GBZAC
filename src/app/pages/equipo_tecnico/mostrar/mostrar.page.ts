@@ -186,8 +186,8 @@ export class MostrarPage implements OnInit {
             title: 'Responsable del mantenimiento'
           },
           {
-            data: 'estado',
-            title: 'observaciones'
+            data: 'observaciones',
+            title: 'Observaciones'
           },
           {
             data: 'created_at',

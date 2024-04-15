@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoadingController, ModalController, ToastController } from '@ionic/angular';
 import { LaravelService } from 'src/app/service/api/laravel.service';
@@ -11,6 +11,12 @@ import { DataPaginasService } from 'src/app/service/api/data-paginas.service';
   styleUrls: ['./registrar.page.scss'],
 })
 export class RegistrarPage implements OnInit {
+
+  // Elementos del formulario
+  public modalidadPermisoInputHabil:boolean = false; 
+  public NumPermisoHabil:boolean = false; 
+  public NumContratoOAsignacionHabil:boolean = false; 
+
 
   // Formulario
   formInformacionGeneral: FormGroup;
@@ -32,7 +38,7 @@ export class RegistrarPage implements OnInit {
   ) {
     this.formInformacionGeneral = this.formBuilder.group({
       id_planta: [''],
-      rfc_contribuyente: [''],
+      rfc_contribuyente: ['', Validators.required],
       rfc_representante_legal: [''],
       rfc_proveedor: [''],
       rfc_proveedores: [''],
@@ -64,7 +70,7 @@ export class RegistrarPage implements OnInit {
       (await this.api.getInformacionGeneralReporte(this.token.token, this.token.user.id_planta)).subscribe((data: any) => {
         if (data && data.length > 0) {
           this.generarFormularioReporte(data[0]);
-          this.infromacionGeneral = data
+          this.infromacionGeneral = data;
         }
       });
       this.datapage.consultarInformacion().then((res) => {
@@ -93,7 +99,7 @@ export class RegistrarPage implements OnInit {
   }
 
 
-  initFormulario() {
+  caracterSeleccionado(event:any){
     
   }
 
@@ -117,6 +123,7 @@ export class RegistrarPage implements OnInit {
       (await this.api.editInformacionGeneralReporte(this.infromacionGeneral[0].id, this.formInformacionGeneral.value, this.token.token)).subscribe({
         next:(val)=>{
           this.presentToast('bottom', 'Informaicón guardada correctamente', 'success');
+          this.getInformacion();
         }, error:(err) => {
           console.log("🚀 ~ RegistrarPage ~ err:", err)
           this.presentToast('bottom', 'Algo salió mal, vuelva a intentarlo', 'danger');
@@ -127,6 +134,7 @@ export class RegistrarPage implements OnInit {
       (await this.api.createInformacionGeneralReporte(this.formInformacionGeneral.value, this.token.token)).subscribe({
         next:(val)=>{
           this.presentToast('bottom', 'Informaicón guardada correctamente', 'success');
+          this.getInformacion();
         }, error:(err) => {
           console.log("🚀 ~ RegistrarPage ~ err:", err)
           this.presentToast('bottom', 'Algo salió mal, vuelva a intentarlo', 'danger');
@@ -134,6 +142,27 @@ export class RegistrarPage implements OnInit {
       });
       await load.dismiss();
     }
+  }
+
+  cleanForm(){
+    this.formInformacionGeneral.get('rfc_contribuyente').setValue(null);
+    this.formInformacionGeneral.get('rfc_representante_legal').setValue(null);
+    this.formInformacionGeneral.get('rfc_proveedor').setValue(null);
+    this.formInformacionGeneral.get('rfc_proveedores').setValue(null);
+    this.formInformacionGeneral.get('tipo_caracter').setValue(null);
+    this.formInformacionGeneral.get('modalidad_permiso').setValue(null);
+    this.formInformacionGeneral.get('numero_permiso').setValue(null);
+    this.formInformacionGeneral.get('numero_contrato_asignacion').setValue(null);
+    this.formInformacionGeneral.get('instalacion_almacen_gas').setValue(null);
+    this.formInformacionGeneral.get('clave_instalacion').setValue(null);
+    this.formInformacionGeneral.get('descripcion_instalacion').setValue(null);
+    this.formInformacionGeneral.get('geolocalizacion_latitud').setValue(null);
+    this.formInformacionGeneral.get('geolocalizacion_longitud').setValue(null);
+    this.formInformacionGeneral.get('numero_pozos').setValue(null);
+    this.formInformacionGeneral.get('numero_tanques').setValue(null);
+    this.formInformacionGeneral.get('numero_ductos_entrada_salida').setValue(null);
+    this.formInformacionGeneral.get('numero_ductos_transporte').setValue(null);
+    this.formInformacionGeneral.get('numero_dispensarios').setValue(null);
   }
 
   async consultarGuia(){
