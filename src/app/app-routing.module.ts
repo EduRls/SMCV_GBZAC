@@ -53,7 +53,17 @@ const routes: Routes = [
   {
     path: 'almacen/mostrar',
     loadChildren: () => import('./pages/almacen/mostrar/mostrar.module').then( m => m.MostrarPageModule)
+  },
+  {
+    path: 'usuario/perfil',
+    loadChildren: () => import('./pages/usuario/perfil/perfil.module').then( m => m.PerfilPageModule)
+  },
+  {
+    path: 'usuarios/lista-usuarios',
+    loadChildren: () => import('./pages/usuarios/lista-usuarios/lista-usuarios.module').then( m => m.ListaUsuariosPageModule)
   }
+
+
 
 
 

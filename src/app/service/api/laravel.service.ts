@@ -268,4 +268,13 @@ export class LaravelService {
     const header = this.headerCreate(bearerToken, 'cud')
     return this.http.delete(`${this.api}v1/almacen/${id}`, header);
   }
+
+  /*
+    INFROMAICÓN DEL USUARIO
+  */
+    async getUsuario(bearerToken: string, idPlanta:number, idUsuario:number) {
+      const header = this.headerCreate(bearerToken, 'get')
+      return this.http.get(`${this.api}v1/usuario/${idPlanta}/${idUsuario}`, header)
+    }
+
 }

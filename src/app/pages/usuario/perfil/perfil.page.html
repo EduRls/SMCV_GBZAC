@@ -1,0 +1,38 @@
+<ion-content class="ion-padding" [fullscreen]="true">
+  <ng-container *ngIf="user">
+    <div>
+      <img class="perfil" src="/assets/img/userDefault.jpg" alt="User image">
+    </div>
+
+    <div class="card mt-5">
+      <div class="card-header" style="background-color: #2c3d50; text-align: center; color: white;">
+        <h3>Información del usuario</h3>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-4">
+            <p class="card-text">
+              <b>Nombre del usuario:</b> <br>
+              {{user.name}} <br>
+              <b>Correo electrónico:</b> <br>
+              {{user.email}}
+            </p>
+          </div>
+          <div class="col-md-4">
+            <p class="card-text">
+              <b>Instalaciones:</b> <br>
+              {{user.planta.nombre_planta}}
+            </p>
+          </div>
+          <div class="col-md-4">
+            <p class="card-text">
+              <b>Rol de usuario:</b>
+              <br>
+              {{user.rol.rol}}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ion-content>
