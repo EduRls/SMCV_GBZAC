@@ -157,8 +157,8 @@
         <!-- FIN EQUIPOS -->
 
         <!--INICIO PERFILES DE USUARIO-->
-        <li class="nav-header">USUARIOS</li>
-        <li class="nav-item">
+        <li class="nav-header" *ngIf="userDataRol == 1">USUARIOS</li>
+        <li class="nav-item" *ngIf="userDataRol == 1">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-users"></i>
             <!--i class="nav-icon fas fa-chart-pie"></i-->

@@ -61,7 +61,11 @@ const routes: Routes = [
   {
     path: 'usuarios/lista-usuarios',
     loadChildren: () => import('./pages/usuarios/lista-usuarios/lista-usuarios.module').then( m => m.ListaUsuariosPageModule)
+  },  {
+    path: 'mostrar',
+    loadChildren: () => import('./pages/reportes/bitacora/mostrar/mostrar.module').then( m => m.MostrarPageModule)
   }
+
 
 
 

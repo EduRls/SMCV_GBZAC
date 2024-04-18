@@ -26,7 +26,7 @@ export class PerfilPage implements OnInit {
       this.route.navigate(['/login'], { replaceUrl: true });
     }
     this.userData = this.storage.getUserData();
-    (await this.api.getUsuario(this.userData.token, this.userData.user.id_planta, this.userData.user.id)).subscribe({
+    (await this.api.getUsuarioById(this.userData.token, this.userData.user.id_planta, this.userData.user.id)).subscribe({
       next: (val: any) => {
         this.user = val[0];
       }, error: (err) => {

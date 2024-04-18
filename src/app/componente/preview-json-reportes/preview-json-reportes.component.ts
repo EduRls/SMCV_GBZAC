@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, Input } from '@angular/core';
 import { IonicModule, ModalController } from '@ionic/angular';
-import { prettyPrintJson } from 'pretty-print-json';
+import JSONFormatter from 'json-formatter-js'
 
 @Component({
   selector: 'app-preview-json-reportes',
@@ -19,8 +19,14 @@ export class PreviewJsonReportesComponent  implements OnInit {
   ) { }
 
   ngOnInit() {
+    const formatter = new JSONFormatter(this.informacionReporte);
+
     const elem:any = document.getElementById('account');
-    elem.innerHTML =  prettyPrintJson.toHtml(this.informacionReporte);
+    elem.appendChild(formatter.render());
+
+    formatter.openAtDepth(10);
+
+    elem.style.fontSize = '16px';
   }
 
   cerrarModal(){

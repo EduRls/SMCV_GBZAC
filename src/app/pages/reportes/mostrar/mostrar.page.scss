@@ -4,3 +4,13 @@ ion-item::part(native) {
 
     text-align: center;
   }
+
+@media (min-width: 1024px) {
+  .modalPc {
+    --width: 60%;
+    --min-width: 600px;
+    --height: 90%;
+    --border-radius: 10px;
+    --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+  }
+}

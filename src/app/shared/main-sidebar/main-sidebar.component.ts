@@ -8,14 +8,16 @@ import { StorageService } from 'src/app/service/storage/storage.service';
 export class MainSidebarComponent  implements OnInit {
 
   public userDataName:any
+  public userDataRol:any;
 
   constructor(
     private staroge:StorageService
   ) { }
 
   ngOnInit(): void {
-    this.userDataName = this.staroge.getUserData();
-    this.userDataName = this.userDataName.user.name;
+    const dataUser = this.staroge.getUserData();
+    this.userDataName = dataUser.user.name;
+    this.userDataRol = dataUser.user.id_rol_usuario;
   }
 
 }

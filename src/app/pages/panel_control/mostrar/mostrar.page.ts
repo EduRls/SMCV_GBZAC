@@ -97,7 +97,7 @@ export class MostrarPage implements OnInit {
           url: "/assets/utils/es-ES.json"
         },
         columns: [
-          { data: 'id', title: 'Matricula' },
+          { data: 'pipa.clave_pipa', title: 'Calve pipa' },
           { data: 'inventario_inical', title: 'Inventario Inicial' },
           { data: 'compra', title: 'Compra' },
           { data: 'venta', title: 'Venta' },

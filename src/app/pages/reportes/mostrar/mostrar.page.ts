@@ -53,10 +53,10 @@ export class MostrarPage implements OnInit {
     let fechaSeleccionada:any;
     if(event.target.value == undefined){
       let date = new Date();
-      fechaSeleccionada = date.getFullYear() + '-' + date.getMonth();
+      fechaSeleccionada = date.getFullYear() + '-' + (date.getMonth()+1);
     }else{
       fechaSeleccionada = new Date(event.target.value);
-      fechaSeleccionada = fechaSeleccionada.getFullYear() + '-' + fechaSeleccionada.getMonth();
+      fechaSeleccionada = fechaSeleccionada.getFullYear() + '-' + (fechaSeleccionada.getMonth()+1);
     }
     this.habilitarBoton = false;
     this.token = this.storage.getUserData();
@@ -173,15 +173,34 @@ export class MostrarPage implements OnInit {
   }
 
   exportarJsonReporte(id:number){
+    // Convertir el objeto JSON a una cadena
+    const jsonData = JSON.stringify(this.reportes);
 
+    // Crear un Blob con la cadena JSON
+    const blob = new Blob([jsonData], { type: 'application/json' });
+
+    // Crear un enlace de descarga
+    const url = window.URL.createObjectURL(blob);
+
+    // Crear un elemento de enlace y establecer sus atributos
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'reporte.json'; // Nombre del archivo a descargar
+
+    // Simular clic en el enlace para iniciar la descarga
+    a.click();
+
+    // Liberar el objeto URL
+    window.URL.revokeObjectURL(url);
   }
 
   async preViewJsonReporte(id:number){
     const modalJson = this.modal.create({
       component: PreviewJsonReportesComponent,
       componentProps: {
-        informacionReporte: this.reportes
-      }
+        informacionReporte: this.reportes,
+      },
+      cssClass: 'modalPc'
     });
     (await modalJson).present();
   }

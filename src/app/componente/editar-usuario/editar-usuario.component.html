@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar style="--background: #2c3d50;">
+    <ion-title style="color: white;">Editar Medidor</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cerrarModal()" [strong]="true" style="color: white;">Cancelar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card color="warning" class="text-center">
+    <ion-card-header>
+      <ion-card-title>Registro de usuario</ion-card-title>
+      <ion-card-subtitle>Favor de ingresar la infromación correspondiente para registrar un
+        usuario</ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+  <form [formGroup]="formularioEditarUsuario" (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-input label="Nombre del usuario" labelPlacement="floating" formControlName="name"
+        type="text" placeholder="Ingrese el nombre del usuario"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input label="Correo electrónico" labelPlacement="floating" formControlName="email"
+        type="text" placeholder="Ingrese el correo electrónico del usuario"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input label="Contraseña" labelPlacement="floating" formControlName="password"
+        type="text" placeholder="Ingrese una contraseña para el usuario"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-select label="Rol de usuario" formControlName="id_rol_usuario" labelPlacement="floating">
+        <ion-select-option *ngFor="let item of rolesUsuario" value="{{item.id}}">{{item.rol}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-button type="submit" expand="full" style="padding-top: 2%;">Guardar</ion-button>
+  </form>
+</ion-content>

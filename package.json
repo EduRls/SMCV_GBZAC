@@ -38,6 +38,7 @@
     "datatables.net-dt": "^1.13.10",
     "ionicons": "^7.0.0",
     "jquery": "^3.7.1",
+    "json-formatter-js": "^2.5.10",
     "pretty-print-json": "^3.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
