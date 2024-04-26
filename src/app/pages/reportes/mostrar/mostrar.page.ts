@@ -27,6 +27,7 @@ export class MostrarPage implements OnInit {
 
   // Reportes generados
   public reportes:any;
+  private fechaSeleccionada:any;
 
   constructor(
     private storage:StorageService,
@@ -46,40 +47,48 @@ export class MostrarPage implements OnInit {
   async onSelectElement(event: any) {
     this.tipoReporte = event.target.value;
     this.habilitarMes = false;
+    if(this.fechaSeleccionada != undefined){
+      this.consultarInformacionReportes(); 
+    }
   }
 
   // En tu método onSelectElementMonth
   async onSelectElementMonth(event: any) {
-    let fechaSeleccionada:any;
     if(event.target.value == undefined){
       let date = new Date();
-      fechaSeleccionada = date.getFullYear() + '-' + (date.getMonth()+1);
+      this.fechaSeleccionada = date.getFullYear() + '-' + (date.getMonth()+1);
     }else{
-      fechaSeleccionada = new Date(event.target.value);
-      fechaSeleccionada = fechaSeleccionada.getFullYear() + '-' + (fechaSeleccionada.getMonth()+1);
+      this.fechaSeleccionada = new Date(event.target.value);
+      this.fechaSeleccionada = this.fechaSeleccionada.getFullYear() + '-' + (this.fechaSeleccionada.getMonth()+1);
     }
     this.habilitarBoton = false;
+    this.consultarInformacionReportes();
+  }
+
+  async consultarInformacionReportes(){
     this.token = this.storage.getUserData();
-    (await this.api.getReporteVolumetrico(this.token.token, this.token.user.id_planta, fechaSeleccionada)).subscribe({
+    (await this.api.getReporteVolumetrico(this.token.token, this.token.user.id_planta, this.fechaSeleccionada, this.tipoReporte)).subscribe({
       next: (val:any) => {
         this.reportes = val
       },error:(err) => {
-      console.log("🚀 ~ MostrarPage ~ err:", err)
+        console.log("🚀 ~ MostrarPage ~ err:", err)
       }
     })
   }
 
   async generarReportes(){
-    if (this.tipoReporte.includes('diario') && this.tipoReporte.includes('mensual')) {
+    if (this.tipoReporte.includes("0") && this.tipoReporte.includes("1")) {
       this.tablaRMensualGenerada = true;
       this.tablaRDiarioGenerada = true;
-      this.generarTablaReporteDiario(this.reportes);
-      this.generarTablaReporteMensual(this.reportes);
-    } else if (this.tipoReporte.includes('diario')) {
+      const reportesDiarios = this.reportes.DIARIOS.original;
+      this.generarTablaReporteDiario(reportesDiarios);
+      const reportesMensuales = this.reportes.MENSUALES.original;
+      this.generarTablaReporteMensual(reportesMensuales);
+    } else if (this.tipoReporte.includes("1")) {
       this.tablaRMensualGenerada = false;
       this.tablaRDiarioGenerada = true;
       this.generarTablaReporteDiario(this.reportes);
-    } else if (this.tipoReporte.includes('mensual')) {
+    } else if (this.tipoReporte.includes("0")) {
       this.tablaRMensualGenerada = true;
       this.tablaRDiarioGenerada = false;
       this.generarTablaReporteMensual(this.reportes);
@@ -118,7 +127,7 @@ export class MostrarPage implements OnInit {
           eliminarButton.setAttribute('size', 'small');
           eliminarButton.setAttribute('color', 'warning');
           eliminarButton.innerHTML = '<ion-icon name="eye-outline"></ion-icon>';
-          eliminarButton.addEventListener('click', () => this.preViewJsonReporte(data.id));
+          eliminarButton.addEventListener('click', () => this.preViewJsonReporte(data));
   
           const cell = row.getElementsByTagName('td')[2];
           cell.innerHTML = '';
@@ -126,6 +135,7 @@ export class MostrarPage implements OnInit {
           cell.appendChild(eliminarButton);
         }
       });
+      tablaReporteMensual.draw();
     }, 300);
   }
 
@@ -160,7 +170,7 @@ export class MostrarPage implements OnInit {
           eliminarButton.setAttribute('size', 'small');
           eliminarButton.setAttribute('color', 'warning');
           eliminarButton.innerHTML = '<ion-icon name="eye-outline"></ion-icon>';
-          eliminarButton.addEventListener('click', () => this.preViewJsonReporte(data.id));
+          eliminarButton.addEventListener('click', () => this.preViewJsonReporte(data));
   
           const cell = row.getElementsByTagName('td')[2];
           cell.innerHTML = '';
@@ -168,7 +178,7 @@ export class MostrarPage implements OnInit {
           cell.appendChild(eliminarButton);
         }
       });
-      
+      tablaReporteDiario.draw();
     }, 300);
   }
 
@@ -194,11 +204,11 @@ export class MostrarPage implements OnInit {
     window.URL.revokeObjectURL(url);
   }
 
-  async preViewJsonReporte(id:number){
+  async preViewJsonReporte(data:any){
     const modalJson = this.modal.create({
       component: PreviewJsonReportesComponent,
       componentProps: {
-        informacionReporte: this.reportes,
+        informacionReporte: data,
       },
       cssClass: 'modalPc'
     });

@@ -235,9 +235,9 @@ export class LaravelService {
   }
 
   // Generación de reporte
-  async getReporteVolumetrico(bearerToken: string, idPlanta: number, monthAndYear: string) {
+  async getReporteVolumetrico(bearerToken: string, idPlanta: number, monthAndYear: string, tipoDM:number) {
     const header = this.headerCreate(bearerToken, 'get')
-    return this.http.get(`${this.api}v1/generar-reporte/${idPlanta}/${monthAndYear}`, header);
+    return this.http.get(`${this.api}v1/generar-reporte/${idPlanta}/${monthAndYear}/${tipoDM}`, header);
   }
 
   /*
