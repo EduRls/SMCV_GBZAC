@@ -235,7 +235,7 @@ export class LaravelService {
   }
 
   // Generación de reporte
-  async getReporteVolumetrico(bearerToken: string, idPlanta: number, monthAndYear: string, tipoDM:number) {
+  async getReporteVolumetrico(bearerToken: string, idPlanta: number, monthAndYear: string, tipoDM: number) {
     const header = this.headerCreate(bearerToken, 'get')
     return this.http.get(`${this.api}v1/generar-reporte/${idPlanta}/${monthAndYear}/${tipoDM}`, header);
   }
@@ -300,5 +300,32 @@ export class LaravelService {
   async getRolUsuario(bearerToken: string) {
     const header = this.headerCreate(bearerToken, 'get')
     return this.http.get(`${this.api}v1/rol`, header)
+  }
+
+  /*
+  INFROMAICÓN DEL USUARIO
+  */
+  async getBitacoraEvento(bearerToken: string, idPlanta: number) {
+    const header = this.headerCreate(bearerToken, 'get');
+    return this.http.get(`${this.api}v1/bitacoraEventos/${idPlanta}`, header);
+  }
+  async getBitacoraEventoById(bearerToken: string, idPlanta: number, id: number) {
+    const header = this.headerCreate(bearerToken, 'get')
+    return this.http.get(`${this.api}v1/bitacoraEventos/${idPlanta}/${id}`, header)
+  }
+  // Agregar un nuevo medidor
+  async createBitacoraEvento(data: any, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'cud')
+    return this.http.post(`${this.api}v1/bitacoraEventos`, data, header);
+  }
+  // Editar un medidor
+  async editBitacoraEvento(id: number, data: any, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'cud')
+    return this.http.post(`${this.api}v1/bitacoraEventos/${id}`, data, header);
+  }
+  // Eliminar un medidor
+  async deleteBitacoraEvento(id: number, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'cud')
+    return this.http.delete(`${this.api}v1/bitacoraEventos/${id}`, header);
   }
 }

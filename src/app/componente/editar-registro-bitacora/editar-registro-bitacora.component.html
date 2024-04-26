@@ -1,0 +1,45 @@
+<ion-header >
+  <ion-toolbar style="--background: #2c3d50;">
+    <ion-title style="color: white;">Editar registro</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cerrarModal()" [strong]="true" style="color: white;">Cancelar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="formularioBitacora" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col-md-6">
+        <ion-item>
+          <ion-input label="Número de evento" labelPlacement="floating" formControlName="NumeroRegistro"
+            type="text" placeholder="Ingrese el número del evento"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input label="Usuario responsable" labelPlacement="floating" formControlName="UsuarioResponsable"
+            type="text" placeholder="Ingrese el usuario responsable"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input label="Tipo de evento" labelPlacement="floating" formControlName="TipoEvento"
+            type="text" placeholder="Ingrese el tipo de evento"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-textarea label="Descripción del evento" labelPlacement="floating" formControlName="DescripcionEvento"
+            type="text" placeholder="Ingrese la descrción del evento" [autoGrow]="true"></ion-textarea>
+        </ion-item>
+
+        <ion-item>
+          <ion-input label="Identificación de la alarma" labelPlacement="floating" formControlName="IdentificacionComponenteAlarma"
+            type="text" placeholder="Ingrese alarma"></ion-input>
+        </ion-item>
+      </div>
+      <div class="col-md-6">
+        <ion-datetime locale="es-ES" formControlName="FechaYHoraEvento"></ion-datetime>
+      </div>
+    </div>
+    <ion-button type="submit" expand="full" style="padding-top: 2%;">Guardar</ion-button>
+  </form>
+</ion-content>
