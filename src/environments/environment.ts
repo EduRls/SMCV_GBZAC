@@ -7,7 +7,7 @@ export const environment = {
   authOptions: {
     isloggedUser: false
   },
-  urlServidor: "http://192.168.10.129:8000/api/"
+  urlServidor: "http://127.0.0.1:8000/api/"
 };
 
 /*
