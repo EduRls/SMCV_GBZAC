@@ -31,6 +31,66 @@ export class LaravelService {
   ) { }
 
   /*
+    INICIO CRUD EXISTENCIA DEL ALMACEN
+  */
+  // Obtención de la informaicón de los medidores
+  async getExistenciaAlmacen(bearerToken: string, idPlanta: number) {
+    const header = this.headerCreate(bearerToken, 'get')
+    return this.http.get(`${this.api}v1/existenciaAlmacen/${idPlanta}`, header)
+  }
+  // Obtener información de un medidor de acuerdo a un ID
+  async getExistenciaAlmacenById(id: number, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'get')
+    return this.http.get(`${this.api}v1/existenciaAlmacen/${id}`);
+  }
+  // Agregar un nuevo medidor
+  async createExistenciaAlmacen(data: any, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'cud')
+    return this.http.post(`${this.api}v1/existenciaAlmacen`, data, header);
+  }
+  // Editar un medidor
+  async editExistenciaAlmacen(id: number, data: any, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'cud')
+    return this.http.post(`${this.api}v1/existenciaAlmacen/${id}`, data, header);
+  }
+  async verificarExistenciaAlmacen(id: number, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'get')
+    return this.http.get(`${this.api}v1/existenciaAlmacen/verificar/${id}`, header);
+  }
+
+
+  /*
+    INICIO CRUD EVENTOS DEL ALMACEN
+  */
+  // Obtención de la informaicón de los medidores
+  async getEventosAlmacen(bearerToken: string, idPlanta: number) {
+    const header = this.headerCreate(bearerToken, 'get')
+    return this.http.get(`${this.api}v1/eventoAlmacen/${idPlanta}`, header)
+  }
+  // Obtener información de un medidor de acuerdo a un ID
+  async getEventosAlmacenById(id: number, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'get')
+    return this.http.get(`${this.api}v1/eventoAlmacen/${id}`);
+  }
+  // Agregar un nuevo medidor
+  async createEventosAlmacen(data: any, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'cud')
+    return this.http.post(`${this.api}v1/eventoAlmacen`, data, header);
+  }
+  // Editar un medidor
+  async editEventosAlmacen(id: number, data: any, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'cud')
+    return this.http.post(`${this.api}v1/eventoAlmacen/${id}`, data, header);
+  }
+  // Eliminar un medidor
+  async deleteEventosAlmacen(id: number, bearerToken: string) {
+    const header = this.headerCreate(bearerToken, 'cud')
+    return this.http.delete(`${this.api}v1/eventoAlmacen/${id}`, header);
+  }
+
+
+
+  /*
     INICIO CRUD MEDIDORES DE TURBINA
   */
   // Obtención de la informaicón de los medidores

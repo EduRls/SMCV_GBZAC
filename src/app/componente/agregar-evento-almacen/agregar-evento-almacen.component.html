@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-toolbar style="--background: #2c3d50;">
+    <ion-title style="color: white;">Registrar evento de almacén</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cerrarModal()" style="color: white;">Cancelar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="formularioEvento" (ngSubmit)="guardarEvento()">
+    <div class="row">
+      <div class="col-md-6">
+        <ion-select formControlName="tipo_evento" label="Tipo de evento" labelPlacement="floating" fill="outline" (ionChange)="calcularVolumenFinal()">
+          <ion-select-option value="entrada">Recepción</ion-select-option>
+          <ion-select-option value="salida">Entrega</ion-select-option>
+        </ion-select>
+      </div>
+      <div class="col-md-6">
+        <ion-select formControlName="id_almacen" label="Tanque asociado" labelPlacement="floating" fill="outline" (ionChange)="onChangeTanque()">
+          <ion-select-option *ngFor="let tanque of listaTanques" [value]="tanque.id">
+            {{ tanque.clave_almacen }}
+          </ion-select-option>
+        </ion-select>
+      </div>
+    </div>
+
+    <div class="row pt-3">
+      <div class="col-md-4">
+        <ion-input formControlName="volumen_inicial" label="Volumen inicial" type="number" fill="outline" labelPlacement="floating" (ionInput)="calcularVolumenFinal()"></ion-input>
+      </div>
+      <div class="col-md-4">
+        <ion-input formControlName="volumen_movido" label="Volumen del evento" type="number" fill="outline" labelPlacement="floating" (ionInput)="calcularVolumenFinal()"></ion-input>
+      </div>
+      <div class="col-md-4">
+        <ion-input formControlName="volumen_final" label="Volumen final" type="number" fill="outline" labelPlacement="floating"></ion-input>
+      </div>
+    </div>
+
+    <div class="row pt-3" style="padding-left: 5%;">
+      <div class="col-md-6" style="text-align: center;">
+        <p>
+          <b>Fecha y hora de inicio del evento</b>
+        </p>
+        <ion-datetime formControlName="fecha_inicio_evento" label="Inicio del evento" presentation="date-time" fill="outline"></ion-datetime>
+      </div>
+      <div class="col-md-6" style="text-align: center; padding-left: 3%;">
+        <p>
+          <b>Fecha y hora de final del evento</b>
+        </p>
+        <ion-datetime formControlName="fecha_fin_evento" label="Fin del evento" presentation="date-time" fill="outline"></ion-datetime>
+      </div>
+    </div>
+    
+
+    <div class="row pt-3">
+      <div class="col-md-6">
+        <ion-input formControlName="temperatura" label="Temperatura (opcional)" type="number" fill="outline" labelPlacement="floating"></ion-input>
+      </div>
+      <div class="col-md-6">
+        <ion-input formControlName="presion_absoluta" label="Presión absoluta (opcional)" type="number" fill="outline" labelPlacement="floating"></ion-input>
+      </div>
+    </div>
+
+
+    <ion-textarea formControlName="observaciones" label="Observaciones" labelPlacement="floating" autoGrow="true" fill="outline"></ion-textarea>
+
+    <div style="text-align: center;">
+      <ion-button type="submit"
+        style="padding-top: 2%; width: 50%; --background: #2c3d50; border-radius: 5%;">Guardar</ion-button>
+    </div>
+  </form>
+</ion-content>

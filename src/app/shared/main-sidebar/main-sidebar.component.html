@@ -54,7 +54,7 @@
 
         <!-- INICIO REPORTES -->
         <li class="nav-header">REPORTES VOLUMETRICOS</li>
-        <li class="nav-item">
+        <li class="nav-item menu-open">
           <a class="nav-link">
             <i class="nav-icon fas fa-clipboard"></i>
             <!--i class="nav-icon fas fa-chart-pie"></i-->
@@ -87,7 +87,7 @@
         <!-- FIN REPORTES -->
         <!-- INICIO PIPAS COMBUSTIBLE -->
         <li class="nav-header">AUTOTANQUES</li>
-        <li class="nav-item">
+        <li class="nav-item menu-open">
           <a class="nav-link">
             <i class="nav-icon fas fa-truck"></i>
             <!--i class="nav-icon fas fa-chart-pie"></i-->
@@ -113,8 +113,8 @@
             </li>
           </ul>
         </li>
-        <li class="nav-header">ALMACENES</li>
-        <li class="nav-item">
+        <li class="nav-header">ALMACENES / TANQUE</li>
+        <li class="nav-item menu-open">
           <a class="nav-link">
             <i class="nav-icon fas fa-warehouse"></i>
             
@@ -131,15 +131,21 @@
                 <p>Lista de almacenes</p>
               </a>
             </li>
+            <li class="nav-item">
+              <a routerLink="almacen/mostrar" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Registro de entradas/salidas</p>
+              </a>
+            </li>
           </ul>
         </li>
         <!-- FIN PIPAS COMBUSTIBLE -->
-        <!-- INICIO EQUIPOS -->
+        <!-- INICIO EQUIPOS >
         <li class="nav-header">EQUIPOS</li>
         <li class="nav-item">
           <a class="nav-link">
             <i class="nav-icon fas fa-toolbox"></i>
-            <!--i class="nav-icon fas fa-chart-pie"></i-->
+            <i class="nav-icon fas fa-chart-pie"></i>
             <p>
               Medidor de Turbina
               <i class="right fas fa-angle-left"></i>
@@ -160,11 +166,11 @@
             </li>
           </ul>
         </li>
-        <!-- FIN EQUIPOS -->
+        < FIN EQUIPOS -->
 
         <!--INICIO PERFILES DE USUARIO-->
         <li class="nav-header" *ngIf="userDataRol == 1">USUARIOS</li>
-        <li class="nav-item" *ngIf="userDataRol == 1">
+        <li class="nav-item menu-open" *ngIf="userDataRol == 1">
           <a class="nav-link">
             <i class="nav-icon fas fa-users"></i>
             <!--i class="nav-icon fas fa-chart-pie"></i-->

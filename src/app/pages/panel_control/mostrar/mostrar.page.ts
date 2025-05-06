@@ -6,8 +6,7 @@ import { StorageService } from 'src/app/service/storage/storage.service';
 import * as $ from 'jquery';
 import DataTable from 'datatables.net-dt';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { LoadingController, ModalController, ToastController } from '@ionic/angular';
-
+import { LoadingController, ToastController } from '@ionic/angular';
 @Component({
   selector: 'app-mostrar',
   templateUrl: './mostrar.page.html',
@@ -16,37 +15,60 @@ import { LoadingController, ModalController, ToastController } from '@ionic/angu
 export class MostrarPage implements OnInit {
 
   formularioAlmacen: FormGroup;
+  public reloj: string = '';
+
 
   constructor(
     private api: LaravelService,
     private authSerivce: AuthService,
     private storage: StorageService,
     private route: Router,
-    private modal:ModalController,
-    private toastController:ToastController,
-    private loadCtrl:LoadingController
+    private toastController: ToastController,
+    private loadCtrl: LoadingController
   ) { }
 
-  public datos: any = [];
-  public almacenDatos:any;
-  public almacen:any;
+  public almacenDatos: any;
+  public almacen: any;
   private token: any;
-
-  private registrosAlmacen:any;
-  public registrosAlmacenById:any;
-
-  public cantidadAlmacen1:number = 0.2
-  public cantidadAlmacen2:number = 0.5
-
+  private registrosEventosAlmacen: any[] = [];
+  public cantidadAlmacen1: number = 0;
+  public cantidadAlmacenTexto: string = '';
 
   ngOnInit(): void {
     if (!this.storage.getUserLogged()) {
       this.storage.logout();
       this.route.navigate(['/login'], { replaceUrl: true });
     }
+    this.actualizarReloj(); // Inicia el reloj
   }
 
-  async presentToast(position: 'top' | 'middle' | 'bottom', mensaje:string, color: "success" | "warning" | "danger") {
+  actualizarReloj() {
+    this.reloj = new Date().toLocaleString('es-MX', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true
+    });
+  
+    setInterval(() => {
+      this.reloj = new Date().toLocaleString('es-MX', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+      });
+    }, 1000);
+  }
+
+  async presentToast(position: 'top' | 'middle' | 'bottom', mensaje: string, color: "success" | "warning" | "danger") {
     const toast = await this.toastController.create({
       message: mensaje,
       duration: 1500,
@@ -57,125 +79,72 @@ export class MostrarPage implements OnInit {
     await toast.present();
   }
 
-  async generarFormaulario(){
-    this.formularioAlmacen = new FormGroup({
-      id_planta: new FormControl(this.token.user.id_planta ,Validators.required),
-      id_almacen: new FormControl('', Validators.required),
-      cantidad_inical: new FormControl('', Validators.required),
-      cantidad_final: new FormControl('', Validators.required),
-      fecha_llenado: new FormControl('', Validators.required)
-    });
-  }
-
   async ionViewDidEnter() {
-    await this.getInformaicon();
-    this.generarFormaulario();
-  }
-
-  async getInformaicon() {
     this.token = this.storage.getUserData();
-    (await this.api.getRegistroPipasES(this.token.token, this.token.user.id_planta)).subscribe((res: any) => {
-      this.generarTabla(res)
+    await this.getInformacion();
+    this.generarTablaEventos([]); // precargar tabla vacía con columnas
+  }
+
+  async getInformacion() {
+    (await this.api.getEventosAlmacen(this.token.token, this.token.user.id_planta)).subscribe((res: any) => {
+      this.registrosEventosAlmacen = res;
     });
-    (await this.api.getRegistroAlmacen(this.token.token, this.token.user.id_planta)).subscribe((res: any) => {
-      this.registrosAlmacen = res;
-      console.log("🚀 ~ MostrarPage ~ this.registrosAlmacen:", this.registrosAlmacen)
-      this.calcularNivelContenedor(res);
-    });
-    (await this.api.getAlmacen(this.token.token, this.token.user.id_planta)).subscribe((res:any) => {
+
+    (await this.api.getAlmacen(this.token.token, this.token.user.id_planta)).subscribe((res: any) => {
       this.almacenDatos = res;
-    })
+    });
   }
 
-  async generarTabla(data: any) {
-    if ($.fn.DataTable.isDataTable('#listaRegistroPipasPanel')) {
-      $('#listaRegistroPipasPanel').DataTable().destroy();
-    }
-    setTimeout(() => {
-      const tablaRegistroPipas = new DataTable('#listaRegistroPipasPanel', {
-        language: {
-          url: "/assets/utils/es-ES.json"
-        },
-        columns: [
-          { data: 'pipa.clave_pipa', title: 'Calve pipa' },
-          { data: 'inventario_inical', title: 'Inventario Inicial' },
-          { data: 'compra', title: 'Compra' },
-          { data: 'venta', title: 'Venta' },
-          { data: 'inventario_final', title: 'Inventario Final' }
-        ],
-        data: data
-      });
-    }, 300);
-    
+  async selectAlmacen(event: any) {
+    const idAlmacen = event.detail.value;
+    this.almacen = this.almacenDatos.filter((item: any) => item.id == idAlmacen);
+
+    const hoy = new Date().toISOString().split('T')[0];
+    const eventosFiltrados = this.registrosEventosAlmacen.filter((e: any) =>
+      e.id_almacen == idAlmacen && e.created_at.startsWith(hoy)
+    );
+
+
+    this.generarTablaEventos(eventosFiltrados);
+    this.actualizarBarraProgreso(idAlmacen);
   }
 
-  async generarTablaAlmacen(data: any) {
+  async generarTablaEventos(data: any) {
     if ($.fn.DataTable.isDataTable('#almacenCombustible')) {
       $('#almacenCombustible').DataTable().destroy();
     }
     setTimeout(() => {
-      const tablaRegistroAlmacen = new DataTable('#almacenCombustible', {
+      const tablaEventos = new DataTable('#almacenCombustible', {
         language: {
           url: "/assets/utils/es-ES.json"
         },
         columns: [
-          { data: 'almacen.clave_almacen', title: 'Clave del almacen' },
-          { data: 'cantidad_inical', title: 'Cantidad inicial' },
-          { data: 'cantidad_final', title: 'Cantidad final' },
-          { data: 'fecha_llenado', title: 'Fecha llenado' },
+          { data: 'tipo_evento', title: 'Tipo de evento' },
+          { data: 'volumen_inicial', title: 'Volumen inicial (L)' },
+          { data: 'volumen_movido', title: 'Movimiento (L)' },
+          { data: 'volumen_final', title: 'Volumen final (L)' },
+          { data: 'fecha_inicio_evento', title: 'Inicio del evento' },
+          { data: 'fecha_fin_evento', title: 'Fin del evento' },
+          { data: 'observaciones', title: 'Observaciones' }
         ],
         data: data
       });
     }, 300);
-    
   }
 
-  async calcularNivelContenedor(data:any){
-    //this.cantidadAlmacen1 = ((data[0]['cantidad_final'] * 100) / 125000)/100;
-    //this.cantidadAlmacen2 = ((data[1]['cantidad_final'] * 100) / 125000)/100
-  }
-
-  async submitForm(almacen:any) {
-    this.formularioAlmacen.get('id_almacen').setValue(almacen);
-    if (this.formularioAlmacen.valid) {
-      ;(await this.api.createRegistroAlmacen(this.formularioAlmacen.value, this.token.token)).subscribe({
-        next:(val) => {
-          this.presentToast('bottom', 'Se ha creado un nuevo registro', 'success');
-          this.formularioAlmacen.reset();
-          this.modal.dismiss();
-          setTimeout(() => {
-            window.location.reload();
-          }, 500);
-        }, error:(err) => {
-          console.log(err);
-          this.presentToast('bottom', 'Algo ha salido mal, vuelve a intentarlo', 'danger');
-        }
-      })
+  async actualizarBarraProgreso(idAlmacen: number) {
+    const eventos = this.registrosEventosAlmacen.filter((e: any) => e.id_almacen == idAlmacen);
+    if (eventos.length > 0) {
+      const ultimo = eventos.sort((a, b) => new Date(b.fecha_fin_evento).getTime() - new Date(a.fecha_fin_evento).getTime())[0];
+      const almacenInfo = this.almacenDatos.find((a: any) => a.id == idAlmacen);
+      if (almacenInfo && almacenInfo.capacidad_almacen > 0) {
+        const porcentaje = ultimo.volumen_final / almacenInfo.capacidad_almacen;
+        this.cantidadAlmacen1 = porcentaje;
+        this.cantidadAlmacenTexto = `${(porcentaje * 100).toFixed(1)}% - ${ultimo.volumen_final}L / ${almacenInfo.capacidad_almacen}L`;
+      }
     } else {
-      // Si el formulario no es válido, puedes mostrar mensajes de error o tomar otras acciones
-      console.log("Formulario inválido");
+      this.cantidadAlmacen1 = 0;
+      this.cantidadAlmacenTexto = '0% - Sin registros';
     }
   }
-
-  cancel() {
-    this.modal.dismiss(null, 'cancel');
-    this.formularioAlmacen.reset();
-  }
-
-  async selectAlmacen(event:any){
-    const load = this.loadCtrl.create({
-      message: "Cargando..."
-    });
-    (await load).present();
-
-    const result = this.almacenDatos.filter((item:any) => item.id == event.target.value);
-    
-    this.almacen = result;
-
-    const registrosAlmacenById = this.registrosAlmacen.filter((item:any) => item.id_almacen == event.target.value);
-    this.generarTablaAlmacen(registrosAlmacenById);
-    
-    (await load).dismiss();
-  }
-
 }

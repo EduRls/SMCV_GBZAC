@@ -80,7 +80,7 @@ export class MostrarPage implements OnInit {
     if (this.tipoReporte.includes("0") && this.tipoReporte.includes("1")) {
       this.tablaRMensualGenerada = true;
       this.tablaRDiarioGenerada = true;
-      const reportesDiarios = this.reportes.DIARIOS.original;
+      const reportesDiarios = this.reportes.DIARIOS;
       this.generarTablaReporteDiario(reportesDiarios);
       const reportesMensuales = this.reportes.MENSUALES.original;
       this.generarTablaReporteMensual(reportesMensuales);
@@ -140,6 +140,7 @@ export class MostrarPage implements OnInit {
   }
 
   async generarTablaReporteDiario(data:any) {
+    console.log(data)
     if ($.fn.DataTable.isDataTable('#tablaReporteDiario')) {
       $('#tablaReporteDiario').DataTable().destroy();
     }
@@ -153,24 +154,24 @@ export class MostrarPage implements OnInit {
         language: {
           url: "/assets/utils/es-ES.json"
         },
-        data: [data],
+        data: data,
         columns: [
-          { title: 'Identificador', data: 'Version' },
-          { title: 'Fecha del reporte', data: 'FechaYHoraReporteMes' },
+          { title: 'Identificador', data: 'REPORTE.Version' },
+          { title: 'Fecha del reporte', data: 'Fecha' },
           { title: 'Operaciones', orderable: false, searchable: false, data: null }
         ],
         createdRow: (row: any, data: any, dataIndex: any) => {
           const editarButton = document.createElement('ion-button');
           editarButton.setAttribute('size', 'small');
           editarButton.innerHTML = '<ion-icon name="code-download-outline"></ion-icon>';
-          editarButton.addEventListener('click', () => this.exportarJsonReporte(data.id));
+          editarButton.addEventListener('click', () => this.exportarJsonReporte(data.REPORTE.id));
           editarButton.style.marginRight = '15%';
   
           const eliminarButton = document.createElement('ion-button');
           eliminarButton.setAttribute('size', 'small');
           eliminarButton.setAttribute('color', 'warning');
           eliminarButton.innerHTML = '<ion-icon name="eye-outline"></ion-icon>';
-          eliminarButton.addEventListener('click', () => this.preViewJsonReporte(data));
+          eliminarButton.addEventListener('click', () => this.preViewJsonReporte(data.REPORTE));
   
           const cell = row.getElementsByTagName('td')[2];
           cell.innerHTML = '';

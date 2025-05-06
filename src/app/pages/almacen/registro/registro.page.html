@@ -10,7 +10,7 @@
             <ion-icon slot="start" name="add"></ion-icon>
             Agregar <br> Almacen
           </ion-button>
-          <ion-modal trigger="agregarAlmacenModal">
+          <ion-modal trigger="agregarAlmacenModal" style="--height: 75%; --width: 70%;">
             <ng-template>
               <ion-header>
                 <ion-toolbar style="--background: #2c3d50;">
@@ -21,72 +21,68 @@
                   </ion-buttons>
                 </ion-toolbar>
               </ion-header>
-              <ion-content class="ion-padding">
-                <ion-card color="warning" class="text-center">
+              <ion-content>
+                <ion-card color="primary" class="text-center">
                   <ion-card-header>
-                    <ion-card-title>Registro de almacen</ion-card-title>
                     <ion-card-subtitle>Favor de ingresar la infromación correspondiente para registrar un
-                      almacen</ion-card-subtitle>
+                      almacen (TANQUES) de hidrocarburos</ion-card-subtitle>
                   </ion-card-header>
                 </ion-card>
-                <form [formGroup]="formularioAlmacen" (ngSubmit)="onSubmit()">
-                  <ion-item>
-                    <ion-input label="Clave del almacen" labelPlacement="floating" formControlName="clave_almacen"
-                      type="text" placeholder="Ingrese la clave del almacen"></ion-input>
-                  </ion-item>
-                  <ion-item>
-                    <ion-textarea label="Localización y descripción" labelPlacement="floating"  [autoGrow]="true" formControlName="localizacion_descripcion_almacen" placeholder="Ingrese la descripción de la pipa">
-                    </ion-textarea>
-                  </ion-item>
+                <form class="ion-padding" [formGroup]="formularioAlmacen" (ngSubmit)="onSubmit()">
                   <div class="row">
                     <div class="col-md-6">
-                      <ion-item>
-                        <ion-input label="Capacidad" labelPlacement="floating" formControlName="capacidad_almacen"
-                          type="number" placeholder="Ingrese la capcidad en Litros del almacen"></ion-input>
-                      </ion-item>
+                      <ion-input label="Clave del almacen" labelPlacement="floating" formControlName="clave_almacen"
+                        type="text" placeholder="Ingrese la clave del almacen (TANQUE) - TQS-TDA-000X" fill="outline"></ion-input>
                     </div>
                     <div class="col-md-6">
-                      <ion-item>
-                        <ion-input label="Vigencia de calibración del almacen" labelPlacement="floating" formControlName="vigencia_calibracion_tanque"
-                          type="date" placeholder="Ingrese la última fecha en la que se calibró"></ion-input>
-                      </ion-item>
+                      <ion-select label="Estado del tanque" labelPlacement="floating"
+                        formControlName="estado_tanque" placeholder="Estado del tanque" fill="outline">
+                        <ion-select-option value="O">En operación</ion-select-option>
+                        <ion-select-option value="F">Fuera de operación</ion-select-option>
+                      </ion-select>
+                    </div>
+                  </div>
+                  <ion-textarea label="Localización y descripción" labelPlacement="floating" fill="outline"
+                    [autoGrow]="true" formControlName="localizacion_descripcion_almacen"
+                    placeholder="Ingrese la descripción del tanque">
+                  </ion-textarea>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <ion-input label="Capacidad" labelPlacement="floating" formControlName="capacidad_almacen"
+                        type="number" placeholder="Ingrese la capcidad en Litros del almacen" fill="outline"></ion-input>
+                    </div>
+                    <div class="col-md-6">
+                      <ion-input label="Vigencia de calibración del almacen" labelPlacement="floating"
+                        formControlName="vigencia_calibracion_tanque" type="date"
+                        placeholder="Ingrese la última fecha en la que se calibró" fill="outline"></ion-input>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-6">
-                      <ion-item>
-                        <ion-input label="Capacidad operativa" labelPlacement="floating" formControlName="capacidad_operativa"
-                          type="number" placeholder="Cantidad máxima en la que opera del almacen"></ion-input>
-                      </ion-item>
+                      <ion-input label="Capacidad operativa" labelPlacement="floating"
+                        formControlName="capacidad_operativa" type="number"
+                        placeholder="Cantidad máxima en la que opera del almacen" fill="outline"></ion-input>
                     </div>
                     <div class="col-md-6">
-                      <ion-item>
-                        <ion-input label="Capacidad útil" labelPlacement="floating" formControlName="capacidad_util"
-                          type="number" placeholder="Cantidad útil en la que opera del almacen"></ion-input>
-                      </ion-item>
+                      <ion-input label="Capacidad útil" labelPlacement="floating" formControlName="capacidad_util"
+                        type="number" placeholder="Cantidad útil en la que opera del almacen" fill="outline"></ion-input>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-6">
-                      <ion-item>
-                        <ion-input label="Capacidad fondaje" labelPlacement="floating" formControlName="capacidad_fondaje"
-                          type="number" placeholder="Cantidad fondaje en la que opera del almacen"></ion-input>
-                      </ion-item>
+                      <ion-input label="Capacidad fondaje" labelPlacement="floating" formControlName="capacidad_fondaje"
+                        type="number" placeholder="Cantidad fondaje en la que opera del almacen" fill="outline"></ion-input>
                     </div>
                     <div class="col-md-6">
-                      <ion-item>
-                        <ion-input label="Valor minimo de operación" labelPlacement="floating" formControlName="volumen_minimo_operacion"
-                          type="number" placeholder="Cantidad mínima en la que opera del almacen"></ion-input>
-                      </ion-item>
+                      <ion-input label="Valor minimo de operación" labelPlacement="floating"
+                        formControlName="volumen_minimo_operacion" type="number"
+                        placeholder="Cantidad mínima en la que opera del almacen" fill="outline"></ion-input>
                     </div>
                   </div>
-                  <ion-item>
-                    <ion-select label="Estado del autotanque" labelPlacement="floating" formControlName="estado_tanque" placeholder="Estado del autotanque">
-                      <ion-select-option value="O">En operación</ion-select-option>
-                      <ion-select-option value="F">Fuera de operación</ion-select-option>
-                    </ion-select>
-                  </ion-item>
-                  <ion-button type="submit" expand="full" style="padding-top: 2%;">Guardar</ion-button>
+                  <div style="text-align: center;">
+                    <ion-button type="submit" style="padding-top: 2%; width: 50%; --background: #2c3d50; border-radius: 5%;">Guardar</ion-button>
+                  </div>
+                  
                 </form>
               </ion-content>
             </ng-template>

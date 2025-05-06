@@ -1,13 +1,84 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>mostrar</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">mostrar</ion-title>
-    </ion-toolbar>
-  </ion-header>
+
+  <div class="ion-margin">
+    <div class="card-header" style="background: #2c3d50;">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 pt-1" style="color: white;">
+          <ion-select label="Selecciona un almacen" placeholder="Selecciona un almacen"
+            (ionChange)="selectAlmacen($event)">
+            <ion-select-option *ngFor="let item of almacenes"
+              value="{{item.id}}">{{item.clave_almacen}}</ion-select-option>
+          </ion-select>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="row ion-padding" *ngIf="mostrarDetalles">
+      <!-- tarjetas aquí -->
+      <div class="col-md-4">
+        <ion-card color="success">
+          <ion-card-header>
+            <ion-card-subtitle>Existencia actual</ion-card-subtitle>
+            <ion-card-title>{{ existenciaActual }} L</ion-card-title>
+          </ion-card-header>
+        </ion-card>
+      </div>
+      
+      <div class="col-md-4">
+        <ion-card color="primary">
+          <ion-card-header>
+            <ion-card-subtitle>Total de recepciones</ion-card-subtitle>
+            <ion-card-title>{{ totalRecepciones }} L</ion-card-title>
+          </ion-card-header>
+        </ion-card>
+      </div>
+      
+      <div class="col-md-4">
+        <ion-card color="warning">
+          <ion-card-header>
+            <ion-card-subtitle>Total de entregas</ion-card-subtitle>
+            <ion-card-title>{{ totalEntregas }} L</ion-card-title>
+          </ion-card-header>
+        </ion-card>
+      </div>
+      
+    </div>
+    <div class="row" *ngIf="!mostrarDetalles">
+      <div class="col-12 text-center pt-4">
+        <p style="color: gray; font-style: italic;">
+          <b>
+            Selecciona un tanque para conocer sus eventos
+          </b>
+        </p>
+      </div>
+    </div>
+
+
+
+    <!-- Tabla con la informaicón -->
+    <div class="card rounded pt-3 ion-margin">
+      <div class="card-header text-white ion-padding" style="background: #2c3d50;">
+        <h4>Lista de eventos del tanque seleccionado</h4>
+      </div>
+      <div class="table-responsive p-2">
+        <table class="table" id="tablaEventosAlmacen"></table>
+      </div>
+    </div>
+
+
+  </div>
+
+  <!-- Sección para gestionar nuevas existencias, repos, entregas -->
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button>
+      <ion-icon name="chevron-up-circle"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button (click)="addEventoAlmacen()">
+        <ion-icon name="add-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
 </ion-content>
