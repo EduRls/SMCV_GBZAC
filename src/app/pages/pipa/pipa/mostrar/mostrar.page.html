@@ -10,7 +10,7 @@
             <ion-icon slot="start" name="add"></ion-icon>
             Agregar <br> Pipa
           </ion-button>
-          <ion-modal trigger="agregarPipaModal">
+          <ion-modal trigger="agregarPipaModal" style="--height: 75%; --width: 70%;">
             <ng-template>
               <ion-header>
                 <ion-toolbar style="--background: #2c3d50;">
@@ -22,11 +22,9 @@
                 </ion-toolbar>
               </ion-header>
               <ion-content class="ion-padding">
-                <ion-card color="warning" class="text-center">
+                <ion-card color="primary" class="text-center">
                   <ion-card-header>
-                    <ion-card-title>Registro de pipa</ion-card-title>
-                    <ion-card-subtitle>Favor de ingresar la infromación correspondiente para registrar un
-                      pipa</ion-card-subtitle>
+                    <ion-card-subtitle>Registro de pipa - Favor de ingresar la infromación correspondiente para registrar una pipa (AUTOTANQUES) de hidrocarburos</ion-card-subtitle>
                   </ion-card-header>
                 </ion-card>
                 <form [formGroup]="formularioPipa" (ngSubmit)="onSubmit()">
@@ -34,7 +32,7 @@
                     <div class="col-md-6">
                       <ion-item>
                         <ion-input label="Clave autotanque" labelPlacement="floating" formControlName="clave_pipa"
-                          type="text" placeholder="Ingrese la clave del autotanque"></ion-input>
+                          type="text" placeholder="Ingrese la clave del autotanque TQS-TAD-XXXX"></ion-input>
                       </ion-item>
                     </div>
                     <div class="col-md-6">

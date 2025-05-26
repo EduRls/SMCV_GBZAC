@@ -7,6 +7,8 @@ import * as $ from 'jquery';
 import DataTable from 'datatables.net-dt';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoadingController, ToastController } from '@ionic/angular';
+
+
 @Component({
   selector: 'app-mostrar',
   templateUrl: './mostrar.page.html',
@@ -53,7 +55,7 @@ export class MostrarPage implements OnInit {
       second: '2-digit',
       hour12: true
     });
-  
+
     setInterval(() => {
       this.reloj = new Date().toLocaleString('es-MX', {
         weekday: 'long',
@@ -128,7 +130,7 @@ export class MostrarPage implements OnInit {
           { data: 'observaciones', title: 'Observaciones' }
         ],
         data: data
-      });
+      })
     }, 300);
   }
 
